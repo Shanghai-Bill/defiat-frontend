@@ -1,0 +1,3 @@
+!.eslintrc.js # allow self-formating
+public
+node_modules
