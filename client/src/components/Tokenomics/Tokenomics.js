@@ -54,11 +54,6 @@ export const Tokenomics = () => {
         <div className="page-header">
           <img
             alt="..."
-            className="path"
-            src={require("assets/img/path4.png")}
-          />
-          <img
-            alt="..."
             className="path2"
             src={require("assets/img/path5.png")}
           />
@@ -93,56 +88,57 @@ export const Tokenomics = () => {
                 </Col>
               </Row>
               
-              <Row className="mt-4 mb-4">
-                <Col lg="6">
-
-                  <h3>Token Supply</h3>
-                  <Pie data={pieData} options={chartOptions} />
-                </Col>
-                <Col lg="6">
-                  <Table responsive>
-                    <thead>
-                      <tr>
-                        <th className="text-center">#</th>
-                        <th>Description</th>
-                        <th className="text-right">Token Allocation</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="text-center">1</td>
-                        <td>Circulating</td>
-                        <td className="text-right">500M</td>
-                      </tr>
-                      <tr>
-                        <td className="text-center">2</td>
-                        <td>Team</td>
-                        <td className="text-right">300M</td>
-                      </tr>
-                      <tr>
-                        <td className="text-center">3</td>
-                        <td>Presale</td>
-                        <td className="text-right">200M</td>
-                      </tr>
-                      <tr>
-                        <td className="text-center">4</td>
-                        <td>Token Burn</td>
-                        <td className="text-right">100M</td>
-                      </tr>
-                      <tr>
-                        <td className="text-center">5</td>
-                        <td>Liquidity Lock</td>
-                        <td className="text-right">100M</td>
-                      </tr>
-                      <tr>
-                        <td className="text-center">6</td>
-                        <td>Expenses</td>
-                        <td className="text-right">80M</td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </Col>
-              </Row>
+              <section className="section section-lg">
+                <Row className="mt-4 mb-4">
+                  <Col lg="6">
+                    <h3>Token Supply</h3>
+                    <Pie data={pieData} options={chartOptions} />
+                  </Col>
+                  <Col lg="6">
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th className="text-center">#</th>
+                          <th>Description</th>
+                          <th className="text-right">Token Allocation</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="text-center">1</td>
+                          <td>Circulating</td>
+                          <td className="text-right">500M</td>
+                        </tr>
+                        <tr>
+                          <td className="text-center">2</td>
+                          <td>Team</td>
+                          <td className="text-right">300M</td>
+                        </tr>
+                        <tr>
+                          <td className="text-center">3</td>
+                          <td>Presale</td>
+                          <td className="text-right">200M</td>
+                        </tr>
+                        <tr>
+                          <td className="text-center">4</td>
+                          <td>Token Burn</td>
+                          <td className="text-right">100M</td>
+                        </tr>
+                        <tr>
+                          <td className="text-center">5</td>
+                          <td>Liquidity Lock</td>
+                          <td className="text-right">100M</td>
+                        </tr>
+                        <tr>
+                          <td className="text-center">6</td>
+                          <td>Expenses</td>
+                          <td className="text-right">80M</td>
+                        </tr>
+                      </tbody>
+                    </Table>
+                  </Col>
+                </Row>
+              </section>
             </Container>
             
             

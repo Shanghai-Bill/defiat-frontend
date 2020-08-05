@@ -11,16 +11,15 @@ import {
   CardBody,
   CardHeader,
   CardTitle,
-
 } from 'reactstrap'
 import {
   FaWallet,
   FaBalanceScale,
   FaChartLine
 } from 'react-icons/fa'
-import {
-  Wallet
-} from './Wallet'
+import { Wallet } from './Wallet'
+import { Governance } from './Governance'
+import { Staking } from './Staking'
 
 export function Dashboard(props){
   const { web3, accounts } = props;
@@ -88,48 +87,10 @@ export function Dashboard(props){
                 </Col>
                 <Col lg="10">
                   <Container>
-                    <div className="d-flex justify-space-between">
-                      <Card className="mr-4">
-                        <CardHeader>
-                          <CardTitle className="font-weight-bold h3">10K DFT</CardTitle>
-                        </CardHeader>
-                        <CardBody>
-                          Available Balance
-                        </CardBody>
-                      </Card>
-                      <Card className="mr-4">
-                        <CardHeader>
-                          <CardTitle className="font-weight-bold h3">10K DFT</CardTitle>
-                        </CardHeader>
-                        <CardBody>
-                          Staked Balance
-                        </CardBody>
-                      </Card>
-                      <Card className="mr-4"> 
-                        <CardHeader>
-                          <CardTitle className="font-weight-bold h3">2.0%</CardTitle>
-                        </CardHeader>
-                        <CardBody>
-                          Discount Rate
-                        </CardBody>
-                      </Card>
-                      <Card>
-                        <CardHeader>
-                          <CardTitle className="font-weight-bold h3">1.2K</CardTitle>
-                        </CardHeader>
-                        <CardBody>
-                          Loyalty Points
-                        </CardBody>
-                      </Card>
-                    </div>
-                      <Card className="d-flex justify-content-start">
-                        <CardBody>
-                          {activeTab === 1 && <Wallet />}
-                          {activeTab === 2 && <></> }
-                          {activeTab === 3 && <></>}
-                        </CardBody>
-                      </Card>
-                    </Container>
+                    {activeTab === 1 && <Wallet />}
+                    {activeTab === 2 && <Governance /> }
+                    {activeTab === 3 && <Staking />}
+                  </Container>
                 </Col>
                 </Row>
               </Container>

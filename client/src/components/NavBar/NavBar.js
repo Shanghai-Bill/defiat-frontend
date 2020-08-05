@@ -6,14 +6,19 @@ import {
   Navbar,
   NavItem,
   Nav,
-  Container
+  NavLink,
+  Container,
+  Row,
+  Col
 } from "reactstrap";
 import { Link } from 'react-router-dom';
-import logo from 'assets/img/defiat.png'
+import logo from 'assets/img/defiat.png';
+import { FaTwitter, FaDiscord, FaTelegramPlane } from 'react-icons/fa';
 
 // Probably need to pass state into here that indicates whether or not the wallet is connected and display the button accordingly
 export const NavBar = () => {
   const [color, setColor] = useState("navbar-transparent");
+  const [isCollapsed, setCollapsed] = useState(true);
   // const [showConnectButton, setConnectButton] = useState(true);
 
   useEffect(() => {
@@ -58,11 +63,39 @@ export const NavBar = () => {
               DeFiat
             </div>
           </NavbarBrand>
+          <button
+              aria-expanded={!isCollapsed}
+              className="navbar-toggler navbar-toggler"
+              onClick={() => setCollapsed(!isCollapsed)}
+            >
+              <span className="navbar-toggler-bar bar1" />
+              <span className="navbar-toggler-bar bar2" />
+              <span className="navbar-toggler-bar bar3" />
+            </button>
         </div>
         <Collapse
           className={"justify-content-end "}
+          isOpen={!isCollapsed}
           navbar
         >
+          <div className="navbar-collapse-header">
+            <Row>
+              <Col className="collapse-brand" xs="6">
+                <Link to="/">
+                  DeFiat
+                </Link>
+              </Col>
+              <Col className="collapse-close text-right" xs="6">
+                <button
+                  aria-expanded={!isCollapsed}
+                  className="navbar-toggler"
+                  onClick={() => setCollapsed(!isCollapsed)}
+                >
+                  <i className="tim-icons icon-simple-remove" />
+                </button>
+              </Col>
+            </Row>
+          </div>
           <Nav navbar>
             <NavItem className="p-0">
               <Button
@@ -72,6 +105,42 @@ export const NavBar = () => {
               >
                 Connect Your Wallet
               </Button>
+            </NavItem>
+            <NavItem className="p-0 d-lg-none d-xl-none">
+              <NavLink
+                data-placement="bottom"
+                href="https://twitter.com/"
+                rel="noopener noreferrer"
+                target="_blank"
+                title="Follow us on Twitter"
+              >
+                <FaTwitter />
+                <p className="">Twitter</p>
+              </NavLink>
+            </NavItem>
+            <NavItem className="p-0 d-lg-none d-xl-none">
+              <NavLink
+                data-placement="bottom"
+                href="https://www.telegram.com"
+                rel="noopener noreferrer"
+                target="_blank"
+                title="Join us on Telegram"
+              >
+                <FaTelegramPlane />
+                <p>Telegram</p>
+              </NavLink>
+            </NavItem>
+            <NavItem className="p-0 d-lg-none d-xl-none">
+              <NavLink
+                data-placement="bottom"
+                href="https://www.instagram.com/CreativeTimOfficial"
+                rel="noopener noreferrer"
+                target="_blank"
+                title="Join us on Discord"
+              >
+                <FaDiscord />
+                <p>Discord</p>
+              </NavLink>
             </NavItem>
           </Nav>
         </Collapse>

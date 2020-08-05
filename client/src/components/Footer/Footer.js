@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 import {
-  Button,
   NavItem,
   NavLink,
   Nav,
@@ -9,7 +8,7 @@ import {
   Row,
   Col
 } from "reactstrap";
-import { FaTwitter, FaFacebookSquare, FaTelegramPlane } from 'react-icons/fa'
+import { SocialButtons } from '../SocialButtons';
 import logo from 'assets/img/defiat.png' 
 
 export const Footer = () => {
@@ -31,27 +30,8 @@ export const Footer = () => {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink to="/landing" tag={Link}>
-                  Landing
-                </NavLink>
-              </NavItem>
-              <NavItem>
                 <NavLink to="/dashboard" tag={Link}>
                   Dashboard
-                </NavLink>
-              </NavItem>
-            </Nav>
-          </Col>
-          <Col md="3">
-            <Nav>
-              <NavItem>
-                <NavLink href="#">
-                  Whitepaper
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/about">
-                  About Us
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -62,30 +42,27 @@ export const Footer = () => {
             </Nav>
           </Col>
           <Col md="3">
-            <h3 className="title">Follow us:</h3>
-            <div className="btn-wrapper profile d-flex align-items-center">
-              <Button
-                className="btn-icon btn-neutral btn-round btn-simple d-flex justify-content-center align-items-center"
-                color="default"
-                href="#"
-              >
-                <FaTwitter />
-              </Button>
-              <Button
-                className="btn-icon btn-neutral btn-round btn-simple d-flex justify-content-center align-items-center"
-                color="default"
-                href="#"
-              >
-                <FaTelegramPlane />
-              </Button>
-              <Button
-                className="btn-icon btn-neutral btn-round btn-simple d-flex justify-content-center align-items-center"
-                color="default"
-                href="#"
-              >
-                <FaFacebookSquare />
-              </Button>
-            </div>
+            <Nav>
+              <NavItem>
+                <NavLink href="/whitepaper">
+                  Whitepaper
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/about">
+                  About Us
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/legal">
+                  Legal
+                </NavLink>
+              </NavItem>
+            </Nav>
+          </Col>
+          <Col md="3">
+            <h3 className="title d-inline-flex align-items-center">Follow us:</h3>
+            <SocialButtons className="profile" />
           </Col>
         </Row>
       </Container>

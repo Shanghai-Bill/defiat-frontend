@@ -9,7 +9,8 @@ import {
   Row,
   Col
 } from "reactstrap";
-import { FaTwitter, FaFacebookSquare, FaTelegramPlane } from 'react-icons/fa'
+import { SocialButtons } from '../SocialButtons';
+import { Link } from 'react-router-dom'
 
 export function Landing(props) {
   return (
@@ -61,47 +62,20 @@ export function Landing(props) {
                     financial liberation today.
                   </p>
                   <div className="btn-wrapper mb-3">
-                    <p className="category text-success d-inline">
-                      Read the Whitepaper
-                    </p>
-                    <Button
-                      className="btn-link"
-                      color="success"
-                      href="#"
-                      onClick={e => e.preventDefault()}
-                      size="sm"
-                    >
-                      <i className="tim-icons icon-minimal-right" />
-                    </Button>
+                    <Link to="/whitepaper">
+                      <p className="category text-success d-inline">
+                        Read the Whitepaper
+                      </p>
+                      <Button
+                        className="btn-link"
+                        color="success"
+                        size="sm"
+                      >
+                        <i className="tim-icons icon-minimal-right" />
+                      </Button>
+                    </Link>
                   </div>
-                  <div className="btn-wrapper">
-                    <div className="button-container">
-                      <Button
-                        className="btn-icon btn-simple btn-round btn-neutral d-inline-flex justify-content-center align-items-center"
-                        color="default"
-                        href="#"
-                        onClick={e => e.preventDefault()}
-                      >
-                        <FaTwitter />
-                      </Button>
-                      <Button
-                        className="btn-icon btn-simple btn-round btn-neutral d-inline-flex justify-content-center align-items-center"
-                        color="default"
-                        href="#"
-                        onClick={e => e.preventDefault()}
-                      >
-                        <FaTelegramPlane />
-                      </Button>
-                      <Button
-                        className="btn-icon btn-simple btn-round btn-neutral d-inline-flex justify-content-center align-items-center"
-                        color="default"
-                        href="#"
-                        onClick={e => e.preventDefault()}
-                      >
-                        <FaFacebookSquare />
-                      </Button>
-                    </div>
-                  </div>
+                  <SocialButtons />
                 </Col>
                 <Col lg="4" md="5">
                   <img
@@ -228,14 +202,13 @@ export function Landing(props) {
                       nostrud exercitation ullamco laboris nisi.
                     </p>
                     <br />
-                    <a
+                    <Link
                       className="font-weight-bold text-info mt-5"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
+                      to="/tokenomics"
                     >
                       Show all{" "}
                       <i className="tim-icons icon-minimal-right text-info" />
-                    </a>
+                    </Link>
                   </div>
                 </Col>
               </Row>

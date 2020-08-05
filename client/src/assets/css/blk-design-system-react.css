@@ -8860,7 +8860,7 @@ fieldset[disabled]
 
 .has-success .form-control:focus,
 .has-success.input-group-focus .input-group-append .input-group-text,
-.has-success.input-group-focus .input-group-prepend .input-group-text {
+.has-success.input-group-focus .input-group-prepend .input-group-text, {
   border-color: #00bf9a; }
 
 .has-danger .form-control,
@@ -11510,7 +11510,7 @@ code {
 .input-group-btn:last-child > .btn {
   margin-left: 0; }
 
-textarea.form-control {
+/* textarea.form-control {
   max-width: 100%;
   max-height: 80px;
   padding: 10px 10px 0 0;
@@ -11522,7 +11522,7 @@ textarea.form-control {
   textarea.form-control:focus, textarea.form-control:active {
     border-left: none;
     border-top: none;
-    border-right: none; }
+    border-right: none; } */
 
 .has-success.form-group .form-control,
 .has-success.form-group.no-border .form-control,
