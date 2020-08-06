@@ -1,4 +1,4 @@
-import { SET_WEB3, SET_ACCOUNTS, SET_CONTRACT_INSTANCE } from './types';
+import { SET_WEB3, SET_ACCOUNTS, SET_CONTRACT_INSTANCE, SET_NETWORK } from './types';
 
 export const setWeb3State = (payload) => ({
   type: SET_WEB3,
@@ -12,3 +12,7 @@ export const setContractState = (payload) => ({
   type: SET_CONTRACT_INSTANCE,
   payload,
 });
+export const setNetworkState = (payload) => ({
+  type: SET_NETWORK,
+  payload
+})

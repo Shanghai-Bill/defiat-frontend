@@ -1,5 +1,5 @@
 
-import { SET_WEB3, SET_ACCOUNTS, SET_CONTRACT_INSTANCE } from './types';
+import { SET_WEB3, SET_ACCOUNTS, SET_CONTRACT_INSTANCE, SET_NETWORK } from './types';
 const initialState = {
   web3: {},
   accounts: [],
@@ -27,6 +27,12 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         contract: action.payload.contract,
       };
+    }
+    case SET_NETWORK: {
+      return {
+        ...state,
+        network: action.payload.network
+      }
     }
     default: {
       return state;

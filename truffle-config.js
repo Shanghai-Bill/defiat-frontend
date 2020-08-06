@@ -25,4 +25,9 @@ module.exports = {
       network_id: '*', // Match any network id
     },
   },
+  compilers: {
+    solc: {
+      version: "0.6.6", // DeFiat v1 smart contract uses this solc version
+    },
+  },
 };

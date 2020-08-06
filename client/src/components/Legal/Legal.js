@@ -30,12 +30,14 @@ export const Legal = () => {
               <li className="py-2">
                 <div className="d-flex align-items-center">
                   <div className="icon icon-success mb-2">
-                    <i className="tim-icons icon-alert-circle-exc" />
+                    <i className="tim-icons icon-bank" />
                   </div>
                   <div className="ml-3">
                     <h6 className="text-left">
-                      Cryptographic tokens may be subject to expropriation or theft by hackers and other malicious groups by 
-                      interfering with the distributed nature of the system. Under some cases, tokens stolen in this method cannot be recovered.
+                      You take full responsibility in purchasing DeFiaT on centralized or decentralized exchanges. DeFiaT did not and 
+                      will not organize an ICO (Initial Coin Offering). Any purchase, or trading you make that would result in a loss 
+                      is your sole responsibility. If you choose to acquire DeFiat, you hereby agree to hold the DeFiat team NOT liable
+                      for financial losses, damages or injuries caused to you or any party or individual.
                     </h6>
                   </div>
                 </div>
@@ -43,7 +45,7 @@ export const Legal = () => {
               <li className="py-2">
                 <div className="d-flex align-items-center">
                   <div className="icon icon-success mb-2">
-                    <i className="tim-icons icon-alert-circle-exc" />
+                    <i className="tim-icons icon-atom" />
                   </div>
                   <div className="ml-3">
                     <h6>

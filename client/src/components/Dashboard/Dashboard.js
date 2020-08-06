@@ -20,9 +20,12 @@ import {
 import { Wallet } from './Wallet'
 import { Governance } from './Governance'
 import { Staking } from './Staking'
+import { NoWallet } from './NoWallet'
+import HRNumbers from 'human-readable-numbers';
 
 export function Dashboard(props){
-  // const { web3, accounts } = props;
+  // Add a loading component for while web3 is initializing??
+  const { web3, accounts, contract } = props;
 
   const [activeTab, setActiveTab] = useState(1);
 
@@ -36,9 +39,10 @@ export function Dashboard(props){
             className="path"
             src={require("assets/img/path4.png")}
           />
-          
+
           <div className="content">
-            <Container>
+            {web3 ? (
+              <Container>
               <Row className="row-grid justify-space-around">
                 <Col lg="2">
                   <Card>
@@ -87,14 +91,17 @@ export function Dashboard(props){
                 </Col>
                 <Col lg="10">
                   <Container>
-                    {activeTab === 1 && <Wallet />}
-                    {activeTab === 2 && <Governance /> }
+                    {activeTab === 1 && <Wallet {...props} />}
+                    {activeTab === 2 && <Governance {...props} /> }
                     {activeTab === 3 && <Staking />}
                   </Container>
                 </Col>
                 </Row>
               </Container>
-            </div>
+            ) : (
+              <NoWallet />
+            )}  
+          </div>
         </div>
       </div>
     </>

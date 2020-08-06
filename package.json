@@ -4,16 +4,14 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "chain": "cd contracts && npm run chain",
-    "compile": "cd contracts && npm run build",
+    "compile": "cd contracts && truffle compile",
     "migrate": "cd contracts && npm run deploy",
-    "start": "cd web && npm start",
+    "start": "cd client && npm start",
     "publish": "lerna publish"
   },
   "devDependencies": {
     "lerna": "^3.4.3",
-    "solc": "^0.6.2"
-  },
-  "dependencies": {
-    "react-chartjs-2": "^2.10.0"
+    "solc": "^0.6.2",
+    "truffle": "^5.1.37"
   }
 }

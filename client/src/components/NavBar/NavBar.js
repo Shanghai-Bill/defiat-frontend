@@ -16,7 +16,10 @@ import logo from 'assets/img/defiat.png';
 import { FaTwitter, FaDiscord, FaTelegramPlane } from 'react-icons/fa';
 
 // Probably need to pass state into here that indicates whether or not the wallet is connected and display the button accordingly
-export const NavBar = () => {
+export const NavBar = ({ 
+  hasWeb3Connection,
+  setWeb3Connection
+}) => {
   const [color, setColor] = useState("navbar-transparent");
   const [isCollapsed, setCollapsed] = useState(true);
   // const [showConnectButton, setConnectButton] = useState(true);
@@ -97,14 +100,26 @@ export const NavBar = () => {
             </Row>
           </div>
           <Nav navbar>
+            
             <NavItem className="p-0">
-              <Button
-                // className={showConnectButton ? "" : "hidden"}
-                color="success"
-                onClick={() => connectWallet()} 
-              >
-                Connect Your Wallet
-              </Button>
+              {hasWeb3Connection && (
+                <Link to="/dashboard">
+                  <Button
+                    color="success"
+                  >
+                    <i className="tim-icons icon-check-2" />
+                    Wallet Connected
+                  </Button>
+                </Link>
+              ) || (
+                <Button
+                  color="primary"
+                  onClick={() => setWeb3Connection()} 
+                >
+                  <i className="tim-icons icon-wallet-43" />
+                  Connect Your Wallet
+                </Button>
+              )}
             </NavItem>
             <NavItem className="p-0 d-lg-none d-xl-none">
               <NavLink

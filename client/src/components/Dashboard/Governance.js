@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Card,
   CardHeader,
@@ -14,21 +14,64 @@ import {
   Button
 } from 'reactstrap';
 
-export const Governance = () => {
-  const [activeTab, setActiveTab] = useState(1);
+export const Governance = ({
+  contract,
+  accounts
+}) => {
+  // const [activeTab, setActiveTab] = useState(1);
+
+  const [governanceState, setGovernanceState] = useState({
+    loyaltyPoints: 0,
+    currentLevel: 0,
+    discountRate: 0,
+    loyaltyPointsNeeded: 0
+  })
+
+  useEffect(() => {
+    async function getGovernanceData() {
+      if (contract) {
+        const discountRate = await contract.methods.currentDiscountOf(accounts[0]).call()
+        const loyaltyPoints = await contract.methods.showLoyaltyPointsOf(accounts[0]).call();
+        const currentLevel = await contract.methods.showLevelOf(accounts[0]).call();
+        const nextLevelPoints = await contract.methods.discountTrancheLoyaltyNeeded(currentLevel+1).call();
+        const loyaltyPointsNeeded = nextLevelPoints - loyaltyPoints;
+
+        setGovernanceState({
+          ...governanceState,
+          loyaltyPoints,
+          currentLevel,
+          discountRate,
+          loyaltyPointsNeeded
+        })
+      }
+    }
+    getGovernanceData()
+  })
+
+  const updateDiscount = async () => {
+    if (contract) {
+      try {
+        console.log(governanceState)
+        const transaction = await contract.methods.updatemyDiscount(accounts[0], governanceState.currentLevel).send({from: accounts[0]})
+      } catch (err) {
+        console.log(err)
+      }
+      
+    }
+  }
 
   return (
     <>
       <Card>
-        <CardHeader>
+        {/* <CardHeader>
           <Nav className="nav-tabs-info" role="tablist" tabs>
             <NavItem>
               <NavLink
                 className={activeTab === 1 ? "active" : ""}
                 onClick={() => setActiveTab(1)}
               >
-                <i className="tim-icons icon-spaceship" />
-                L0
+                <i className="tim-icons icon-single-02" />
+                User
               </NavLink>
             </NavItem>
             <NavItem>
@@ -36,7 +79,7 @@ export const Governance = () => {
                 className={activeTab === 2 ? "active" : ""}
                 onClick={() => setActiveTab(2)}
               >
-                <i className="tim-icons icon-settings-gear-63" />
+                <i className="tim-icons icon-vector" />
                 Governor
               </NavLink>
             </NavItem>
@@ -45,7 +88,7 @@ export const Governance = () => {
                 className={activeTab === 3 ? "active" : ""}
                 onClick={() => setActiveTab(3)}
               >
-                <i className="tim-icons icon-bag-16" />
+                <i className="tim-icons icon-link-72" />
                 Partner
               </NavLink>
             </NavItem>
@@ -54,21 +97,25 @@ export const Governance = () => {
                 className={activeTab === 4 ? "active" : ""}
                 onClick={() => setActiveTab(4)}
               >
-                <i className="tim-icons icon-bag-16" />
+                <i className="tim-icons icon-key-25" />
                 Mastermind
               </NavLink>
             </NavItem>
           </Nav>
-        </CardHeader>
+        </CardHeader> */}
         <CardBody>
           <TabContent
             //className="tab-space"
-            activeTab={"link" + activeTab}
+            activeTab={"link1"}
           >
             <TabPane tabId="link1">
-              <p className="h2">Current Discount Level: </p>
-              <p className="h3">Points remaining for next Discount Level: </p>
-              <Button>Update My Discount</Button>
+              <p className="h2">Current Discount Level: {governanceState.discountRate}</p>
+              <p className="h3">Points remaining for next Discount Level: {governanceState.loyaltyPointsNeeded}</p>
+              <Button
+                onClick={() => updateDiscount()}
+              >
+                Update My Discount
+              </Button>
             </TabPane>
             <TabPane tabId="link2">
               {/* <FormGroup>
