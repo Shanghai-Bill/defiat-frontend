@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
+import getWeb3 from '../getWeb3';
+import SimpleStorage from '../contracts/SimpleStorage.json';
+import { connect } from 'react-redux';
+import { setWeb3State, setContractState, setAccountsState } from '../store/action';
+import PropTypes from 'prop-types';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'assets/css/blk-design-system-react.css';
@@ -18,46 +23,39 @@ import { Tokenomics } from './Tokenomics';
 import { About } from './About';
 import { Whitepaper } from './Whitepaper';
 import { Legal } from './Legal';
-import getWeb3 from '../getWeb3';
-import SimpleStorage from "../contracts/SimpleStorage.json";
-
 // import Counter from './components/About';
 
 class App extends Component {
-  state = {
-    page: '',
-  };
-
-  componentDidMount(){
+  componentDidMount() {
     this.loadWeb3();
   }
 
-    // Instantiates Web3 library and smart contracts
-    loadWeb3 = async () => {
-      try {
-        // Get network provider and web3 instance.
-        const web3 = await getWeb3();
-  
-        // Use web3 to get the user's accounts.
-        const accounts = await web3.eth.getAccounts();
-  
-        // Get the contract instance.
-        const networkId = await web3.eth.net.getId();
-        const deployedNetwork = SimpleStorage.networks[networkId];
-        const instance = new web3.eth.Contract(
-          SimpleStorage.abi,
-          deployedNetwork && deployedNetwork.address,
-        );
-        // Set web3, accounts, and contract to the state, and then proceed with an
-        this.setState({ web3, accounts, contract: instance } );
-      } catch (error) {
-        // Catch any errors for any of the above operations.
-        alert(
-          `Failed to load web3, accounts, or contract. Check console for details.`,
-        );
-        console.error(error);
-      }
+  // Instantiates Web3 library and smart contracts
+  loadWeb3 = async () => {
+    try {
+      // Get network provider and web3 instance.
+      const web3 = await getWeb3();
+
+      // Use web3 to get the user's accounts.
+      const accounts = await web3.eth.getAccounts();
+
+      // Get the contract instance.
+      const networkId = await web3.eth.net.getId();
+      const deployedNetwork = SimpleStorage.networks[networkId];
+      const instance = new web3.eth.Contract(
+        SimpleStorage.abi,
+        deployedNetwork && deployedNetwork.address
+      );
+      // Set web3, accounts, and contract to the state.
+      this.props.setWeb3({ web3 });
+      this.props.setAccount({ accounts });
+      this.props.setContractInstance({ instance });
+    } catch (error) {
+      // Catch any errors for any of the above operations.
+      alert(`Failed to load web3, accounts, or contract. Check console for details.`);
+      console.error(error);
     }
+  };
 
   render() {
     const locale = getLocale();
@@ -74,7 +72,7 @@ class App extends Component {
               rel="stylesheet"
               href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
             />
-                        
+
             <NavBar />
             <Scroll />
 
@@ -92,7 +90,6 @@ class App extends Component {
             </div>
 
             <Footer />
-            
           </div>
         </Router>
       </IntlProvider>
@@ -100,4 +97,32 @@ class App extends Component {
   }
 }
 
-export default App;
+App.propTypes = {
+  setWeb3: PropTypes.func.isRequired,
+  setAccount: PropTypes.func.isRequired,
+  setContractInstance: PropTypes.func.isRequired,
+};
+
+//May not need state
+const mapStateToProps = (state) => ({
+  ...state,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    // connectMetamaskWallet: (payload) => {
+    //   dispatch(connectWallet(payload));
+    // },
+    setWeb3: (payload) => {
+      dispatch(setWeb3State(payload));
+    },
+    setAccount: (payload) => {
+      dispatch(setAccountsState(payload));
+    },
+    setContractInstance: (payload) => {
+      dispatch(setContractState(payload));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

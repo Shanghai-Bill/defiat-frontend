@@ -9,7 +9,7 @@ import {
   Row,
   Col
 } from "reactstrap";
-import { SocialButtons } from '../SocialButtons';
+import { SocialButtons } from './SocialButtons';
 import { Link } from 'react-router-dom'
 
 export function Landing(props) {

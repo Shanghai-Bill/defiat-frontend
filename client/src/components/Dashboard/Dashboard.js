@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import {
   Container,
   Col,
@@ -22,7 +22,7 @@ import { Governance } from './Governance'
 import { Staking } from './Staking'
 
 export function Dashboard(props){
-  const { web3, accounts } = props;
+  // const { web3, accounts } = props;
 
   const [activeTab, setActiveTab] = useState(1);
 
@@ -101,12 +101,12 @@ export function Dashboard(props){
   )
 }
 
-Dashboard.propTypes = {
-  web3: PropTypes.object,
-};
+// Dashboard.propTypes = {
+//   web3: PropTypes.object,
+// };
 
-Dashboard.defaultProps = {
-  web3: null,
-};
+// Dashboard.defaultProps = {
+//   web3: null,
+// };
 
 export default Dashboard;
