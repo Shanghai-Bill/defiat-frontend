@@ -9,24 +9,24 @@ export const SocialButtons = () => {
         <Button
           className="btn-icon btn-simple btn-round btn-neutral d-inline-flex justify-content-center align-items-center"
           color="default"
-          href="#"
-          onClick={e => e.preventDefault()}
+          href="https://twitter.com/DeFiatCrypto"
+          target="_blank"
         >
           <FaTwitter />
         </Button>
         <Button
           className="btn-icon btn-simple btn-round btn-neutral d-inline-flex justify-content-center align-items-center"
           color="default"
-          href="#"
-          onClick={e => e.preventDefault()}
+          href="https://t.me/defiat_crypto"
+          target="_blank"
         >
           <FaTelegramPlane />
         </Button>
         <Button
           className="btn-icon btn-simple btn-round btn-neutral d-inline-flex justify-content-center align-items-center"
           color="default"
-          href="#"
-          onClick={e => e.preventDefault()}
+          href="https://discord.gg/fjHpaAr"
+          target="_blank"
         >
           <FaDiscord />
         </Button>

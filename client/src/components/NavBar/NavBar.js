@@ -11,7 +11,7 @@ import {
   Row,
   Col
 } from "reactstrap";
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import logo from 'assets/img/defiat.png';
 import { FaTwitter, FaDiscord, FaTelegramPlane } from 'react-icons/fa';
 
@@ -22,6 +22,8 @@ export const NavBar = ({
 }) => {
   const [color, setColor] = useState("navbar-transparent");
   const [isCollapsed, setCollapsed] = useState(true);
+  const location = useLocation();
+  console.log(location.pathname)
   // const [showConnectButton, setConnectButton] = useState(true);
 
   useEffect(() => {
@@ -43,8 +45,8 @@ export const NavBar = ({
     return () => window.removeEventListener("scroll", changeColor);
   });
 
-  const connectWallet = () => {
-    console.log("wallet");
+  const closeNavIfOpen = () => {
+    
   }
   
   return (
@@ -100,62 +102,25 @@ export const NavBar = ({
             </Row>
           </div>
           <Nav navbar>
-            
+            {/* <NavItem className="p-0">
+              <Link className="nav-link" to="/dashboard" onClick={() =>!isCollapsed && setCollapsed(true)}>
+                Dashboard
+              </Link>
+            </NavItem> */}
             <NavItem className="p-0">
-              {hasWeb3Connection && (
-                <Link to="/dashboard">
-                  <Button
-                    color="success"
-                  >
-                    <i className="tim-icons icon-check-2" />
-                    Wallet Connected
-                  </Button>
-                </Link>
-              ) || (
-                <Button
-                  color="primary"
-                  onClick={() => setWeb3Connection()} 
-                >
-                  <i className="tim-icons icon-wallet-43" />
-                  Connect Your Wallet
-                </Button>
-              )}
+              <Link className="nav-link" to="/news" onClick={() =>!isCollapsed && setCollapsed(true)}>
+                News
+              </Link>
             </NavItem>
-            <NavItem className="p-0 d-lg-none d-xl-none">
-              <NavLink
-                data-placement="bottom"
-                href="https://twitter.com/"
-                rel="noopener noreferrer"
-                target="_blank"
-                title="Follow us on Twitter"
-              >
-                <FaTwitter />
-                <p className="">Twitter</p>
-              </NavLink>
+            <NavItem className="p-0">
+              <Link className="nav-link" to="/about" onClick={() =>!isCollapsed && setCollapsed(true)}>
+                About
+              </Link>
             </NavItem>
-            <NavItem className="p-0 d-lg-none d-xl-none">
-              <NavLink
-                data-placement="bottom"
-                href="https://www.telegram.com"
-                rel="noopener noreferrer"
-                target="_blank"
-                title="Join us on Telegram"
-              >
-                <FaTelegramPlane />
-                <p>Telegram</p>
-              </NavLink>
-            </NavItem>
-            <NavItem className="p-0 d-lg-none d-xl-none">
-              <NavLink
-                data-placement="bottom"
-                href="https://www.instagram.com/CreativeTimOfficial"
-                rel="noopener noreferrer"
-                target="_blank"
-                title="Join us on Discord"
-              >
-                <FaDiscord />
-                <p>Discord</p>
-              </NavLink>
+            <NavItem className="p-0">
+              <Button color="primary">
+                Get DFT
+              </Button>
             </NavItem>
           </Nav>
         </Collapse>

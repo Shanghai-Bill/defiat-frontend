@@ -13,7 +13,6 @@ export const Whitepaper = () => {
           
           <div className="content">
             <h2 className="display-2">Whitepaper</h2>
-
           </div>
 
         </div>

@@ -20,15 +20,15 @@ export const Tokenomics = () => {
     
     return {
       labels: [
-        "Circulating",
         "Team",
-        "Presale",
-        "Token Burn",
-        "Liquidity Lock",
-        "Expenses"
+        "Marketing/Ecosystem",
+        "Development",
+        "Liquidity",
+        "Staking",
+        // "Expenses"
       ],
       datasets: [{
-        data: [500, 300, 200, 100, 100, 80],
+        data: [30, 20, 20, 20, 10],
         borderColor: "#ffffff",
         backgroundColor: [
           "#212529",
@@ -36,7 +36,7 @@ export const Tokenomics = () => {
           "#525f7f",
           "#6c757d",
           "#adb5bd",
-          "#ced4da"
+          // "#ced4da"
         ]
       }]
     }

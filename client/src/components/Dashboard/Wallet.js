@@ -32,14 +32,14 @@ export const Wallet = ({
         console.log(contract.methods)
         //console.log(contract.methods.balanceOf)
         const balance = await contract.methods.balanceOf(accounts[0]).call();
-        const discountRate = await contract.methods.currentDiscountOf(accounts[0]).call();
-        const loyaltyPoints = await contract.methods.showLoyaltyPointsOf(accounts[0]).call();
-        console.log(balance, discountRate, loyaltyPoints)
+        //const discountRate = await contract.methods.currentDiscountOf(accounts[0]).call();
+        //const loyaltyPoints = await contract.methods.showLoyaltyPointsOf(accounts[0]).call();
+        //console.log(balance, discountRate, loyaltyPoints)
         setWalletState({
           ...walletState,
           balance,
-          discountRate,
-          loyaltyPoints
+          //discountRate,
+          //loyaltyPoints
         })}
     }
     getWalletData()

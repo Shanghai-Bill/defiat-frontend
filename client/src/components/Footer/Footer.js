@@ -9,7 +9,8 @@ import {
   Col
 } from "reactstrap";
 import { SocialButtons } from '../SocialButtons';
-import logo from 'assets/img/defiat.png' 
+import logo from 'assets/img/defiat.png'
+import pdf from 'assets/files/dummy.pdf'
 
 export const Footer = () => {
   return (
@@ -30,27 +31,27 @@ export const Footer = () => {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink to="/dashboard" tag={Link}>
-                  Dashboard
+                <NavLink href="/news">
+                  News
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/tokenomics">
-                  Tokenomics
+                <NavLink href="/about">
+                  About
                 </NavLink>
               </NavItem>
             </Nav>
           </Col>
           <Col md="3">
             <Nav>
-              <NavItem>
-                <NavLink href="/whitepaper">
-                  Whitepaper
+              {/* <NavItem>
+                <NavLink to="/dashboard" tag={Link}>
+                  Dashboard
                 </NavLink>
-              </NavItem>
+              </NavItem> */}
               <NavItem>
-                <NavLink href="/about">
-                  About Us
+                <NavLink href={pdf}>
+                  Whitepaper
                 </NavLink>
               </NavItem>
               <NavItem>

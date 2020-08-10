@@ -21,7 +21,6 @@ import { Wallet } from './Wallet'
 import { Governance } from './Governance'
 import { Staking } from './Staking'
 import { NoWallet } from './NoWallet'
-import HRNumbers from 'human-readable-numbers';
 
 export function Dashboard(props){
   // Add a loading component for while web3 is initializing??
