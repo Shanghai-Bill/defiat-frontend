@@ -49,7 +49,7 @@ address public votingPowerToken;
 address public rewardToken;
 uint256 public rewardAmount;
 
-event voteStart(address _Defiat_Gov, uint256 _expirationDate, bytes32 _hash, string _description);
+event voteStart(address _Defiat_Gov, uint256 _expirationDate, uint256 _value, bytes32 _hash, string _description);
 
 modifier OnlyOwner() {
     require(msg.sender == owner);
@@ -73,20 +73,30 @@ modifier CanVote()   {
     _;
 }
 modifier VotePassed {
-    require(votesYAY > votesNAY, "Vote expired");
+    require(votesYAY > votesNAY, "Voted Against");
+    require(expirationDate < now, "Voting still ongoing");
+
     _;
 }
 
 
 // INITIALIZE
-    function setupTokens(address _votingPowerToken, address _rewardToken, uint256 _rewardAmount) external OnlyOwner {
+    /*function setupTokens(address _votingPowerToken, address _rewardToken, uint256 _rewardAmount) external OnlyOwner {
         rewardToken = _rewardToken;
         rewardAmount = _rewardAmount;
         votingPowerToken = _votingPowerToken;
-    }
-    constructor(address _DeFiat_gov, uint256 _delayDays, uint256 _value) public {
+    }*/
+    constructor(address _DeFiat_gov, uint256 _delayHours, uint256 _value, 
+    address _votingPowerToken, address _rewardToken, uint256 _rewardAmount) public {
         DeFiat_gov = _DeFiat_gov;
-        expirationDate = now + (3600*24*_delayDays); //linux timestamp. No need for Safemath here.
+        expirationDate = now + (3600*_delayHours); //linux timestamp. No need for Safemath here.
+        
+        rewardToken = _rewardToken;
+        rewardAmount = _rewardAmount;
+        votingPowerToken = _votingPowerToken;
+        
+        
+        
         owner = msg.sender;
         //set variables (as many as needed)
         votedValue1 = _value;
@@ -97,41 +107,43 @@ modifier VotePassed {
         //opens vote
         voteIsOpen = true; 
         bytes32 _hash = sha256(abi.encodePacked(DeFiat_gov, expirationDate, _value));
-        emit voteStart(DeFiat_gov, expirationDate,  _hash, "VOTING ON BURN RATE");
+        emit voteStart(DeFiat_gov, expirationDate,_value,  _hash, "PROPOSAL FOR FEE RATE");
     }
 
 
 //1- define ACTIVATION function
-    function activateDecision() public VotePassed { //anybody can actovate this.
-        require(expirationDate < now, "Voting still going");
+    function activateDecision() external VotePassed { //anybody can actovate this.
+        require(expirationDate < now, "Voting still ongoing");
         
-        //ADD THE CORRECT FUNCTION TO BE ACTIVATED HERE
-        IDeFiat_Gov(DeFiat_gov).changeBurnRate(votedValue1);
+        voteIsOpen = false; //close vote
+        
+        //activate function (copy paste the correct one)
+        IDeFiat_Gov(DeFiat_gov).changeFeeRate(votedValue1);
     }
 
 //2- Gather votes
-    function voteYAY() public VoteOpen CanVote tokenHolder{ //this can 
+    function voteYAY() external VoteOpen CanVote tokenHolder{ //this can 
         votes[msg.sender] = block.number; //registers voteNAY
         votesYAY = votesYAY + myVotingPower(); //we can use external
-        sendReward(msg.sender);
+        _sendReward(msg.sender);
     }
-    function voteNAY() public VoteOpen CanVote tokenHolder{
+    function voteNAY() external VoteOpen CanVote tokenHolder{
         votes[msg.sender] = block.number; //registers voteNAY
         votesNAY = votesNAY + myVotingPower();
-        sendReward(msg.sender);
+        _sendReward(msg.sender);
     }
 
 //3- reward voters
-    function sendReward(address _address) internal {
+    function _sendReward(address _address) internal {
        if(  IERC20(rewardToken).balanceOf(address(this)) >= rewardAmount){
        IERC20(rewardToken ).transfer(_address, rewardAmount);}
     } //rewards if enough in the pool
     
 //0- Misc functions
-    function openCloseVote(bool _open) public OnlyOwner {
+    function forceVoteStatus(bool _open) external OnlyOwner {
         voteIsOpen = _open;
     }
-    function killContract() public OnlyOwner {
+    function killContract() external OnlyOwner {
             selfdestruct(msg.sender); //destroys the contract
         } //only Mastermind can kill contract
     function myVotingPower() internal view returns(uint256) {
@@ -153,12 +165,6 @@ modifier VotePassed {
     } //get tokens sent by error to contract
  
 } //end contract
-
-
-interface voting {
-     function voteYAY() external ;
-    function voteNAY() external;
-}
 
 
 interface IDeFiat_Gov {
