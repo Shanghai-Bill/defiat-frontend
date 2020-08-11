@@ -1,5 +1,3 @@
-//Still work in progress and needs tweaking.
-
 // SPDX-License-Identifier: stupid
 
 /*Readme:
@@ -144,6 +142,15 @@ modifier VotePassed {
         
         return _power;
     }
+    function widthdrawAnyToken(address _ERC20address) external OnlyOwner returns (bool) {
+        uint256 _amount = IERC20(_ERC20address).balanceOf(address(this));
+        _widthdrawAnyToken(msg.sender, _ERC20address, _amount);
+        return true;
+    } //get tokens sent by error to contract
+    function _widthdrawAnyToken(address _recipient, address _ERC20address, uint256 _amount) internal returns (bool) {
+        IERC20(_ERC20address).transfer(_recipient, _amount); //use of the _ERC20 traditional transfer
+        return true;
+    } //get tokens sent by error to contract
  
 } //end contract
 
