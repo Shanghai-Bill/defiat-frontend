@@ -1,17 +1,31 @@
 import React from 'react';
+import {
+  Row,
+  Col,
+  Container
+} from 'reactstrap'
 import logo from 'assets/img/defiat.png'
 
 export const NoWallet = () => {
   return (
     <>
-      <div className="d-inline-flex align-items-center justify-space-around">
-        <img className="mr-2" width="50" height="50" src={logo} alt="logo" />
-        <h1 className="title">DeFiat</h1>
-      </div>
-      <h3>
-        Please connect your Ethereum wallet using the MetaMask Browser
-        Extension to access the DeFiat dashboard.
-      </h3>
+      <Row className="justify-content-center">
+        <Col md="3">
+        <div className="d-inline-flex align-items-center justify-space-around">
+          <img className="mr-2" style={{ height: "50px", width: "50px", marginTop: "0"}} src={logo} alt="logo" />
+          <h1 className="title m-0">DeFiat</h1>
+        </div>
+        </Col>
+      </Row>
+
+      <Row className="justify-content-center">
+        <Col lg="6">
+          <h3>
+            Please connect your Ethereum wallet via Metamask
+            or another browser-based extension to access the DeFiat dashboard
+          </h3>
+        </Col>
+      </Row>     
     </>
   )
 }

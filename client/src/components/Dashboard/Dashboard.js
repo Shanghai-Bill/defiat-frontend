@@ -1,33 +1,57 @@
-import React, { useState } from 'react'
-// import PropTypes from 'prop-types';
-import {
-  Container,
-  Col,
-  Row,
-  Nav,
-  NavItem,
-  NavLink,
-  Card,
-  CardBody,
-  CardHeader,
-  CardTitle,
-} from 'reactstrap'
-import {
-  FaWallet,
-  FaBalanceScale,
-  FaChartLine
-} from 'react-icons/fa'
-import { Wallet } from './Wallet'
-import { Governance } from './Governance'
-import { Staking } from './Staking'
-import { NoWallet } from './NoWallet'
+import React, { useEffect } from 'react'
+import PropTypes from 'prop-types';
+import getWeb3 from 'getWeb3';
+import DEFIAT from 'contracts/DEFIAT.json';
+import constants from '../../constants';
+import { connect } from 'react-redux';
+import { 
+  setWeb3State, 
+  setContractState, 
+  setAccountsState, 
+  setNetworkState
+ } from 'store/action';
+import { NoWallet } from './NoWallet';
 
-export function Dashboard(props){
-  // Add a loading component for while web3 is initializing??
-  const { web3, accounts, contract } = props;
-
-  const [activeTab, setActiveTab] = useState(1);
-
+const Dashboard = ({
+  web3,
+  setWeb3,
+  accounts,
+  setAccount,
+  contract,
+  setContractInstance,
+  network,
+  setNetwork
+}) => {
+  useEffect(() => {
+    async function loadWeb3() {
+      try {
+        // Get network provider and web3 instance.
+        const w3 = await getWeb3();
+  
+        // Use web3 to get the user's accounts.
+        const accts = await w3.eth.getAccounts();
+  
+        // Get the contract instance.
+        const networkId = await w3.eth.net.getId();
+        console.log(networkId, constants.networks)
+        const ntk = constants.networks[networkId];
+        // const smartContract = new w3.eth.Contract(
+        //   DEFIAT.abi,
+        //   ntk && ntk.address
+        // );
+        // Set web3, accounts, and contract to the state.
+        setWeb3({ web3: w3 });
+        setAccount({ accounts: accts });
+        // setContractInstance({ contract: smartContract });
+        setNetwork({ network: ntk });
+      } catch (error) {
+        // Catch any errors for any of the above operations.
+        // alert(`Failed to load web3, accounts, or contract. Check console for details.`);
+        console.error(error);
+      }
+    }
+    loadWeb3();
+  })
 
   return (
     <>
@@ -40,66 +64,15 @@ export function Dashboard(props){
           />
 
           <div className="content">
-            {web3 ? (
-              <Container>
-              <Row className="row-grid justify-space-around">
-                <Col lg="2">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="font-weight-bold">
-                        Dashboard
-                      </CardTitle>
-                    </CardHeader>
-                    
-                    <CardBody>
-                      <Nav
-                        className="nav-pills-info nav-pills-icons flex-column"
-                        pills
-                        role="tablist"
-                      >
-                        <NavItem>
-                          <NavLink
-                            className={activeTab === 1 ? "active" : ""}
-                            onClick={() => setActiveTab(1)}
-                          >
-                            <FaWallet /><br />
-                            Wallet
-                          </NavLink>
-                        </NavItem>
-                        <NavItem>
-                          <NavLink
-                            className={activeTab === 2 ? "active" : ""}
-                            onClick={() => setActiveTab(2)}
-                          >
-                            <FaBalanceScale /><br />
-                            Governance
-                          </NavLink>
-                        </NavItem>
-                        <NavItem>
-                          <NavLink
-                            className={activeTab === 3 ? "active" : ""}
-                            onClick={() => setActiveTab(3)}
-                          >
-                            <FaChartLine /><br />
-                            Staking
-                          </NavLink>
-                        </NavItem>
-                      </Nav>
-                    </CardBody>
-                  </Card>
-                </Col>
-                <Col lg="10">
-                  <Container>
-                    {activeTab === 1 && <Wallet {...props} />}
-                    {activeTab === 2 && <Governance {...props} /> }
-                    {activeTab === 3 && <Staking />}
-                  </Container>
-                </Col>
-                </Row>
-              </Container>
+            {accounts && accounts.length ? (
+              <>
+
+              </>
             ) : (
-              <NoWallet />
-            )}  
+              <div className="content-center">
+                <NoWallet />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -107,12 +80,36 @@ export function Dashboard(props){
   )
 }
 
-// Dashboard.propTypes = {
-//   web3: PropTypes.object,
-// };
+Dashboard.propTypes = {
+  setWeb3: PropTypes.func.isRequired,
+  setAccount: PropTypes.func.isRequired,
+  setContractInstance: PropTypes.func.isRequired,
+  setNetwork: PropTypes.func.isRequired,
+};
 
-// Dashboard.defaultProps = {
-//   web3: null,
-// };
+//May not need state
+const mapStateToProps = (state) => ({
+  ...state,
+});
 
-export default Dashboard;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    // connectMetamaskWallet: (payload) => {
+    //   dispatch(connectWallet(payload));
+    // },
+    setWeb3: (payload) => {
+      dispatch(setWeb3State(payload));
+    },
+    setAccount: (payload) => {
+      dispatch(setAccountsState(payload));
+    },
+    setContractInstance: (payload) => {
+      dispatch(setContractState(payload));
+    },
+    setNetwork: (payload) => {
+      dispatch(setNetworkState(payload));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

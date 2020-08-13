@@ -16,10 +16,11 @@ export const TeamSection = () => {
           <Col lg="8">
           <p>
             The DeFiat team is a diverse group of individuals simply seeking to make the crypto community 
-            a better space and enable everyone to take control of their financial situation. We seek to disrupt
-            traditional finance techonologies by leveraging the power of the Ethereum blockchain and introducing
-            unique and lasting DeFi (decentralized finance) solutions. Our team has over 40 years of industry
-            experience and is compromised of some of the brightest minds in blockchain.
+            a better space and enable everyone to take control of their financial situation. Our team has over 
+            40 years of industry experience and is compromised of some of the brightest minds in blockchain. 
+            Since members from our team are actively employed in the industry, the team has chosen to stay anonymous
+            due to potential conflicts of interest. We seek to disrupt traditional finance techonologies by leveraging
+            the power of the Ethereum blockchain and introducing unique and lasting DeFi (decentralized finance) solutions. 
           </p>
           </Col>
         </Row>
@@ -27,26 +28,26 @@ export const TeamSection = () => {
         <Row>
           <TeamCard
             imageSrc={clown}
-            cardTitle="Member 1"
-            cardSubtitle="Le Mastermind"
+            cardTitle="Mastermind"
+            cardSubtitle="Blockchain Developer"
             cardText="Lorem ipsum dolor si amet color de doloroe. Nes geth bot gjin got him not, for end ipsum dolor."
           />
           <TeamCard
             imageSrc={clown}
-            cardTitle="Member 2"
-            cardSubtitle="Memeologist"
+            cardTitle="QuantSoldier"
+            cardSubtitle="dApp Developer"
             cardText="Lorem ipsum dolor si amet color de doloroe. Nes geth bot gjin got him not, for end ipsum dolor."
           />
           <TeamCard
             imageSrc={clown}
             cardTitle="Member 3"
-            cardSubtitle="Holder of Bags"
+            cardSubtitle="Product Manager & Developer"
             cardText="Lorem ipsum dolor si amet color de doloroe. Nes geth bot gjin got him not, for end ipsum dolor."
           />
           <TeamCard
             imageSrc={clown}
             cardTitle="Member 4"
-            cardSubtitle="Presidente de Shill"
+            cardSubtitle="Designer"
             cardText="Lorem ipsum dolor si amet color de doloroe. Nes geth bot gjin got him not, for end ipsum dolor."
           />
         </Row>

@@ -1,10 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { HeaderSection } from './HeaderSection';
 import { FeatureSection } from './FeatureSection';
 import { StatSection } from './StatSection';
 
-export const Landing = (props) => {
+export const Landing = () => {
   return (
     <>
       <div className="landing-page">
@@ -17,11 +16,3 @@ export const Landing = (props) => {
     </>
   )
 }
-
-Landing.propTypes = {
-  web3: PropTypes.object,
-};
-
-Landing.defaultProps = {
-  web3: null,
-};

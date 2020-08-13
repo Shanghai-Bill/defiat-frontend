@@ -6,25 +6,16 @@ import {
   Navbar,
   NavItem,
   Nav,
-  NavLink,
   Container,
   Row,
   Col
 } from "reactstrap";
 import { Link, useLocation } from 'react-router-dom';
 import logo from 'assets/img/defiat.png';
-import { FaTwitter, FaDiscord, FaTelegramPlane } from 'react-icons/fa';
 
-// Probably need to pass state into here that indicates whether or not the wallet is connected and display the button accordingly
-export const NavBar = ({ 
-  hasWeb3Connection,
-  setWeb3Connection
-}) => {
+export const NavBar = () => {
   const [color, setColor] = useState("navbar-transparent");
   const [isCollapsed, setCollapsed] = useState(true);
-  const location = useLocation();
-  console.log(location.pathname)
-  // const [showConnectButton, setConnectButton] = useState(true);
 
   useEffect(() => {
     const changeColor = () => {
@@ -44,10 +35,6 @@ export const NavBar = ({
     window.addEventListener("scroll", changeColor);
     return () => window.removeEventListener("scroll", changeColor);
   });
-
-  const closeNavIfOpen = () => {
-    
-  }
   
   return (
     <Navbar
@@ -118,7 +105,11 @@ export const NavBar = ({
               </Link>
             </NavItem>
             <NavItem className="p-0">
-              <Button color="primary">
+              <Button 
+                color="primary"
+                href="https://app.uniswap.org/#/swap"
+                target="_blank"
+              >
                 Get DFT
               </Button>
             </NavItem>
