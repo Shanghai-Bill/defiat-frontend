@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: stupid
 
 pragma solidity ^0.6.0;
+import "_ERC20.sol";
+import "DeFiat_Governance.sol";
+import "DeFiat_Points.sol";
+
 contract DeFiat_Token is _ERC20 {  //overrides the _transfer function and adds burn capabilities
 
     using SafeMath for uint;

@@ -41,7 +41,7 @@ export const TeamSection = () => {
           <TeamCard
             imageSrc={clown}
             cardTitle="Member 3"
-            cardSubtitle="Product Manager & Developer"
+            cardSubtitle="PM / Developer"
             cardText="Lorem ipsum dolor si amet color de doloroe. Nes geth bot gjin got him not, for end ipsum dolor."
           />
           <TeamCard

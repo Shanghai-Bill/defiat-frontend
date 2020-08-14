@@ -1,4 +1,6 @@
 pragma solidity ^0.6.0;
+import "_ERC20.sol";
+
 contract DeFiat_Points is _ERC20{
     
     //global variables
@@ -40,7 +42,7 @@ contract DeFiat_Points is _ERC20{
         }
         return _tranche;
     }
-    function discountPointsNeeded(uint _tranche) internal view returns (uint256 pointsNeeded) {
+    function discountPointsNeeded(uint _tranche) public view returns (uint256 pointsNeeded) {
         return( _discountTranches[_tranche]); //check the nb of points needed to access discount tranche
     }
 

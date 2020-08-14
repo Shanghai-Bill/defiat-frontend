@@ -25,7 +25,7 @@ export default function rootReducer(state = initialState, action) {
     case SET_CONTRACT_INSTANCE: {
       return {
         ...state,
-        contract: action.payload.contract,
+        contracts: action.payload.contracts,
       };
     }
     case SET_NETWORK: {

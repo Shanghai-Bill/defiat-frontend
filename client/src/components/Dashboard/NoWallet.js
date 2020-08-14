@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Row,
   Col,
-  Container
 } from 'reactstrap'
 import logo from 'assets/img/defiat.png'
 

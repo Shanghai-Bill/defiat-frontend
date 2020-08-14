@@ -10,7 +10,7 @@ import {
   Row,
   Col
 } from "reactstrap";
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import logo from 'assets/img/defiat.png';
 
 export const NavBar = () => {
@@ -89,11 +89,11 @@ export const NavBar = () => {
             </Row>
           </div>
           <Nav navbar>
-            {/* <NavItem className="p-0">
+            <NavItem className="p-0">
               <Link className="nav-link" to="/dashboard" onClick={() =>!isCollapsed && setCollapsed(true)}>
                 Dashboard
               </Link>
-            </NavItem> */}
+            </NavItem>
             <NavItem className="p-0">
               <Link className="nav-link" to="/news" onClick={() =>!isCollapsed && setCollapsed(true)}>
                 News

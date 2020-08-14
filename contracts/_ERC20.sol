@@ -4,7 +4,7 @@ Standard ERC20.sol from zeppeling without constructor
 */
 
 pragma solidity ^0.6.0;
-import "https://raw.githubusercontent.com/OpenZeppelin/openzeppelin-contracts/master/contracts/token/ERC20/IERC20.sol";
+import "IERC20.sol";
 
 library SafeMath {
     /**

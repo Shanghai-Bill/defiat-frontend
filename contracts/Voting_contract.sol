@@ -24,7 +24,8 @@ COPY PASTE THESE
 
 pragma solidity ^0.6.0;
 
-import "https://raw.githubusercontent.com/OpenZeppelin/openzeppelin-contracts/master/contracts/token/ERC20/IERC20.sol";
+import "IERC20.sol";
+//import "https://raw.githubusercontent.com/OpenZeppelin/openzeppelin-contracts/master/contracts/token/ERC20/IERC20.sol";
 //used to give tokens as rewards (tokens need to be loaded on the contract 1st)
 
 

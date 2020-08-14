@@ -1,11 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { 
   Card, 
   CardBody,
   Row,
   Col,
-  Container,
   Button
 } from 'reactstrap'
 
@@ -22,7 +20,7 @@ export const NewsModule = ({
         <CardBody>
           <Row>
             <Col lg="2">
-              <img src={imagePath} className="rounded shadow-lg" height="100" width="100" />
+              <img src={imagePath} className="rounded shadow-lg" height="100" width="100" alt="splash" />
             </Col>
             <Col className="text-left">
               <a className="display-3" href={route}>{title}</a>

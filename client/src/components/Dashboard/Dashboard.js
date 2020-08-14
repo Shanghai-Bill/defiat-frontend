@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
-import getWeb3 from 'getWeb3';
-import DEFIAT from 'contracts/DEFIAT.json';
+import getWeb3 from '../../getWeb3';
 import constants from '../../constants';
 import { connect } from 'react-redux';
+import DeFiat_Token from 'contracts/DeFiat_Token.json';
+import DeFiat_Points from 'contracts/DeFiat_Points.json';
+import DeFiat_Gov from 'contracts/DeFiat_Gov.json';
 import { 
   setWeb3State, 
   setContractState, 
@@ -11,17 +13,24 @@ import {
   setNetworkState
  } from 'store/action';
 import { NoWallet } from './NoWallet';
+import { Wallet } from './Wallet';
+import { withRouter } from 'react-router-dom'
 
-const Dashboard = ({
-  web3,
-  setWeb3,
-  accounts,
-  setAccount,
-  contract,
-  setContractInstance,
-  network,
-  setNetwork
-}) => {
+const Dashboard = (props) => {
+  const {
+    location,
+    web3,
+    setWeb3,
+    accounts,
+    setAccount,
+    contracts,
+    setContractInstance,
+    network,
+    setNetwork
+  } = props;
+
+  const [showDashboard, setShowDashboard] = useState(false);
+
   useEffect(() => {
     async function loadWeb3() {
       try {
@@ -33,25 +42,30 @@ const Dashboard = ({
   
         // Get the contract instance.
         const networkId = await w3.eth.net.getId();
-        console.log(networkId, constants.networks)
         const ntk = constants.networks[networkId];
-        // const smartContract = new w3.eth.Contract(
-        //   DEFIAT.abi,
-        //   ntk && ntk.address
-        // );
+        const smartContracts = {
+          token: new w3.eth.Contract(DeFiat_Token.abi, ntk["token"]),
+          points: new w3.eth.Contract(DeFiat_Points.abi, ntk["points"]),
+          gov: new w3.eth.Contract(DeFiat_Gov.abi, ntk["gov"])
+        }
         // Set web3, accounts, and contract to the state.
         setWeb3({ web3: w3 });
         setAccount({ accounts: accts });
-        // setContractInstance({ contract: smartContract });
+        setContractInstance({ contracts: smartContracts });
         setNetwork({ network: ntk });
+        setShowDashboard(true);
       } catch (error) {
         // Catch any errors for any of the above operations.
         // alert(`Failed to load web3, accounts, or contract. Check console for details.`);
         console.error(error);
       }
     }
-    loadWeb3();
-  })
+    if (accounts && accounts.length && contracts && network) {
+      setShowDashboard(true);
+    } else {
+      loadWeb3();
+    }
+  }, [location])
 
   return (
     <>
@@ -64,12 +78,16 @@ const Dashboard = ({
           />
 
           <div className="content">
-            {accounts && accounts.length ? (
+            {showDashboard ? (
               <>
-
+                <Wallet 
+                  contracts={contracts} 
+                  accounts={accounts}
+                  network={network} 
+                />
               </>
             ) : (
-              <div className="content-center">
+              <div className="content-center" onClick={() => console.log(props)}>
                 <NoWallet />
               </div>
             )}
@@ -112,4 +130,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard));

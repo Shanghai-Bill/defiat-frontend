@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
 import { getLocale } from '../locales';
@@ -11,11 +11,13 @@ import { Footer } from './Footer';
 import { News } from './News'
 import { About } from './About';
 import { Legal } from './Legal';
+import { ToastContainer } from 'react-toastify';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'assets/css/blk-design-system-react.css';
 import 'assets/css/nucleo-icons.css';
 import 'assets/css/demo.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const App = () => {
   const locale = getLocale();
@@ -35,6 +37,7 @@ export const App = () => {
 
           <NavBar />
           <Scroll />
+          <ToastContainer position="bottom-right" />
 
           <div className="main">
             <Switch>
@@ -42,7 +45,7 @@ export const App = () => {
               {/* <Route exact path="/dashboard">
                 <Dashboard {...this.props} />
               </Route> */}
-              <Route path="/test" component={Dashboard} />
+              <Route path="/dashboard" component={Dashboard} />
               <Route path="/about" component={About} />
               <Route path="/news" component={News} />
               <Route path="/legal" component={Legal} />
