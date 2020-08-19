@@ -1,5 +1,5 @@
 import React from 'react'
-import { Pie } from 'react-chartjs-2'
+import { Doughnut } from 'react-chartjs-2'
 import {
   Row,
   Col,
@@ -19,21 +19,19 @@ export const TokenomicsSection = () => {
     return {
       labels: [
         "Team",
-        "Marketing/Ecosystem",
-        "Development",
-        "Liquidity",
-        "Staking",
-        // "Expenses"
+        "Marketing",
+        "Dev & Ops",
+        "Treasury (liquidity/staking)"
       ],
       datasets: [{
-        data: [30, 20, 20, 20, 10],
+        data: [5, 30, 40, 25],
         borderColor: "#ffffff",
         backgroundColor: [
-          "#212529",
-          "#32325d",
-          "#525f7f",
-          "#6c757d",
-          "#adb5bd",
+          "#8355ff",
+          "#a99cff",
+          "#221c57",
+          "#0091f2",
+          // "#adb5bd",
           // "#ced4da"
         ]
       }]
@@ -53,7 +51,7 @@ export const TokenomicsSection = () => {
           <h2 className="display-2 text-center">Tokenomics</h2>
           <Row className="mt-4 mb-4">
             <Col lg="6">
-              <Pie data={pieData} options={chartOptions} />
+              <Doughnut data={pieData} options={chartOptions} />
             </Col>
             <Col lg="6">
               <Table responsive>
@@ -61,6 +59,7 @@ export const TokenomicsSection = () => {
                   <tr>
                     <th className="text-center">#</th>
                     <th>Description</th>
+                    <th className="text-right">Supply</th>
                     <th className="text-right">Token Allocation</th>
                   </tr>
                 </thead>
@@ -68,27 +67,26 @@ export const TokenomicsSection = () => {
                   <tr>
                     <td className="text-center">1</td>
                     <td>Team</td>
-                    <td className="text-right">30M</td>
+                    <td className="text-right">5%</td>
+                    <td className="text-right">25K</td>
                   </tr>
                   <tr>
                     <td className="text-center">2</td>
-                    <td>Marketing/Ecosystem</td>
-                    <td className="text-right">20M</td>
+                    <td>Marketing</td>
+                    <td className="text-right">30%</td>
+                    <td className="text-right">150K</td>
                   </tr>
                   <tr>
                     <td className="text-center">3</td>
-                    <td>Development</td>
-                    <td className="text-right">20M</td>
+                    <td>Development & Ops</td>
+                    <td className="text-right">40%</td>
+                    <td className="text-right">200K</td>
                   </tr>
                   <tr>
                     <td className="text-center">4</td>
-                    <td>Liquidity</td>
-                    <td className="text-right">20M</td>
-                  </tr>
-                  <tr>
-                    <td className="text-center">5</td>
-                    <td>Staking</td>
-                    <td className="text-right">10M</td>
+                    <td>Treasury (Liquidity & Staking)</td>
+                    <td className="text-right">25%</td>
+                    <td className="text-right">125K</td>
                   </tr>
                 </tbody>
               </Table>

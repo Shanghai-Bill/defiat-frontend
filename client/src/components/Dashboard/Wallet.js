@@ -16,6 +16,7 @@ export const Wallet = ({
   network
 }) => {
   const [isLoading, setLoading] = useState(true);
+  const [isUpdating, setUpdating] = useState(false);
   const [walletState, setWalletState] = useState({
     balance: 0,
     discountRate: 0,
@@ -68,20 +69,31 @@ export const Wallet = ({
   }
 
   const updateDiscount = async () => {
+    setUpdating(true);
     const previousLevel = await contracts["points"].methods.viewEligibilityOf(accounts[0]).call();
-    const update = await contracts["points"].methods.updateMyDiscountOf().send({from: accounts[0]});
-    const currentLevel = await contracts["points"].methods.viewEligibilityOf(accounts[0]).call();
-
-    if (currentLevel != previousLevel) {
-      const discountRate = await contracts["points"].methods.viewDiscountOf(accounts[0]).call()
-      toast.success(`✅ Successfully updated discount. You are now Discount Tier ${currentLevel}.`);
-      setWalletState({
-        ...walletState,
-        discountRate
+    contracts["points"].methods.updateMyDiscountOf().send({from: accounts[0]})
+      .then(() => {
+        contracts["points"].methods.viewEligibilityOf(accounts[0]).call()
+          .then((currentLevel) => {
+            if (currentLevel != previousLevel) {
+              contracts["points"].methods.viewDiscountOf(accounts[0]).call()
+                .then((discountRate) => {
+                  toast.success(`✅ Successfully updated discount. You are now Discount Tier ${currentLevel}.`);
+                  setWalletState({
+                    ...walletState,
+                    discountRate
+                  })
+                  setUpdating(false);
+                })
+            } else {
+              toast.error("⛔️ Could not update discount. Check your eligibility and try again.")
+              setUpdating(false);
+            }
+          });
       })
-    } else {
-      toast.error("Could not update discount. Check your eligibility and try again.")
-    }
+      .catch(() => {
+        setUpdating(false);
+      })
   }
 
   const transferToken = async () => {
@@ -185,8 +197,9 @@ export const Wallet = ({
                           className="w-100" 
                           color="primary"
                           onClick={() => updateDiscount()}
+                          disabled={isUpdating}
                         >
-                          Update Discount
+                          {!isUpdating ? "Update Discount" : "Updating Discount..."}
                         </Button>
                       </div>
                     </Col>

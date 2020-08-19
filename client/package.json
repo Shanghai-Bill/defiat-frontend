@@ -10,6 +10,7 @@
     "human-readable-numbers": "^0.9.5",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
+    "node-sass": "^4.14.1",
     "prettier": "^2.0.5",
     "prop-types": "^15.6.1",
     "react": "^16.6.1",
@@ -40,7 +41,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "lint": "eslint src --ignore-path .gitignore",
-    "lint-fix": "eslint src --fix --ignore-path .gitignore"
+    "lint-fix": "eslint src --fix --ignore-path .gitignore",
+    "compile-sass": "node-sass src/assets/scss/blk-design-system-react.scss src/assets/css/defiat.css",
+    "minify-sass": "node-sass src/assets/scss/blk-design-system-react.scss src/assets/css/defiat.min.css --output-style compressed",
+    "map-sass": "node-sass src/assets/scss/blk-design-system-react.scss src/assets/css/defiat.css --source-map true"
   },
   "browserslist": [
     ">0.2%",

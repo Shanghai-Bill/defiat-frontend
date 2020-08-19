@@ -22,7 +22,7 @@ export const TeamCard = ({
           <img className="m-2" src={imageSrc} alt="" height="100" width="100" />
           <CardTitle>{cardTitle}</CardTitle>
           <CardSubtitle>{cardSubtitle}</CardSubtitle>
-          <CardText>{cardText}</CardText>
+          {/* <CardText>{cardText}</CardText> */}
         </CardBody>
       </Card>
     </Col>

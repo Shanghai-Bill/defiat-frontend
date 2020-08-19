@@ -3,7 +3,6 @@ import {
   Row,
   Col,
 } from 'reactstrap'
-import logo from 'assets/img/defiat.png'
 
 export const NoWallet = () => {
   return (
@@ -11,7 +10,7 @@ export const NoWallet = () => {
       <Row className="justify-content-center">
         <Col md="3">
         <div className="d-inline-flex align-items-center justify-space-around">
-          <img className="mr-2" style={{ height: "50px", width: "50px", marginTop: "0"}} src={logo} alt="logo" />
+          <img className="mr-2" style={{ height: "50px", width: "50px", marginTop: "0"}} src={require('assets/img/defiat.png')} alt="logo" />
           <h1 className="title m-0">DeFiat</h1>
         </div>
         </Col>

@@ -5,7 +5,6 @@ import {
   Col
 } from 'reactstrap'
 import { TeamCard } from './TeamCard'
-import clown from 'assets/img/clown-pepe.png'
 
 export const TeamSection = () => {
   return (
@@ -27,28 +26,24 @@ export const TeamSection = () => {
         <br />
         <Row>
           <TeamCard
-            imageSrc={clown}
+            imageSrc={require('assets/img/clown-pepe.png')}
             cardTitle="Mastermind"
             cardSubtitle="Blockchain Developer"
-            cardText="Lorem ipsum dolor si amet color de doloroe. Nes geth bot gjin got him not, for end ipsum dolor."
           />
           <TeamCard
-            imageSrc={clown}
+            imageSrc={require('assets/img/clown-pepe.png')}
             cardTitle="QuantSoldier"
             cardSubtitle="dApp Developer"
-            cardText="Lorem ipsum dolor si amet color de doloroe. Nes geth bot gjin got him not, for end ipsum dolor."
           />
           <TeamCard
-            imageSrc={clown}
+            imageSrc={require('assets/img/clown-pepe.png')}
             cardTitle="Member 3"
             cardSubtitle="PM / Developer"
-            cardText="Lorem ipsum dolor si amet color de doloroe. Nes geth bot gjin got him not, for end ipsum dolor."
           />
           <TeamCard
-            imageSrc={clown}
+            imageSrc={require('assets/img/clown-pepe.png')}
             cardTitle="Member 4"
             cardSubtitle="Designer"
-            cardText="Lorem ipsum dolor si amet color de doloroe. Nes geth bot gjin got him not, for end ipsum dolor."
           />
         </Row>
       </Container>
