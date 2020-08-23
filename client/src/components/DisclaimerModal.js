@@ -17,12 +17,10 @@ export const DisclaimerModal = ({
       backdrop="static"
       size="md"
       keyboard={false}
-      centered
       scrollable
-      style={{minHeight:"100vh"}}
     >
         <ModalHeader ><span className="text-primary display-4">DeFiat Disclaimer</span></ModalHeader>
-        <ModalBody>
+        <ModalBody style={{maxHeight: "300px"}}>
           <i>Please read and accept the following Disclaimer to continue to DeFiat.net</i>
           <br/><br/>
           DeFiat (the “Token”)  is a utility token experiment using the ERC20 standard on the Ethereum Blockchain (The “Blockchain). The DeFiat website and White Paper (the “WP”)  are for illustration only and do not make the Team liable for any of their content. The DeFiat website may evolve over time, including but not limited to, a change of URL, change of content, adding or removing functionalities.
@@ -36,8 +34,11 @@ export const DisclaimerModal = ({
           <br/><br/>
           IF YOU ARE UNCERTAIN AS TO ANYTHING AVAILABLE OR YOU ARE NOT PREPARED TO INCUR FINANCIAL LOSSES, WE STRONGLY URGE YOU NOT TO PURCHASE ANY TOKENS.  WE RECOMMEND YOU CONSULT LEGAL, FINANCIAL, TAX AND OTHER PROFESSIONAL ADVISORS OR EXPERTS FOR FURTHER GUIDANCE BEFORE PURCHASING AMOUNTS OF THE TOKEN.
         </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={onAccept}>Continue to DeFiat.net</Button>
+        <ModalFooter className="pt-4">
+          <Button color="primary" onClick={onAccept}>
+            I Understand, Continue to DeFiat.net{' '}
+            <i className="tim-icons icon-minimal-right" />
+          </Button>
         </ModalFooter>
       </Modal>
   )

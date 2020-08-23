@@ -6,7 +6,7 @@ import {
   Container,
   Table,
 } from 'reactstrap'
-
+import ScrollAnimation from 'react-animate-on-scroll';
 
 export const TokenomicsSection = () => {
   const pieData = () => {
@@ -45,15 +45,26 @@ export const TokenomicsSection = () => {
   }
 
   return (
-    <>
-      <section className="section section-lg">
-        <Container>
+    <section className="section section-lg">
+      <img
+        alt="..."
+        className="bg about-5 floating"
+        src={require("assets/img/treasury.png")}
+      />
+      <Container>
+        <ScrollAnimation animateIn="fadeInUp">
           <h2 className="display-2 text-center">Tokenomics</h2>
-          <Row className="mt-4 mb-4">
-            <Col lg="6">
+        </ScrollAnimation>
+        
+        <Row className="mt-4 mb-4">
+          <Col lg="6">
+            <ScrollAnimation animateIn="fadeInLeft">
               <Doughnut data={pieData} options={chartOptions} />
-            </Col>
-            <Col lg="6">
+            </ScrollAnimation>
+            
+          </Col>
+          <Col lg="6">
+            <ScrollAnimation animateIn="fadeInRight">
               <Table responsive>
                 <thead>
                   <tr>
@@ -90,10 +101,10 @@ export const TokenomicsSection = () => {
                   </tr>
                 </tbody>
               </Table>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-    </>
+            </ScrollAnimation>
+          </Col>
+        </Row>
+      </Container>
+    </section>
   )
 }
