@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: stupid
+// SPDX-License-Identifier: DeFiat 2020
 
 pragma solidity ^0.6.0;
 import "_ERC20.sol";
