@@ -27,7 +27,7 @@ contract donation {
         _;
     }
     modifier antiSpam {
-        require(block.number > participant[msg.sender].lastTXblock + 10, "no spam here"); //10 blocks between transactions
+        require(block.number > participant[msg.sender].lastTXblock + 5, "no spam here"); //5 blocks between transactions
         _;
     }
     
@@ -35,6 +35,7 @@ contract donation {
 
 
     constructor(address _token) public {
+      assert(1 ether == 1e18); //not sure we will use
       token = _token;
       owner = msg.sender;
     }
@@ -52,7 +53,7 @@ contract donation {
          return participant[msg.sender].price;
     }
      
-    receive() external payable { //use of 0.6 function receive ETH
+    receive() external payable antiSpam{    //use of pragme ^0.6.0 functions to receive ETH
     //update participant functions
         address _address = msg.sender;
         participant[_address].lastTXblock = block.number; //init
