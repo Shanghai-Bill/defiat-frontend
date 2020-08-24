@@ -21,6 +21,7 @@ import 'assets/css/defiat.css';
 import 'assets/css/nucleo-icons.css';
 import 'assets/css/demo.css';
 import 'react-toastify/dist/ReactToastify.css';
+import 'assets/css/fonts.css'
 
 export const App = () => {
   const locale = getLocale();

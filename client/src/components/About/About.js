@@ -10,9 +10,7 @@ export const About = () => {
       <div className="wrapper">
         <div className="content">
           <WhitepaperSection />
-          <section className="section section-lg">
-            <Roadmap />
-          </section>
+          <Roadmap />
           <TokenomicsSection />
           <TeamSection />
         </div>

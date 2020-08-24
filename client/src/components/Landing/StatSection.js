@@ -20,7 +20,7 @@ export const StatSection = () => {
         <Container>
           <Row className="row-grid justify-content-between">
             <Col className="mt-lg-5" md="5">
-              <ScrollAnimation animateIn="fadeInLeft" duration={3}>
+              <ScrollAnimation animateIn="fadeInLeft">
                 <img
                   src={ecosystem}
                   alt="ecosystem"
@@ -29,10 +29,10 @@ export const StatSection = () => {
               </ScrollAnimation>
             </Col>
             <Col md="6">
-              <ScrollAnimation animateIn="fadeInRight" duration={3}>
+              <ScrollAnimation animateIn="fadeInRight">
                 <div className="pl-md-5">
-                  <h1>
-                    The DeFiat Ecosystem
+                  <h1 className="text-primary">
+                    The DeFiat Philosophy
                   </h1>
                   <p>
                     DeFiat (DFT) is the first token with fully-embedded governance, 

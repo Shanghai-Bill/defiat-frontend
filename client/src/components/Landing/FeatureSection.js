@@ -29,20 +29,20 @@ export const FeatureSection = () => {
         <Container>
           <Row className="row-grid justify-content-center">
             <Col lg="12">
-              <ScrollAnimation animateIn="fadeInUp" duration={2}>
-                <h1 className="text-center">Core Network Protocols</h1>
+              <ScrollAnimation animateIn="fadeInUp">
+                <h1 className="text-center text-tertiary">The DeFiat Ecosystem</h1>
               </ScrollAnimation>
 
-              <ScrollAnimation animateIn="fadeInUp" duration={2}>
+              <ScrollAnimation animateIn="fadeInUp">
                 <Row className="row-grid justify-content-center">
                   <Col lg="3">
                     <div className="info">
-                      <div className="icon icon-warning">
+                      <div className="icon icon-primary">
                         <i className="tim-icons icon-bank" />
                       </div>
                       <h4 className="info-title">Governance</h4>
-                      <hr className="line-warning" />
-                      <p>
+                      <hr className="line-primary" />
+                      <p className="text-tertiary">
                         Fully-embedded governance model which puts the control of the
                         DFT network into the hands of the participants. DFT holders can
                         vote on network decisions, allocate UniStake liquidity, change 
@@ -57,7 +57,7 @@ export const FeatureSection = () => {
                       </div>
                       <h4 className="info-title">Loyalty Discounts</h4>
                       <hr className="line-primary" />
-                      <p>
+                      <p className="text-tertiary">
                         Multi-Tiered transaction fee and burn discounts for active
                         participants in the DFT ecosystem. Performing any transaction
                         on the DFT network will earn you loyalty points which can unlock
@@ -67,12 +67,12 @@ export const FeatureSection = () => {
                   </Col>
                   <Col lg="3">
                     <div className="info">
-                      <div className="icon icon-success">
+                      <div className="icon icon-primary">
                         <i className="tim-icons icon-lock-circle" />
                       </div>
                       <h4 className="info-title">Staking</h4>
-                      <hr className="line-success" />
-                      <p>
+                      <hr className="line-primary" />
+                      <p style={{color: "##a99cff"}}>
                         DeFiat's original UniStake protocol allows you to make your
                         ERC20 tokens work for you. Staking ERC20 tokens allows you to collect
                         interest as others enter and exit the staking pool, resulting

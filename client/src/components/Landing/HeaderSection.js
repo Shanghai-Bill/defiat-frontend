@@ -29,29 +29,36 @@ export const HeaderSection = () => {
         
           <Col lg="6" md="6">
             <ScrollAnimation animateIn="fadeInUp">
-              <h1 className="text-gray">
-                <span className="text-white font-weight-bold display-3">DeFiat</span> <br />
+              <h1 className="text-tertiary">
+                <span className="text-primary font-weight-bold display-3">DeFiat</span> <br />
                 A new brand of decentralized finance
               </h1>
-              <p className="text-white mb-3">
+              <p className="text-gray mb-3">
                 Finance used to be controlled by large institutions. Not anymore. 
                 Decentralized technology has taken the ledger public and yields
                 are higher than ever before. Join the revolution and start your own
                 financial liberation today.
               </p>
               <div className="btn-wrapper mb-3">
-                <Link to="/about">
-                  <p className="category text-success d-inline">
+                {/* <Link to="/about">
+                  <p className="category text-info d-inline font-weight-bold">
                     Learn More
                   </p>
                   <Button
                     className="btn-link"
-                    color="success"
+                    color="info"
                     size="sm"
                   >
                     <i className="tim-icons icon-minimal-right" />
                   </Button>
-                </Link>
+                </Link> */}
+                <Link
+                    className="font-weight-bold text-info mt-5"
+                    to="/about"
+                  >
+                    Learn More{" "}
+                    <i className="tim-icons icon-minimal-right text-info" />
+                  </Link>
               </div>
               <SocialButtons />
             </ScrollAnimation>

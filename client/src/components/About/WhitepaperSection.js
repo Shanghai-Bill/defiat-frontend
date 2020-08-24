@@ -23,8 +23,8 @@ export const WhitepaperSection = () => {
       <div className="content-center">
         <Container>
           <ScrollAnimation animateIn="fadeInRight">
-            <h2 className="display-2">About</h2>
-            <p>
+            <h2 className="display-2 text-primary">About</h2>
+            <p className="text-lg">
               DeFiat (DFT) is a fully-governed, deflationary ERC-20 token with a multi-tiered loyalty reward
               system. Every time DFT is transacted, an amount from the transaction is taken for fees and another
               amount is permanately burned; naturally reducing supply over time. Holders of DFT are granted

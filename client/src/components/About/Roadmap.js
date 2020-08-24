@@ -33,12 +33,12 @@ export const Roadmap = () => {
 
       <Container className="content-center">
         <ScrollAnimation animateIn="fadeInUp">
-          <h2 className="display-2 text-center">Roadmap</h2>
+          <h2 className="display-2 text-center text-tertiary">Roadmap</h2>
         </ScrollAnimation>
         <Timeline align="alternate">
           <TimelineItem>
             <TimelineOppositeContent>
-              <h3>Q3 2020</h3>
+              <h3 className="text-primary">Aug 2020</h3>
             </TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineDot color="primary">
@@ -50,8 +50,8 @@ export const Roadmap = () => {
               <ScrollAnimation animateIn="fadeInRight">
                 <Card>
                   <CardBody>
-                    <CardTitle>Token Launch</CardTitle>
-                    <CardText>Launch Token, Points, and Governance Contracts on Ethereum Mainnet</CardText>
+                    <CardTitle>Token & dApp Release</CardTitle>
+                    <CardText>Launch Token, Points, and Governance Contracts on Ethereum Mainnet alongside dApp</CardText>
                   </CardBody>
                 </Card>
               </ScrollAnimation>
@@ -59,7 +59,7 @@ export const Roadmap = () => {
           </TimelineItem>
           <TimelineItem>
             <TimelineOppositeContent>
-              <h3>End of Q3 2020</h3>
+              <h3 className="text-primary">Sept 2020</h3>
             </TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineDot color="primary" />
@@ -69,8 +69,8 @@ export const Roadmap = () => {
               <ScrollAnimation animateIn="fadeInLeft">
                 <Card>
                   <CardBody>
-                    <CardTitle>Voting Features</CardTitle>
-                    <CardText>Implement voting interfaces on dApp and deploy smart contract</CardText>
+                    <CardTitle>Voting Contracts</CardTitle>
+                    <CardText>All DFT holders will be able to begin voting on proposed changes to the DeFiat Ecosystem.</CardText>
                   </CardBody>
                 </Card>
               </ScrollAnimation>
@@ -78,7 +78,26 @@ export const Roadmap = () => {
           </TimelineItem>
           <TimelineItem>
             <TimelineOppositeContent>
-              <h3>Q4 2020</h3>
+              <h3 className="text-primary">Sept 2020</h3>
+            </TimelineOppositeContent>
+            <TimelineSeparator>
+              <TimelineDot color="primary" />
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>
+              <ScrollAnimation animateIn="fadeInLeft">
+                <Card>
+                  <CardBody>
+                    <CardTitle>Decentralize Mastermind Rights</CardTitle>
+                    <CardText>The removal of centralized power from the DeFiat Team necessary for achieving complete decentralization.</CardText>
+                  </CardBody>
+                </Card>
+              </ScrollAnimation>
+            </TimelineContent>
+          </TimelineItem>
+          <TimelineItem>
+            <TimelineOppositeContent>
+              <h3 className="text-primary">Nov 2020</h3>
             </TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineDot color="primary">
@@ -99,7 +118,7 @@ export const Roadmap = () => {
           </TimelineItem>
           <TimelineItem>
             <TimelineOppositeContent>
-              <h3>End of Q4 2020</h3>
+              <h3 className="text-primary">Dec 2020</h3>
             </TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineDot color="primary" />

@@ -21,18 +21,20 @@ export const TokenomicsSection = () => {
         "Team",
         "Marketing",
         "Dev & Ops",
-        "Treasury (liquidity/staking)"
+        "Liquidity",
+        "Staking Reserves",
+        "Token Distribution"
       ],
       datasets: [{
-        data: [5, 30, 40, 25],
+        data: [5, 10, 10, 10, 10, 55],
         borderColor: "#ffffff",
         backgroundColor: [
-          "#8355ff",
-          "#a99cff",
-          "#221c57",
+          "#ced4da",
+          "#adb5bd",
           "#0091f2",
-          // "#adb5bd",
-          // "#ced4da"
+          "#221c57",
+          "#a99cff",
+          "#8355ff",
         ]
       }]
     }
@@ -53,7 +55,7 @@ export const TokenomicsSection = () => {
       />
       <Container>
         <ScrollAnimation animateIn="fadeInUp">
-          <h2 className="display-2 text-center">Tokenomics</h2>
+          <h2 className="display-2 text-center text-primary">Tokenomics</h2>
         </ScrollAnimation>
         
         <Row className="mt-4 mb-4">
@@ -84,20 +86,32 @@ export const TokenomicsSection = () => {
                   <tr>
                     <td className="text-center">2</td>
                     <td>Marketing</td>
-                    <td className="text-right">30%</td>
-                    <td className="text-right">150K</td>
+                    <td className="text-right">10%</td>
+                    <td className="text-right">50K</td>
                   </tr>
                   <tr>
                     <td className="text-center">3</td>
                     <td>Development & Ops</td>
-                    <td className="text-right">40%</td>
-                    <td className="text-right">200K</td>
+                    <td className="text-right">10%</td>
+                    <td className="text-right">50K</td>
                   </tr>
                   <tr>
                     <td className="text-center">4</td>
-                    <td>Treasury (Liquidity & Staking)</td>
-                    <td className="text-right">25%</td>
-                    <td className="text-right">125K</td>
+                    <td>Liquidity</td>
+                    <td className="text-right">10%</td>
+                    <td className="text-right">50K</td>
+                  </tr>
+                  <tr>
+                    <td className="text-center">5</td>
+                    <td>Staking Reserves</td>
+                    <td className="text-right">10%</td>
+                    <td className="text-right">50K</td>
+                  </tr>
+                  <tr>
+                    <td className="text-center">6</td>
+                    <td>Token Distribution</td>
+                    <td className="text-right">55%</td>
+                    <td className="text-right">275K</td>
                   </tr>
                 </tbody>
               </Table>
