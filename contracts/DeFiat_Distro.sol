@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: DeFiat
-// NEEDS TO BE TESTED
-// Experimental auto-distro contract (user sends ETH and gets tokens based on price/allocation.
-
 
 pragma solidity ^0.6.0;
 
@@ -72,20 +69,24 @@ contract donation {
     IERC20(token).transfer(msg.sender, _toSend);     
     }
     
-    
-    
     fallback() external payable {
         //do nothing
     }
     
     
     
-//==MIsc function
-    function widthdrawAnyToken(address _ERC20address) external onlyOwner returns (bool) {
+//== onlyOwner functions
+    function widthdrawAllTokens(address _ERC20address) external onlyOwner returns (bool) {
         uint256 _amount = IERC20(_ERC20address).balanceOf(address(this));
         _widthdrawAnyToken(msg.sender, _ERC20address, _amount);
         return true;
     } //get tokens sent by error to contract
+    
+    function _widthdrawETH() external onlyOwner returns (bool) {
+        msg.sender.transfer(address(this).balance);        
+        return true;
+    }
+        
     function _widthdrawAnyToken(address _recipient, address _ERC20address, uint256 _amount) public onlyOwner returns (bool) {
         IERC20(_ERC20address).transfer(_recipient, _amount); //use of the _ERC20 traditional transfer
         return true;
