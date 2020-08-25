@@ -42,25 +42,25 @@ export const TeamSection = () => {
         <ScrollAnimation animateIn="fadeInLeft">
           <Row>
             <TeamCard
-              imageSrc={require('assets/img/clown-pepe.png')}
+              imageSrc={require('assets/img/defiat.png')}
               cardTitle="Stupid"
               cardSubtitle="Blockchain Developer"
               email="stupid@defiat.net"
             />
             <TeamCard
-              imageSrc={require('assets/img/clown-pepe.png')}
+              imageSrc={require('assets/img/defiat.png')}
               cardTitle="QuantSoldier"
               cardSubtitle="dApp Developer"
               email="quantsoldier@defiat.net"
             />
             <TeamCard
-              imageSrc={require('assets/img/clown-pepe.png')}
+              imageSrc={require('assets/img/defiat.png')}
               cardTitle="TetraGraviton"
               cardSubtitle="PM / Developer"
               email="tetragraviton@defiat.net"
             />
             <TeamCard
-              imageSrc={require('assets/img/clown-pepe.png')}
+              imageSrc={require('assets/img/defiat.png')}
               cardTitle="Mandalf"
               cardSubtitle="Designer"
               email="mandalf@defiat.net"
