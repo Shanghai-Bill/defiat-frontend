@@ -55,9 +55,9 @@ export const TeamSection = () => {
             />
             <TeamCard
               imageSrc={require('assets/img/defiat.png')}
-              cardTitle="TetraGraviton"
+              cardTitle="TetraGrammaton"
               cardSubtitle="PM / Developer"
-              email="tetragraviton@defiat.net"
+              email="tetragrammaton@defiat.net"
             />
             <TeamCard
               imageSrc={require('assets/img/defiat.png')}
