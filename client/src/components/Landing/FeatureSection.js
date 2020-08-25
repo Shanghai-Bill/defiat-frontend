@@ -38,45 +38,56 @@ export const FeatureSection = () => {
                   <Col lg="3">
                     <div className="info">
                       <div className="icon icon-primary">
-                        <i className="tim-icons icon-bank" />
+                        {/* <i className="tim-icons icon-bank" /> */}
+                        <img src={require("assets/img/defiat.png")} alt='gov' width="auto" height="50" />
+                      </div>
+                      <h4 className="info-title">Token</h4>
+                      <hr className="line-primary" />
+                      <p className="text-tertiary">
+                        Strictly deflationary token the fuels the network, enabling
+                        holders to participate in governance decisions and access DeFiat Services.
+                      </p>
+                    </div>
+                  </Col>
+                  <Col lg="3">
+                    <div className="info">
+                      <div className="icon icon-primary">
+                        {/* <i className="tim-icons icon-bank" /> */}
+                        <img src={require("assets/img/governance.png")} alt='gov' width="auto" height="50" />
                       </div>
                       <h4 className="info-title">Governance</h4>
                       <hr className="line-primary" />
                       <p className="text-tertiary">
-                        Fully-embedded governance model which puts the control of the
-                        DFT network into the hands of the participants. DFT holders can
-                        vote on network decisions, allocate UniStake liquidity, change 
-                        Burn and Fee rates, and more.
+                        Fully-embedded governance model which allows participants to regulate
+                        Token Burn, Fee Rates, Staking Rewards, and more.
                       </p>
                     </div>
                   </Col>
                   <Col lg="3">
                     <div className="info">
                       <div className="icon icon-primary">
-                        <i className="tim-icons icon-money-coins" />
+                        {/* <i className="tim-icons icon-money-coins" /> */}
+                        <img src={require("assets/img/points.png")} alt='points' width="auto" height="50" />
                       </div>
-                      <h4 className="info-title">Loyalty Discounts</h4>
+                      <h4 className="info-title">Loyalty Points</h4>
                       <hr className="line-primary" />
                       <p className="text-tertiary">
-                        Multi-Tiered transaction fee and burn discounts for active
-                        participants in the DFT ecosystem. Performing any transaction
-                        on the DFT network will earn you loyalty points which can unlock
-                        up to a 90% discount!
+                        Secondary, inflationary asset which is earned through network partcipation
+                        and discounts DFT transaction fee and burn rates.
                       </p>
                     </div>
                   </Col>
                   <Col lg="3">
                     <div className="info">
                       <div className="icon icon-primary">
-                        <i className="tim-icons icon-lock-circle" />
+                        {/* <i className="tim-icons icon-lock-circle" /> */}
+                        <img src={require("assets/img/services.png")} alt='services' width="auto" height="50" />
                       </div>
-                      <h4 className="info-title">Staking</h4>
+                      <h4 className="info-title">Services</h4>
                       <hr className="line-primary" />
-                      <p style={{color: "##a99cff"}}>
-                        DeFiat's original UniStake protocol allows you to make your
-                        ERC20 tokens work for you. Staking ERC20 tokens allows you to collect
-                        interest as others enter and exit the staking pool, resulting
-                        in very competitive interest rates.
+                      <p>
+                        Native staking of DFT, as well as the ability to stake any ERC-20 token, awarding
+                        yields from the DeFiat Treasury.
                       </p>
                     </div>
                   </Col>

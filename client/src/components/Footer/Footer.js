@@ -10,7 +10,7 @@ import {
 } from "reactstrap";
 import { SocialButtons } from '../SocialButtons';
 import logo from 'assets/img/defiat.png'
-import pdf from 'assets/files/dummy.pdf'
+import pdf from 'assets/files/DFT-DeFiat-Whitepaper-august24th2020.pdf'
 
 export const Footer = () => {
   return (
@@ -44,11 +44,11 @@ export const Footer = () => {
           </Col>
           <Col md="3">
             <Nav>
-              {/* <NavItem>
+              <NavItem>
                 <NavLink to="/dashboard" tag={Link}>
                   Dashboard
                 </NavLink>
-              </NavItem> */}
+              </NavItem>
               <NavItem>
                 <NavLink href={pdf}>
                   Whitepaper

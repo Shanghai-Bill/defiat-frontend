@@ -15,6 +15,7 @@ import {
 import { NoWallet } from './NoWallet';
 import { Wallet } from './Wallet';
 import { withRouter } from 'react-router-dom'
+import { Row, Col } from 'reactstrap'
 
 const Dashboard = (props) => {
   const {
@@ -43,6 +44,13 @@ const Dashboard = (props) => {
         // Get the contract instance.
         const networkId = await w3.eth.net.getId();
         const ntk = constants.networks[networkId];
+        
+        // Remove this when adding contract to main net
+        if (ntk === 1) {
+          return;
+        }
+
+
         const smartContracts = {
           token: new w3.eth.Contract(DeFiat_Token.abi, ntk["token"]),
           points: new w3.eth.Contract(DeFiat_Points.abi, ntk["points"]),
@@ -71,14 +79,27 @@ const Dashboard = (props) => {
     <>
       <div className="wrapper">
         <div className="page-header">
-          <img
+          {/* <img
             alt="..."
             className="path"
             src={require("assets/img/path4.png")}
-          />
+          /> */}
 
           <div className="content">
-            {showDashboard ? (
+            <Row className="justify-content-center">
+              <Col lg="3">
+                {/* <Card className="shadow-lg">
+                  <CardBody>
+                    <Spinner color="primary" type="grow" />
+                    <p>Loading...</p>
+                  </CardBody>
+                </Card> */}
+                <img alt="loading" src={require("assets/img/LoadingScales.gif")} />
+                <h2>Awaiting Mainnet Launch</h2>
+              </Col>
+            </Row>
+
+            {/* {showDashboard ? (
               <>
                 <Wallet 
                   contracts={contracts} 
@@ -90,7 +111,7 @@ const Dashboard = (props) => {
               <div className="content-center" onClick={() => console.log(props)}>
                 <NoWallet />
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>

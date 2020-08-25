@@ -88,10 +88,11 @@ export const NavBar = () => {
               </Col>
             </Row>
           </div>
+          
           <Nav navbar>
             <NavItem className="p-0">
-              <Link className="nav-link" to="/dashboard" onClick={() =>!isCollapsed && setCollapsed(true)}>
-                Dashboard
+              <Link className="nav-link" to="/about" onClick={() =>!isCollapsed && setCollapsed(true)}>
+                About
               </Link>
             </NavItem>
             <NavItem className="p-0">
@@ -100,8 +101,8 @@ export const NavBar = () => {
               </Link>
             </NavItem>
             <NavItem className="p-0">
-              <Link className="nav-link" to="/about" onClick={() =>!isCollapsed && setCollapsed(true)}>
-                About
+              <Link className="nav-link" to="/dashboard" onClick={() =>!isCollapsed && setCollapsed(true)}>
+                Dashboard
               </Link>
             </NavItem>
             <NavItem className="p-0">

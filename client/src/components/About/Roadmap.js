@@ -78,7 +78,7 @@ export const Roadmap = () => {
           </TimelineItem>
           <TimelineItem>
             <TimelineOppositeContent>
-              <h3 className="text-primary">Sept 2020</h3>
+              <h3 className="text-primary">Oct 2020</h3>
             </TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineDot color="primary" />
@@ -97,7 +97,7 @@ export const Roadmap = () => {
           </TimelineItem>
           <TimelineItem>
             <TimelineOppositeContent>
-              <h3 className="text-primary">Nov 2020</h3>
+              <h3 className="text-primary">Oct 2020</h3>
             </TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineDot color="primary">
@@ -109,8 +109,8 @@ export const Roadmap = () => {
               <ScrollAnimation animateIn="fadeInRight">
                 <Card>
                   <CardBody>
-                    <CardTitle>DeFi Staking</CardTitle>
-                    <CardText>Launch native DFT staking (stake DFT, receive DFT) and the Unified-Staking Protocol (stake any ERC20, receive DFT)</CardText>
+                    <CardTitle>UniStake/Staking</CardTitle>
+                    <CardText>Native staking of DFT, as well as the ability to stake any ERC-20 token, will commence.</CardText>
                   </CardBody>
                 </Card>
               </ScrollAnimation>
@@ -128,13 +128,32 @@ export const Roadmap = () => {
               <ScrollAnimation animateIn="fadeInLeft">
                 <Card>
                   <CardBody>
+                    <CardTitle>DeFiX Burn Events</CardTitle>
+                    <CardText>Periodically, burn events will be taking place in which various amounts of DFT will be burned.</CardText>
+                  </CardBody>
+                </Card>
+              </ScrollAnimation>
+            </TimelineContent>
+          </TimelineItem>
+          {/* <TimelineItem>
+            <TimelineOppositeContent>
+              <h3 className="text-primary">Jan 2020</h3>
+            </TimelineOppositeContent>
+            <TimelineSeparator>
+              <TimelineDot color="primary" />
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>
+              <ScrollAnimation animateIn="fadeInLeft">
+                <Card>
+                  <CardBody>
                     <CardTitle>DeFi Lending</CardTitle>
                     <CardText>Deploy native DFT lending smart contracts and integrate with dApp</CardText>
                   </CardBody>
                 </Card>
               </ScrollAnimation>
             </TimelineContent>
-          </TimelineItem>
+          </TimelineItem> */}
           <TimelineItem>
             <TimelineSeparator>
               <TimelineDot color="primary" variant="outlined" />

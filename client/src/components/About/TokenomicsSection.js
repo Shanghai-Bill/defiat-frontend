@@ -21,20 +21,20 @@ export const TokenomicsSection = () => {
         "Team",
         "Marketing",
         "Dev & Ops",
-        "Liquidity",
-        "Staking Reserves",
-        "Token Distribution"
+        "Treasury - Staking",
+        "Treasury - Locked Liquidity",
+        "Circulating Liquidity"
       ],
       datasets: [{
-        data: [5, 10, 10, 10, 10, 55],
+        data: [25, 50, 50, 50, 75, 250],
         borderColor: "#ffffff",
         backgroundColor: [
-          "#ced4da",
-          "#adb5bd",
-          "#0091f2",
-          "#221c57",
-          "#a99cff",
           "#8355ff",
+          "#a99cff",
+          "#ced4da",
+          "#4036aa",
+          "#221c57",
+          "#0091f2"
         ]
       }]
     }
@@ -97,21 +97,21 @@ export const TokenomicsSection = () => {
                   </tr>
                   <tr>
                     <td className="text-center">4</td>
-                    <td>Liquidity</td>
+                    <td>Treasury - Staking Rewards</td>
                     <td className="text-right">10%</td>
                     <td className="text-right">50K</td>
                   </tr>
                   <tr>
                     <td className="text-center">5</td>
-                    <td>Staking Reserves</td>
-                    <td className="text-right">10%</td>
-                    <td className="text-right">50K</td>
+                    <td>Treasury - Locked Liquidity</td>
+                    <td className="text-right">15%</td>
+                    <td className="text-right">75K</td>
                   </tr>
                   <tr>
                     <td className="text-center">6</td>
-                    <td>Token Distribution</td>
-                    <td className="text-right">55%</td>
-                    <td className="text-right">275K</td>
+                    <td>Circulating Liquidity</td>
+                    <td className="text-right">50%</td>
+                    <td className="text-right">250K</td>
                   </tr>
                 </tbody>
               </Table>

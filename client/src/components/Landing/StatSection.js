@@ -21,11 +21,14 @@ export const StatSection = () => {
           <Row className="row-grid justify-content-between">
             <Col className="mt-lg-5" md="5">
               <ScrollAnimation animateIn="fadeInLeft">
-                <img
-                  src={ecosystem}
-                  alt="ecosystem"
-                  className="img-fluid"
-                />
+                <div className="d-flex align-items-center justify-content-center">
+                  <img
+                    src={ecosystem}
+                    alt="ecosystem"
+                    width="400"
+                    height="auto"
+                  />
+                </div>
               </ScrollAnimation>
             </Col>
             <Col md="6">
@@ -41,14 +44,8 @@ export const StatSection = () => {
                     orchestrated by DFT holders. Every time a transaction occurs on
                     the network, a fee is distributed to network participants and
                     tokens are burned to facilitate the transaction, naturally decreasing
-                    supply.
-                  </p>
-                  <br />
-                  <p>
-                    DeFiat's main offering is it's Unified-Staking (UniStake) pools.
-                    UniStake supports staking for any ERC20 token and is powered by the DFT 
-                    network, generating an additional source of token burn. Liquidity 
-                    allocations to UniStake pools will be determined by DFT governance.
+                    supply. Transaction fees are rewarded as staking rewards, creating a
+                    circular economy
                   </p>
                   <br />
                   <Link

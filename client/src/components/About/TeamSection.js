@@ -33,7 +33,7 @@ export const TeamSection = () => {
               The DeFiat team team has over 40 years of industry experience and is compromised of some of the brightest
               minds in blockchain. Since members from our team are actively employed in the industry, the team has chosen
               to stay anonymous due to potential conflicts of interest. Please feel free to reach out to the team through
-              Discord or Telegram.
+              Discord or email.
             </p>
             </Col>
           </Row>
@@ -45,21 +45,25 @@ export const TeamSection = () => {
               imageSrc={require('assets/img/clown-pepe.png')}
               cardTitle="Stupid"
               cardSubtitle="Blockchain Developer"
+              email="stupid@defiat.net"
             />
             <TeamCard
               imageSrc={require('assets/img/clown-pepe.png')}
               cardTitle="QuantSoldier"
               cardSubtitle="dApp Developer"
+              email="quantsoldier@defiat.net"
             />
             <TeamCard
               imageSrc={require('assets/img/clown-pepe.png')}
               cardTitle="TetraGraviton"
               cardSubtitle="PM / Developer"
+              email="tetragraviton@defiat.net"
             />
             <TeamCard
               imageSrc={require('assets/img/clown-pepe.png')}
               cardTitle="Mandalf"
               cardSubtitle="Designer"
+              email="mandalf@defiat.net"
             />
           </Row>
         </ScrollAnimation>

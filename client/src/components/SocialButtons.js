@@ -44,14 +44,14 @@ export const SocialButtons = () => {
         >
           <FaMediumM />
         </Button>
-        <Button
+        {/* <Button
           className="btn-icon btn-simple btn-round btn-neutral d-inline-flex justify-content-center align-items-center"
           color="default"
           href="https://github.com/QuantSoldier/defiat"
           target="_blank"
         >
           <FaGithub />
-        </Button>
+        </Button> */}
       </div>
     </div>
   )

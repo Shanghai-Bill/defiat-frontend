@@ -1,20 +1,11 @@
 [
   {
     "id": 0,
-    "title": "DeFiat Website Launch",
-    "subtitle": "DeFiat has launched its own website and other social media platforms",
-    "datePublished": "Aug. 8th, 2020",
+    "title": "DeFiat Website & Whitepaper Launch",
+    "subtitle": "DeFiat has launched its website, whitepaper, and other social media platforms",
+    "datePublished": "Aug. 24th, 2020",
     "image": "defiat_dark_100x100.png",
     "author": "QuantSoldier",
     "route": "/2020/08/08/defiat-website"
-  },
-  {
-    "id": 1,
-    "title": "DeFiat Mainnet Launch",
-    "subtitle": "DeFiat (DFT) has launched on the main ethereum network!",
-    "datePublished": "Aug. 9th, 2020",
-    "image": "defiat_dark_100x100.png",
-    "author": "QuantSoldier",
-    "route": "/2020/08/09/defiat-mainnet-launch"
   }
 ]

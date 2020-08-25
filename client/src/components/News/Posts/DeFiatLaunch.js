@@ -16,6 +16,7 @@ export const DeFiatLaunch = () => {
         <br/><br/>
         Discord: <a href="https://discord.gg/fjHpaAr" target="_blank" rel="noopener noreferrer">https://discord.gg/fjHpaAr</a><br/>
         Telegram: <a href="https://t.me/defiat_crypto" target="_blank" rel="noopener noreferrer">https://t.me/defiat_crypto</a><br/>
+        Twitter: <a href="https://twitter.com/DeFiatCrypto" target="_blank" rel="noopener noreferrer">https://twitter.com/DeFiatCrypto</a><br />
         Twitter: <a href="https://twitter.com/DeFiatCrypto" target="_blank" rel="noopener noreferrer">https://twitter.com/DeFiatCrypto</a>
       </p>
     </>

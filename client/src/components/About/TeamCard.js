@@ -13,7 +13,7 @@ export const TeamCard = ({
   imageSrc,
   cardTitle,
   cardSubtitle,
-  cardText
+  email
 }) => {
   return (
     <Col md="3">
@@ -22,7 +22,7 @@ export const TeamCard = ({
           <img className="m-2" src={imageSrc} alt="" height="100" width="100" />
           <CardTitle>{cardTitle}</CardTitle>
           <CardSubtitle>{cardSubtitle}</CardSubtitle>
-          {/* <CardText>{cardText}</CardText> */}
+          <CardText><a href={`mailto:${email}`}>{email}</a></CardText>
         </CardBody>
       </Card>
     </Col>

@@ -4,7 +4,7 @@ import {
   Button
 } from 'reactstrap'
 import ScrollAnimation from 'react-animate-on-scroll';
-import pdf from 'assets/files/dummy.pdf'
+import pdf from 'assets/files/DFT-DeFiat-Whitepaper-august24th2020.pdf'
 
 export const WhitepaperSection = () => {
   return (
@@ -30,8 +30,8 @@ export const WhitepaperSection = () => {
               amount is permanately burned; naturally reducing supply over time. Holders of DFT are granted
               proportional voting rights in network decisions, such as setting the burn and fee rates.
               DeFiat's Unified-Staking (UniStake) platform allows users to stake any ERC-20 token in the governance-chosen
-              liquidity pools, making your money work for you. Users also gain loyalty points as they use DFT,
-              resulting in lower fee and burn rates on DFT transactions.
+              liquidity pools, making your money work for you. Users also gain loyalty points, in the form of DFTP, as they 
+              interact with the DeFiat ecosystem, resulting in lower fee and burn rates on DFT transactions.
             </p>
             <br />
             <Button 

@@ -40,19 +40,7 @@ export const HeaderSection = () => {
                 financial liberation today.
               </p>
               <div className="btn-wrapper mb-3">
-                {/* <Link to="/about">
-                  <p className="category text-info d-inline font-weight-bold">
-                    Learn More
-                  </p>
-                  <Button
-                    className="btn-link"
-                    color="info"
-                    size="sm"
-                  >
-                    <i className="tim-icons icon-minimal-right" />
-                  </Button>
-                </Link> */}
-                <Link
+                  <Link
                     className="font-weight-bold text-info mt-5"
                     to="/about"
                   >

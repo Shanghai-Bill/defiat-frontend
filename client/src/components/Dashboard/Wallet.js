@@ -106,12 +106,13 @@ export const Wallet = ({
         <div className="content-center">
           <Row className="justify-content-center">
             <Col lg="3">
-              <Card className="shadow-lg">
+              {/* <Card className="shadow-lg">
                 <CardBody>
                   <Spinner color="primary" type="grow" />
                   <p>Loading...</p>
                 </CardBody>
-              </Card>
+              </Card> */}
+              <img alt="loading" src={require("assets/img/LoadingScales.gif")} />
             </Col>
           </Row>
         </div>
