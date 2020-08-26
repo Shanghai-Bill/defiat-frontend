@@ -44,7 +44,7 @@ export const FeatureSection = () => {
                       <h4 className="info-title">Token</h4>
                       <hr className="line-primary" />
                       <p className="text-tertiary">
-                        Strictly deflationary token the fuels the network, enabling
+                        A strictly deflationary token that fuels the network, enabling
                         holders to participate in governance decisions and access DeFiat Services.
                       </p>
                     </div>
@@ -58,7 +58,7 @@ export const FeatureSection = () => {
                       <h4 className="info-title">Governance</h4>
                       <hr className="line-primary" />
                       <p className="text-tertiary">
-                        Fully-embedded governance model which allows participants to regulate
+                        A Fully-embedded governance model which allows participants to regulate
                         Token Burn, Fee Rates, Staking Rewards, and more.
                       </p>
                     </div>
@@ -72,8 +72,8 @@ export const FeatureSection = () => {
                       <h4 className="info-title">Loyalty Points</h4>
                       <hr className="line-primary" />
                       <p className="text-tertiary">
-                        Secondary, inflationary asset which is earned through network partcipation
-                        and discounts DFT transaction fee and burn rates.
+                        A Secondary, inflationary asset which is earned through network partcipation
+                        and DFT discounts for transaction fee's and burn rates.
                       </p>
                     </div>
                   </Col>
@@ -86,8 +86,8 @@ export const FeatureSection = () => {
                       <h4 className="info-title">Services</h4>
                       <hr className="line-primary" />
                       <p>
-                        Native staking of DFT, as well as the ability to stake any ERC-20 token, awarding
-                        yields from the DeFiat Treasury.
+                        Native staking of DFT, as well as the ability to stake any ERC-20 token, awards
+                        yield from the DeFiat Treasury.
                       </p>
                     </div>
                   </Col>
