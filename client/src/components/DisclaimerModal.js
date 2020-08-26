@@ -23,7 +23,7 @@ export const DisclaimerModal = ({
         <ModalBody style={{maxHeight: "300px"}}>
           <i>Please read and accept the following Disclaimer to continue to DeFiat.net</i>
           <br/><br/>
-          DeFiat (the “Token”)  is a utility token experiment using the ERC20 standard on the Ethereum Blockchain (The “Blockchain). The DeFiat website and White Paper (the “WP”)  are for illustration only and do not make the Team liable for any of their content. The DeFiat website may evolve over time, including but not limited to, a change of URL, change of content, adding or removing functionalities.
+          DeFiat (the “Token”)  is a utility token experiment using the ERC20 standard on the Ethereum Blockchain (The “Blockchain"). The DeFiat website and White Paper (the “WP”)  are for illustration only and do not make the Team liable for any of their content. The DeFiat website may evolve over time, including but not limited to, a change of URL, change of content, adding or removing functionalities.
           THERE IS NO GUARANTEE THAT THE UTILITY OF THE TOKENS OR THE PROJECT DESCRIBED IN THE AVAILABLE INFORMATION (AS DEFINED BELOW) WILL BE DELIVERED. 
           REGARDLESS OF THE ACQUISITION METHOD, BY ACQUIRING THE TOKEN YOU ARE AGREEING TO HAVE NO RECOURSE, CLAIM, ACTION, JUDGEMENT OR REMEDY AGAINST THE TEAM IF THE UTILITY OF THE TOKENS OR IF THE PROJECT DESCRIBED IN THE AVAILABLE INFORMATION IS NOT DELIVERED OR REALISED.
           <br/><br/>

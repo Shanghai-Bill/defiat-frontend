@@ -44,7 +44,7 @@ export const FeatureSection = () => {
                       <h4 className="info-title">Token</h4>
                       <hr className="line-primary" />
                       <p className="text-tertiary">
-                        A strictly deflationary token that fuels the network, enabling
+                        Strictly deflationary token that fuels the network, enabling
                         holders to participate in governance decisions and access DeFiat Services.
                       </p>
                     </div>
@@ -58,7 +58,7 @@ export const FeatureSection = () => {
                       <h4 className="info-title">Governance</h4>
                       <hr className="line-primary" />
                       <p className="text-tertiary">
-                        A Fully-embedded governance model which allows participants to regulate
+                        Fully-embedded governance model which allows participants to regulate
                         Token Burn, Fee Rates, Staking Rewards, and more.
                       </p>
                     </div>
@@ -72,7 +72,7 @@ export const FeatureSection = () => {
                       <h4 className="info-title">Loyalty Points</h4>
                       <hr className="line-primary" />
                       <p className="text-tertiary">
-                        A Secondary, inflationary asset which is earned through network partcipation
+                        Secondary, inflationary asset which is earned through network partcipation
                         and DFT discounts for transaction fee's and burn rates.
                       </p>
                     </div>
