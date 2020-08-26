@@ -567,8 +567,9 @@ contract DeFiat_Farming {
     function viewEligibleRewardOf(address _address) public view returns(uint256) {
         require(poolMetrics.rewards > 0, "No Rewards in the Pool");
         
-        //uint256 _baseLineRewards = SafeMath.min(poolMetrics.staked, poolMetrics.rewards); 
         uint256 _baseLineRewards = poolMetrics.rewards;
+        if(FullRewards == true){ _baseLineRewards = SafeMath.min(poolMetrics.staked, poolMetrics.rewards);}
+
         // baseline is the min( staked, rewards); avoids ultra_farming > staking pool EXPERIMENTAL
         
         uint256 _rate =  viewPointsOf(_address).mul(1e18).div(viewPoolPoints()); //eligibilty rate at full period.
@@ -634,6 +635,10 @@ contract DeFiat_Farming {
         _;
     }
     
+    bool public FullRewards = false;
+    function setFullRewards(bool _bool) public onlyPoolOperator {
+        FullRewards = _bool;
+    }
     
     function loadRewards(uint256 _amount) public { //load tokens in the rewards pool.
         
