@@ -609,12 +609,13 @@ contract DeFiat_Farming {
         }
     }
 
-//useful
-    function exit() external antiSpam(1) poolStarted{
+/*
+    function exit() external poolStarted{
         unStake(userMetrics[msg.sender].stake);
-        takeRewards();
-
+        takeRewards(); //will not work as the antispam is up
     }
+*/
+    
     function myStake() public view returns(uint256) {
         return userMetrics[msg.sender].stake;
     }
@@ -674,9 +675,7 @@ interface Interface_DFT_farming {
     function stake(uint256 amount) external; //stake shitcoins
     function unStake(uint256 amount) external; //wd Stake only
     function takeReward() external; //wd reward
-    function exit() external;   //wd STAKE and reward
 
-    //function eligibleRewardOf(address _address) external; //type your address and see your earnings
     function myRewards() external view returns(uint256);
     function myStake() external view returns(uint256);
     // 100000000000000000000 = 100 TOKENS
