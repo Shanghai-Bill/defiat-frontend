@@ -100,6 +100,11 @@ export const NavBar = () => {
                 News
               </Link>
             </NavItem>
+            {/* <NavItem className="p-0">
+              <Link className="nav-link" to="/dashboard" onClick={() =>!isCollapsed && setCollapsed(true)}>
+                Whitepaper
+              </Link>
+            </NavItem> */}
             <NavItem className="p-0">
               <Link className="nav-link" to="/dashboard" onClick={() =>!isCollapsed && setCollapsed(true)}>
                 Dashboard

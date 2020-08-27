@@ -30,7 +30,7 @@ export const TeamSection = () => {
           <Row className="justify-content-center">
             <Col lg="8">
             <p>
-              The DeFiat team team has over 40 years of industry experience and is compromised of some of the brightest
+              The DeFiat team has over 40 years of industry experience and is compromised of some of the brightest
               minds in blockchain. Since members from our team are actively employed in the industry, the team has chosen
               to stay anonymous due to potential conflicts of interest. Please feel free to reach out to the team through
               Discord or email.

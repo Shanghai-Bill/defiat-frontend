@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { 
-  Spinner,
+import {
   Container,
   Card,
   CardBody,
@@ -8,6 +7,7 @@ import {
   Col,
   Button
 } from 'reactstrap'
+import { DashboardCard } from './DashboardCard'
 import { toast } from 'react-toastify'
 
 export const Wallet = ({
@@ -51,6 +51,7 @@ export const Wallet = ({
         feeRate: values[7]
       });
       setLoading(false);
+      console.log(contracts)
     }
     getWalletData();
   }, []);
@@ -75,7 +76,7 @@ export const Wallet = ({
       .then(() => {
         contracts["points"].methods.viewEligibilityOf(accounts[0]).call()
           .then((currentLevel) => {
-            if (currentLevel != previousLevel) {
+            if (currentLevel !== previousLevel) {
               contracts["points"].methods.viewDiscountOf(accounts[0]).call()
                 .then((discountRate) => {
                   toast.success(`✅ Successfully updated discount. You are now Discount Tier ${currentLevel}.`);
@@ -96,22 +97,12 @@ export const Wallet = ({
       })
   }
 
-  const transferToken = async () => {
-
-  }
-
   return (
     <>
       {isLoading ? (
         <div className="content-center">
           <Row className="justify-content-center">
             <Col lg="3">
-              {/* <Card className="shadow-lg">
-                <CardBody>
-                  <Spinner color="primary" type="grow" />
-                  <p>Loading...</p>
-                </CardBody>
-              </Card> */}
               <img alt="loading" src={require("assets/img/LoadingScales.gif")} />
             </Col>
           </Row>
@@ -226,10 +217,9 @@ export const Wallet = ({
             </Col>
             <Col lg="4" className="d-flex">
               <Card>
-                <CardBody className="d-flex align-items-center justify-content-center">
-                  <div>
+                <CardBody className="d-flex align-items-center justify-content-center w-100">
                     <Button 
-                      className="m-100"
+                      className="w-100"
                       color="success"
                       href="https://app.uniswap.org/#/swap"
                       target="_blank"
@@ -243,7 +233,6 @@ export const Wallet = ({
                     >
                       Send DFT
                     </Button> */}
-                  </div>
                 </CardBody>
               </Card>
             </Col>
@@ -251,21 +240,5 @@ export const Wallet = ({
         </Container>
       )}
     </>
-  )
-}
-
-const DashboardCard = ({
-  header,
-  title,
-  color
-}) => {
-  return (
-    <Card className="shadow">
-      <CardBody className="text-left">
-        <h3>{header}</h3>
-        <hr className={`line-${color}`} />
-        <p>{title}</p>
-      </CardBody>
-    </Card>
   )
 }

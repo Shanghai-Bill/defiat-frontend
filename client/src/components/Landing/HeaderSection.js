@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom'
 import { SocialButtons } from '../SocialButtons'
 import {
   Row,
-  Col,
-  Button
+  Col
 } from 'reactstrap'
 import ScrollAnimation from 'react-animate-on-scroll';
 
@@ -40,13 +39,13 @@ export const HeaderSection = () => {
                 financial liberation today.
               </p>
               <div className="btn-wrapper mb-3">
-                  <Link
-                    className="font-weight-bold text-info mt-5"
-                    to="/about"
-                  >
-                    Learn More{" "}
-                    <i className="tim-icons icon-minimal-right text-info" />
-                  </Link>
+                <Link
+                  className="font-weight-bold text-info mt-5"
+                  to="/about"
+                >
+                  Learn More{" "}
+                  <i className="tim-icons icon-minimal-right text-info" />
+                </Link>
               </div>
               <SocialButtons />
             </ScrollAnimation>

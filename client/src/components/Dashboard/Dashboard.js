@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import DeFiat_Token from 'contracts/DeFiat_Token.json';
 import DeFiat_Points from 'contracts/DeFiat_Points.json';
 import DeFiat_Gov from 'contracts/DeFiat_Gov.json';
+import DeFiat_Farming from 'contracts/DeFiat_Farming.json';
 import { 
   setWeb3State, 
   setContractState, 
@@ -14,13 +15,15 @@ import {
  } from 'store/action';
 import { NoWallet } from './NoWallet';
 import { Wallet } from './Wallet';
+import { Staking } from './Staking';
 import { withRouter } from 'react-router-dom'
-import { Row, Col } from 'reactstrap'
+import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Container } from 'reactstrap';
+import { toast } from 'react-toastify'
 
 const Dashboard = (props) => {
   const {
     location,
-    web3,
+    //web3,
     setWeb3,
     accounts,
     setAccount,
@@ -31,6 +34,7 @@ const Dashboard = (props) => {
   } = props;
 
   const [showDashboard, setShowDashboard] = useState(false);
+  const [activeTab, setTab] = useState('wallet');
 
   useEffect(() => {
     async function loadWeb3() {
@@ -46,7 +50,8 @@ const Dashboard = (props) => {
         const ntk = constants.networks[networkId];
         
         // Remove this when adding contract to main net
-        if (ntk === 1) {
+        if (networkId === 1) {
+          setNetwork({ network: ntk });
           return;
         }
 
@@ -54,7 +59,8 @@ const Dashboard = (props) => {
         const smartContracts = {
           token: new w3.eth.Contract(DeFiat_Token.abi, ntk["token"]),
           points: new w3.eth.Contract(DeFiat_Points.abi, ntk["points"]),
-          gov: new w3.eth.Contract(DeFiat_Gov.abi, ntk["gov"])
+          gov: new w3.eth.Contract(DeFiat_Gov.abi, ntk["gov"]),
+          farming: new w3.eth.Contract(DeFiat_Farming.abi, ntk["farming"])
         }
         // Set web3, accounts, and contract to the state.
         setWeb3({ web3: w3 });
@@ -86,32 +92,63 @@ const Dashboard = (props) => {
           /> */}
 
           <div className="content">
-            <Row className="justify-content-center">
-              <Col lg="3">
-                {/* <Card className="shadow-lg">
-                  <CardBody>
-                    <Spinner color="primary" type="grow" />
-                    <p>Loading...</p>
-                  </CardBody>
-                </Card> */}
-                <img alt="loading" src={require("assets/img/LoadingScales.gif")} />
-                <h2>Awaiting Mainnet Launch</h2>
-              </Col>
-            </Row>
-
-            {/* {showDashboard ? (
-              <>
-                <Wallet 
-                  contracts={contracts} 
-                  accounts={accounts}
-                  network={network} 
-                />
-              </>
+            {network === undefined || network.name === 'main' ? ( // remove this statement on mainnet launch
+              <Row className="justify-content-center">
+                <Col lg="3">
+                  <img alt="loading" src={require("assets/img/LoadingScales.gif")} />
+                  <h2>Awaiting Mainnet Launch</h2>
+                </Col>
+              </Row>
             ) : (
-              <div className="content-center" onClick={() => console.log(props)}>
-                <NoWallet />
-              </div>
-            )} */}
+              <>
+                {showDashboard ? (
+                  <>
+                    <Container>
+                      <Nav tabs>
+                        <NavItem>
+                          <NavLink
+                            className={activeTab === 'wallet' ? 'active' : '' }
+                            onClick={() => setTab('wallet')}
+                            style={{cursor:"pointer"}}
+                          >
+                            Account
+                          </NavLink>
+                        </NavItem>
+                        <NavItem>
+                          <NavLink
+                            className={activeTab === 'staking' ? 'active' : '' }
+                            onClick={() => setTab('staking')}
+                            style={{cursor:"pointer"}}
+                          >
+                            Staking
+                          </NavLink>
+                        </NavItem>
+                      </Nav>
+                      <TabContent activeTab={activeTab}>
+                        <TabPane tabId="wallet">
+                          <Wallet 
+                            contracts={contracts} 
+                            accounts={accounts}
+                            network={network} 
+                          />
+                        </TabPane>
+                        <TabPane tabId="staking">
+                          <Staking
+                            contracts={contracts} 
+                            accounts={accounts}
+                            network={network} 
+                          />
+                        </TabPane>
+                      </TabContent>
+                    </Container>
+                  </>
+                ) : (
+                  <div className="content-center" onClick={() => console.log(props)}>
+                    <NoWallet />
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>

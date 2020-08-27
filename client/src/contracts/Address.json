@@ -1,196 +1,12 @@
 {
-  "contractName": "IERC20",
-  "abi": [
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "owner",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "spender",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "value",
-          "type": "uint256"
-        }
-      ],
-      "name": "Approval",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "from",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "to",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "value",
-          "type": "uint256"
-        }
-      ],
-      "name": "Transfer",
-      "type": "event"
-    },
-    {
-      "inputs": [],
-      "name": "totalSupply",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "account",
-          "type": "address"
-        }
-      ],
-      "name": "balanceOf",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "recipient",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "transfer",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "owner",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "spender",
-          "type": "address"
-        }
-      ],
-      "name": "allowance",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "spender",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "approve",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "sender",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "recipient",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "transferFrom",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    }
-  ],
-  "metadata": "{\"compiler\":{\"version\":\"0.6.6+commit.6c089d02\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"}],\"name\":\"allowance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Interface of the ERC20 standard as defined in the EIP. Does not include the optional functions; to access them see {ERC20Detailed}.\",\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/noahcoomer/source/defiat/contracts/DeFiat_Farming.sol\":\"IERC20\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/noahcoomer/source/defiat/contracts/DeFiat_Farming.sol\":{\"keccak256\":\"0x9e0b590705809f9de609a5e2a679f09111ea0ed5deff8063460c98468bb2e32e\",\"urls\":[\"bzz-raw://e60c6a89bdd97ef930b4b03d6bd1e5a6febeae4c3885d958615146fecb74cffd\",\"dweb:/ipfs/QmNtVdA1BqauifatMro7mN5CLitR8DwwZPKFYx3TpUNGBR\"]}},\"version\":1}",
-  "bytecode": "0x",
-  "deployedBytecode": "0x",
+  "contractName": "Address",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.6.6+commit.6c089d02\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"details\":\"Collection of functions related to the address type\",\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/noahcoomer/source/defiat/contracts/DeFiat_Farming.sol\":\"Address\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/noahcoomer/source/defiat/contracts/DeFiat_Farming.sol\":{\"keccak256\":\"0x9e0b590705809f9de609a5e2a679f09111ea0ed5deff8063460c98468bb2e32e\",\"urls\":[\"bzz-raw://e60c6a89bdd97ef930b4b03d6bd1e5a6febeae4c3885d958615146fecb74cffd\",\"dweb:/ipfs/QmNtVdA1BqauifatMro7mN5CLitR8DwwZPKFYx3TpUNGBR\"]}},\"version\":1}",
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122061178f98af44c017ca4af15bd71679b5a9c6bc799c9639e98483ec7767e0ef6064736f6c63430006060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122061178f98af44c017ca4af15bd71679b5a9c6bc799c9639e98483ec7767e0ef6064736f6c63430006060033",
   "immutableReferences": {},
-  "sourceMap": "",
-  "deployedSourceMap": "",
+  "sourceMap": "11764:2919:1:-:0;;132:2:-1;166:7;155:9;146:7;137:37;255:7;249:14;246:1;241:23;235:4;232:33;222:2;;269:9;222:2;293:9;290:1;283:20;323:4;314:7;306:22;347:7;338;331:24",
+  "deployedSourceMap": "11764:2919:1:-:0;;;;;;12:1:-1;9;2:12",
   "source": "\n/*\n* Copyright (c) 2020 DeFiat.net\n*\n* Permission is hereby granted, free of charge, to any person obtaining a copy\n* of this software and associated documentation files (the \"Software\"), to deal\n* in the Software without restriction, including without limitation the rights\n* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n* copies of the Software, and to permit persons to whom the Software is\n* furnished to do so, subject to the following conditions:\n*\n* The above copyright notice and this permission notice shall be included in all\n* copies or substantial portions of the Software.\n*\n* THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n*/\n\n// File: @openzeppelin/contracts/math/Math.sol\n//\n\n// File: @openzeppelin/contracts/math/SafeMath.sol\npragma solidity ^0.6.0;\n/**\n * @dev Wrappers over Solidity's arithmetic operations with added overflow\n * checks.\n *\n * Arithmetic operations in Solidity wrap on overflow. This can easily result\n * in bugs, because programmers usually assume that an overflow raises an\n * error, which is the standard behavior in high level programming languages.\n * `SafeMath` restores this intuition by reverting the transaction when an\n * operation overflows.\n *\n * Using this library instead of the unchecked operations eliminates an entire\n * class of bugs, so it's recommended to use it always.\n */\nlibrary SafeMath{\n    /**\n     * @dev Returns the addition of two unsigned integers, reverting on\n     * overflow.\n     *\n     * Counterpart to Solidity's `+` operator.\n     *\n     * Requirements:\n     * - Addition cannot overflow.\n     */\n    function add(uint256 a, uint256 b) internal pure returns (uint256) {\n        uint256 c = a + b;\n        require(c >= a, \"SafeMath: addition overflow\");\n\n        return c;\n    }\n\n    /**\n     * @dev Returns the subtraction of two unsigned integers, reverting on\n     * overflow (when the result is negative).\n     *\n     * Counterpart to Solidity's `-` operator.\n     *\n     * Requirements:\n     * - Subtraction cannot overflow.\n     */\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    /**\n     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on\n     * overflow (when the result is negative).\n     *\n     * Counterpart to Solidity's `-` operator.\n     *\n     * Requirements:\n     * - Subtraction cannot overflow.\n     *\n     * _Available since v2.4.0._\n     */\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n\n        return c;\n    }\n\n    /**\n     * @dev Returns the multiplication of two unsigned integers, reverting on\n     * overflow.\n     *\n     * Counterpart to Solidity's `*` operator.\n     *\n     * Requirements:\n     * - Multiplication cannot overflow.\n     */\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        // Gas optimization: this is cheaper than requiring 'a' not being zero, but the\n        // benefit is lost if 'b' is also tested.\n        // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522\n        if (a == 0) {\n            return 0;\n        }\n\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n\n        return c;\n    }\n\n    /**\n     * @dev Returns the integer division of two unsigned integers. Reverts on\n     * division by zero. The result is rounded towards zero.\n     *\n     * Counterpart to Solidity's `/` operator. Note: this function uses a\n     * `revert` opcode (which leaves remaining gas untouched) while Solidity\n     * uses an invalid opcode to revert (consuming all remaining gas).\n     *\n     * Requirements:\n     * - The divisor cannot be zero.\n     */\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {\n        return div(a, b, \"SafeMath: division by zero\");\n    }\n\n    /**\n     * @dev Returns the integer division of two unsigned integers. Reverts with custom message on\n     * division by zero. The result is rounded towards zero.\n     *\n     * Counterpart to Solidity's `/` operator. Note: this function uses a\n     * `revert` opcode (which leaves remaining gas untouched) while Solidity\n     * uses an invalid opcode to revert (consuming all remaining gas).\n     *\n     * Requirements:\n     * - The divisor cannot be zero.\n     *\n     * _Available since v2.4.0._\n     */\n    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        // Solidity only automatically asserts when dividing by 0\n        require(b > 0, errorMessage);\n        uint256 c = a / b;\n        // assert(a == b * c + a % b); // There is no case in which this doesn't hold\n\n        return c;\n    }\n\n    /**\n     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),\n     * Reverts when dividing by zero.\n     *\n     * Counterpart to Solidity's `%` operator. This function uses a `revert`\n     * opcode (which leaves remaining gas untouched) while Solidity uses an\n     * invalid opcode to revert (consuming all remaining gas).\n     *\n     * Requirements:\n     * - The divisor cannot be zero.\n     */\n    function mod(uint256 a, uint256 b) internal pure returns (uint256) {\n        return mod(a, b, \"SafeMath: modulo by zero\");\n    }\n\n    /**\n     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),\n     * Reverts with custom message when dividing by zero.\n     *\n     * Counterpart to Solidity's `%` operator. This function uses a `revert`\n     * opcode (which leaves remaining gas untouched) while Solidity uses an\n     * invalid opcode to revert (consuming all remaining gas).\n     *\n     * Requirements:\n     * - The divisor cannot be zero.\n     *\n     * _Available since v2.4.0._\n     */\n    function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b != 0, errorMessage);\n        return a % b;\n    }\n    \n        /**\n     * @dev Returns the largest of two numbers.\n     */\n    function max(uint256 a, uint256 b) internal pure returns (uint256) {\n        return a >= b ? a : b;\n    }\n\n    /**\n     * @dev Returns the smallest of two numbers.\n     */\n    function min(uint256 a, uint256 b) internal pure returns (uint256) {\n        return a < b ? a : b;\n    }\n\n    /**\n     * @dev Returns the average of two numbers. The result is rounded towards\n     * zero.\n     */\n    function average(uint256 a, uint256 b) internal pure returns (uint256) {\n        // (a + b) / 2 can overflow, so we distribute\n        return (a / 2) + (b / 2) + ((a % 2 + b % 2) / 2);\n    }\n}\n\n// File: @openzeppelin/contracts/GSN/Context.sol\npragma solidity ^0.6.0;\n/*\n * @dev Provides information about the current execution context, including the\n * sender of the transaction and its data. While these are generally available\n * via msg.sender and msg.data, they should not be accessed in such a direct\n * manner, since when dealing with GSN meta-transactions the account sending and\n * paying for execution may not be the actual sender (as far as an application\n * is concerned).\n *\n * This contract is only required for intermediate, library-like contracts.\n */\ncontract Context {\n    // Empty internal constructor, to prevent people from mistakenly deploying\n    // an instance of this contract, which should be used via inheritance.\n    constructor () internal { }\n    // solhint-disable-previous-line no-empty-blocks\n\n    function _msgSender() internal view returns (address payable) {\n        return msg.sender;\n    }\n\n    function _msgData() internal view returns (bytes memory) {\n        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691\n        return msg.data;\n    }\n}\n\n// File: @openzeppelin/contracts/ownership/Ownable.sol\npragma solidity ^0.6.6;\n/**\n * @dev Contract module which provides a basic access control mechanism, where\n * there is an account (an owner) that can be granted exclusive access to\n * specific functions.\n *\n * This module is used through inheritance. It will make available the modifier\n * `onlyOwner`, which can be applied to your functions to restrict their use to\n * the owner.\n */\ncontract Ownable is Context {\n    address private _owner;\n\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\n\n    /**\n     * @dev Initializes the contract setting the deployer as the initial owner.\n     */\n    constructor () internal {\n        _owner = _msgSender();\n        emit OwnershipTransferred(address(0), _owner);\n    }\n\n    /**\n     * @dev Returns the address of the current owner.\n     */\n    function owner() public view returns (address) {\n        return _owner;\n    }\n\n    /**\n     * @dev Throws if called by any account other than the owner.\n     */\n    modifier onlyOwner() {\n        require(isOwner(), \"Ownable: caller is not the owner\");\n        _;\n    }\n\n\n    /**\n     * @dev Returns true if the caller is the current owner.\n     */\n    function isOwner() public view returns (bool) {\n        return _msgSender() == _owner;\n    }\n\n    /**\n     * @dev Leaves the contract without owner. It will not be possible to call\n     * `onlyOwner` functions anymore. Can only be called by the current owner.\n     *\n     * NOTE: Renouncing ownership will leave the contract without an owner,\n     * thereby removing any functionality that is only available to the owner.\n     */\n    function renounceOwnership() public onlyOwner {\n        emit OwnershipTransferred(_owner, address(0));\n        _owner = address(0);\n    }\n\n    /**\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\n     * Can only be called by the current owner.\n     */\n    function transferOwnership(address newOwner) public onlyOwner {\n        _transferOwnership(newOwner);\n    }\n\n    /**\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\n     */\n    function _transferOwnership(address newOwner) internal {\n        require(newOwner != address(0), \"Ownable: new owner is the zero address\");\n        emit OwnershipTransferred(_owner, newOwner);\n        _owner = newOwner;\n    }\n} //adding ALLOWED method\n\n// File: @openzeppelin/contracts/token/ERC20/IERC20.sol\npragma solidity ^0.6.0;\n/**\n * @dev Interface of the ERC20 standard as defined in the EIP. Does not include\n * the optional functions; to access them see {ERC20Detailed}.\n */\ninterface IERC20 {\n    function totalSupply() external view returns (uint256);\n    function balanceOf(address account) external view returns (uint256);\n    function transfer(address recipient, uint256 amount) external returns (bool);\n    function allowance(address owner, address spender) external view returns (uint256);\n    function approve(address spender, uint256 amount) external returns (bool);\n    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);\n    event Transfer(address indexed from, address indexed to, uint256 value);\n    event Approval(address indexed owner, address indexed spender, uint256 value);\n}\n\n// File: @openzeppelin/contracts/utils/Address.sol\npragma solidity ^0.6.6;\n/**\n * @dev Collection of functions related to the address type\n */\nlibrary Address {\n    /**\n     * @dev Returns true if `account` is a contract.\n     *\n     * This test is non-exhaustive, and there may be false-negatives: during the\n     * execution of a contract's constructor, its address will be reported as\n     * not containing a contract.\n     *\n     * IMPORTANT: It is unsafe to assume that an address for which this\n     * function returns false is an externally-owned account (EOA) and not a\n     * contract.\n     */\n    function isContract(address account) internal view returns (bool) {\n        // This method relies in extcodesize, which returns 0 for contracts in\n        // construction, since the code is only stored at the end of the\n        // constructor execution.\n\n        // According to EIP-1052, 0x0 is the value returned for not-yet created accounts\n        // and 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 is returned\n        // for accounts without code, i.e. `keccak256('')`\n        bytes32 codehash;\n        bytes32 accountHash = 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470;\n        // solhint-disable-next-line no-inline-assembly\n        assembly { codehash := extcodehash(account) }\n        return (codehash != 0x0 && codehash != accountHash);\n    }\n\n    /**\n     * @dev Converts an `address` into `address payable`. Note that this is\n     * simply a type cast: the actual underlying value is not changed.\n     *\n     * _Available since v2.4.0._\n     */\n    function toPayable(address account) internal pure returns (address payable) {\n        return address(uint160(account));\n    }\n\n    /**\n     * @dev Replacement for Solidity's `transfer`: sends `amount` wei to\n     * `recipient`, forwarding all available gas and reverting on errors.\n     *\n     * https://eips.ethereum.org/EIPS/eip-1884[EIP1884] increases the gas cost\n     * of certain opcodes, possibly making contracts go over the 2300 gas limit\n     * imposed by `transfer`, making them unable to receive funds via\n     * `transfer`. {sendValue} removes this limitation.\n     *\n     * https://diligence.consensys.net/posts/2019/09/stop-using-soliditys-transfer-now/[Learn more].\n     *\n     * IMPORTANT: because control is transferred to `recipient`, care must be\n     * taken to not create reentrancy vulnerabilities. Consider using\n     * {ReentrancyGuard} or the\n     * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].\n     *\n     * _Available since v2.4.0._\n     */\n    function sendValue(address payable recipient, uint256 amount) internal {\n        require(address(this).balance >= amount, \"Address: insufficient balance\");\n\n        // solhint-disable-next-line avoid-call-value\n        (bool success, ) = recipient.call.value(amount)(\"\");\n        require(success, \"Address: unable to send value, recipient may have reverted\");\n    }\n}\n\n\npragma solidity ^0.6.0;\n\n\ncontract DeFiat_Farming {\n    using SafeMath for uint256;\n\n    //Structs\n    struct PoolMetrics {\n        address stakedToken;\n        uint256 staked;             // sum of tokens staked in the contract\n        uint256 stakingFee;         // entry fee\n        \n        uint256 stakingPoints;\n\n        address rewardToken;\n        uint256 rewards;        // sum of rewards in the pool\n\n        uint256 startTime;      // when the pool opens\n        uint256 closingTime;    // when the pool closes. \n        uint256 duration;       // duration of the staking\n        uint256 lastStakingEvent;   // last time metrics were updated.\n        \n        uint256  ratePerToken;      // CALCULATED pool reward Rate per Token (calculated based on total stake and time)\n    }\n    PoolMetrics public poolMetrics;\n\n    struct UserMetrics {\n            uint256 stake;          // native token stake (balanceOf)\n            uint256 stakingPoints;  // acrrued over time. Does not take into account current ones\n            uint256 lastStakingEvent;\n            \n            uint256 rewardAccrued;  // accrued rewards over time based on staking points\n            uint256 rewardsPaid;    // what the user already consumed, to remove from rewardsAccrued\n\n            uint256 lastTxBlock;    // latest transaction from the user (antiSpam)\n    }\n    mapping(address => UserMetrics) public userMetrics;\n\n//== constructor \n    constructor(address _stakedToken, address _rewardToken, uint256 _feeBase1000, uint256 _durationHours, uint256 _delayStartHours) public {\n    poolOperator = msg.sender;\n    \n    poolMetrics.stakedToken = address(_stakedToken);\n    poolMetrics.rewardToken = address(_rewardToken);\n    poolMetrics.stakingFee = _feeBase1000; //3%\n    \n    poolMetrics.duration = _durationHours.mul(3600); // ~7 1/4 days --> 1 week of staking // NOT ENOUGH. Go 1months.\n    poolMetrics.startTime = block.timestamp + _delayStartHours.mul(3600);\n    poolMetrics.closingTime = block.timestamp + poolMetrics.duration;\n    }\n\n//==EVENTS\n    event PoolInitalized(uint256 amountAdded, string  _desc);\n    event RewardTaken(address indexed user, uint256 reward, string  _desc);\n\n    event userStaking(address indexed user, uint256 amount, string  _desc);\n    event userWithdrawal(address indexed user, uint256 amount, string  _desc);\n\n    modifier poolLive() {\n        require(block.timestamp >= poolMetrics.startTime,\"Pool not started Yet\"); //good for delayed starts.\n        require(block.timestamp <= poolMetrics.closingTime,\"Pool closed\"); //good for delayed starts.\n        _;\n    }\n    modifier poolStarted() {\n        require(block.timestamp >= poolMetrics.startTime,\"Pool not started Yet\"); //good for delayed starts.\n        _;\n    }\n    modifier poolEnded() {\n        require(block.timestamp > poolMetrics.closingTime,\"Pool not started Yet\"); //good for delayed starts.\n        _;\n    }\n    modifier antiSpam(uint256 _blocks) {\n        require(block.number > userMetrics[msg.sender].lastTxBlock.add(_blocks), \"Wait 1 BLOCK between Transactions\");\n        userMetrics[msg.sender].lastTxBlock = block.number; //update\n        _;\n    } \n \n\n    \n//BASICS \n    function setFee(uint256 _fee) public onlyPoolOperator {\n        poolMetrics.stakingFee = _fee;\n    }\n    function currentTime() public view returns (uint256) {\n        return SafeMath.min(block.timestamp, poolMetrics.closingTime); //allows expiration\n    } // SafeMath.min(now, endTime)\n    \n//Points locking    \n    function viewPoolPoints() public view returns(uint256) {\n            uint256 _previousPoints = poolMetrics.stakingPoints;    // previous points shapshot \n            uint256 _previousStake = poolMetrics.staked;             // previous stake snapshot\n            \n            uint256 _timeHeld = currentTime().sub(\n                        SafeMath.max(poolMetrics.lastStakingEvent, poolMetrics.startTime)\n                                                 );                 // time held with _previousStake\n                                                 \n            return  _previousPoints.add(_previousStake.mul(_timeHeld));    //generated points since event\n    }\n    function lockPoolPoints() public returns (uint256 ) { //ON STAKE/UNSTAKE EVENT\n            uint256 _currentPoints = viewPoolPoints() ;     // snapshot\n            poolMetrics.lastStakingEvent = currentTime();   // update lastStakingEvent\n            return poolMetrics.stakingPoints = _currentPoints;\n        } \n    \n    function viewPointsOf(address _address) public view returns(uint256) {\n            uint256 _currentPoints = userMetrics[_address].stakingPoints;    // snapshot\n            uint256 _previousStake = userMetrics[_address].stake;            // stake before event\n        \n            uint256 _timeHeld = currentTime().sub(\n                        SafeMath.max(userMetrics[_address].lastStakingEvent, poolMetrics.startTime)\n                                                 );                          // time held with _previousStake\n            \n            uint256 _result = _currentPoints.add(_previousStake.mul(_timeHeld));   \n            if(_result > poolMetrics.stakingPoints){_result = poolMetrics.stakingPoints;}\n            return _result;\n    }\n    function lockPointsOf(address _address) public returns (uint256) {\n            uint256 _currentPoints =  viewPointsOf(_address); \n            userMetrics[_address].lastStakingEvent = currentTime(); \n            return userMetrics[_address].stakingPoints = _currentPoints;\n    }\n\n\n//staking & unstaking\n    function stake(uint256 _amount) public poolLive antiSpam(1) { //updateReward and checkStart are modifiers\n        require(_amount > 0, \"Cannot stake 0\");\n        \n        uint256 _balanceNow = IERC20(address(poolMetrics.stakedToken)).balanceOf(address(this));\n        IERC20(poolMetrics.stakedToken).transferFrom(msg.sender, address(this), _amount); //will require allowance\n        uint256 amount = IERC20(address(poolMetrics.stakedToken)).balanceOf(address(this)).sub(_balanceNow); //actually received\n        \n        \n        //discount amount by fee\n        uint256 _fee = amount.mul(poolMetrics.stakingFee).div(1000);\n        amount = amount.sub(_fee);\n        \n        poolMetrics.rewards = poolMetrics.rewards.add(_fee);\n        \n        poolMetrics.staked = poolMetrics.staked.add(amount);\n        lockPoolPoints();\n\n        userMetrics[msg.sender].stake = userMetrics[msg.sender].stake.add(amount);\n        lockPointsOf(msg.sender);\n\n   \n       emit userStaking(msg.sender, amount, \"Staking... ... \");\n    } // stake visibility is public and  overriding StakeToken's stake() function\n    function unStake(uint256 amount) public antiSpam(1) poolStarted{ \n        require(amount > 0, \"Cannot withdraw 0\");\n        require(amount <- userMetrics[msg.sender].stake, \"Cannot withdraw more than stake\");\n        IERC20(poolMetrics.stakedToken).transfer(msg.sender, amount);\n        \n        lockPoolPoints(); //using the previous stake\n        poolMetrics.staked = poolMetrics.staked.sub(amount);\n        \n        lockPointsOf(msg.sender); //using the previous stake\n        userMetrics[msg.sender].stake = userMetrics[msg.sender].stake.sub(amount);\n        \n        emit userWithdrawal(msg.sender, amount, \"Widhtdrawal\");\n    }\n \n//Rewards\n    function eligibleRewardOf(address _address) public returns(uint256) {\n         lockPointsOf(_address);lockPoolPoints(); //eligibilty rate + locks\n         uint256 _reward = viewEligibleRewardOf(_address);\n        return _reward;\n    }  \n    \n    //to pass INTERNAL\n    function viewEligibleRewardOf(address _address) public view returns(uint256) {\n        require(poolMetrics.rewards > 0, \"No Rewards in the Pool\");\n        \n        uint256 _baseLineRewards = poolMetrics.rewards;\n        if(FullRewards == true){ _baseLineRewards = SafeMath.min(poolMetrics.staked, poolMetrics.rewards);}\n\n        // baseline is the min( staked, rewards); avoids ultra_farming > staking pool EXPERIMENTAL\n        \n        uint256 _rate =  viewPointsOf(_address).mul(1e18).div(viewPoolPoints()); //eligibilty rate at full period.\n        \n        //need to discount for TIME NOW. 100% is eligible at the END of the period.\n        uint256 _elapsed = currentTime().sub(poolMetrics.startTime);\n        uint256 _timeRate = _elapsed.mul(1e18).div(poolMetrics.duration);\n\n        _rate = _rate.mul(_timeRate).div(1e18);\n        uint256 _reward = _baseLineRewards.mul(_rate).div(1e18);  //apply rate on pool rewards\n        \n        //need to remove take points?\n        \n        \n        return _reward;\n    }\n    \n    \n    function takeRewards() public antiSpam(1) poolStarted{ //10 blocks between rewards\n        require(poolMetrics.rewards > 0, \"No Rewards in the Pool\");\n\n        uint256 _reward = eligibleRewardOf(msg.sender);\n        \n        if (_reward > 0) { //gas saver\n            poolMetrics.rewards = poolMetrics.rewards.sub(_reward);           // update pool rewards\n            poolMetrics.stakingPoints = poolMetrics.stakingPoints.sub(userMetrics[msg.sender].stakingPoints); //erase points\n            \n            userMetrics[msg.sender].rewardsPaid = _reward;   // update user paid rewards\n            userMetrics[msg.sender].stakingPoints = 0; //erase points\n            \n            IERC20(poolMetrics.rewardToken).transfer(msg.sender, _reward);  // transfer\n            \n            eligibleRewardOf(msg.sender); //relaunch counter\n            \n            emit RewardTaken(msg.sender, _reward, \"Rewards Sent\");          \n            \n        }\n    }\n\n/*\n    function exit() external poolStarted{\n        unStake(userMetrics[msg.sender].stake);\n        takeRewards(); //will not work as the antispam is up\n    }\n*/\n    \n    function myStake() public view returns(uint256) {\n        return userMetrics[msg.sender].stake;\n    }\n    function myRewards() public view returns(uint256) {\n        return viewEligibleRewardOf(msg.sender);\n    }\n    \n\n//== OPERATOR FUNCTIONS ==\n\n    address public poolOperator;\n    \n    function setPoolOperator(address _address) public onlyPoolOperator {\n        poolOperator = _address;\n    }\n    modifier onlyPoolOperator() {\n        require(msg.sender == poolOperator, \"msg.sender is not allowed to operate Pool\");\n        _;\n    }\n    \n    bool public FullRewards = false;\n    function setFullRewards(bool _bool) public onlyPoolOperator {\n        FullRewards = _bool;\n    }\n    \n    function loadRewards(uint256 _amount) public { //load tokens in the rewards pool.\n        \n        uint256 _balanceNow = IERC20(address(poolMetrics.rewardToken)).balanceOf(address(this));\n        IERC20(address(poolMetrics.rewardToken)).transferFrom( msg.sender,  address(this),  _amount);     // !! need to allow contract 1st\n        uint256 amount = IERC20(address(poolMetrics.rewardToken)).balanceOf(address(this)).sub(_balanceNow); //actually received\n        \n        poolMetrics.rewards = SafeMath.add(poolMetrics.rewards,amount);\n        poolMetrics.staked = SafeMath.add(poolMetrics.staked,amount); // initializes\n        //lockPoolPoints();\n    }\n\n//== UTILS ===\nfunction flushPool(address _recipient, address _ERC20address) external onlyPoolOperator { // poolEnded returns(bool) {\n        uint256 _amount = IERC20(_ERC20address).balanceOf(address(this));\n        IERC20(_ERC20address).transfer(_recipient, _amount); //use of the _ERC20 traditional transfer\n        //return true;\n    } //get tokens sent by error to contract\n    \nfunction killPool() public { //onlyPoolOperator poolEnded returns(bool) {\n        selfdestruct(msg.sender);\n        //return true;\n    } //frees space on the ETH chain\n\n\n}\n\n\n//== END CONTRACT ==\npragma solidity ^0.6.0;\ninterface Interface_DFT_farming {\n    // at address: \n    function stake(uint256 amount) external; //stake shitcoins\n    function unStake(uint256 amount) external; //wd Stake only\n    function takeReward() external; //wd reward\n\n    function myRewards() external view returns(uint256);\n    function myStake() external view returns(uint256);\n    // 100000000000000000000 = 100 TOKENS\n}\n\ninterface InterfaceToken {\n    // at address: 0xB571d40e4A7087C1B73ce6a3f29EaDfCA022C5B2\n    function balanceOf(address account) external ;\n    function approve(address spender, uint256 amount) external;\n}\n\n",
   "sourcePath": "/Users/noahcoomer/source/defiat/contracts/DeFiat_Farming.sol",
   "ast": {
@@ -43747,9 +43563,9 @@
   },
   "networks": {},
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-26T01:59:04.855Z",
+  "updatedAt": "2020-08-26T01:59:04.697Z",
   "devdoc": {
-    "details": "Interface of the ERC20 standard as defined in the EIP. Does not include the optional functions; to access them see {ERC20Detailed}.",
+    "details": "Collection of functions related to the address type",
     "methods": {}
   },
   "userdoc": {
