@@ -439,11 +439,13 @@ contract DeFiat_Farming {
     
     poolMetrics.stakedToken = address(_stakedToken);
     poolMetrics.rewardToken = address(_rewardToken);
-    poolMetrics.stakingFee = _feeBase1000; //3%
+    poolMetrics.stakingFee = _feeBase1000; //10 = 1%
     
-    poolMetrics.duration = _durationHours.mul(3600); // ~7 1/4 days --> 1 week of staking // NOT ENOUGH. Go 1months.
+    poolMetrics.duration = _durationHours.mul(3600); //
     poolMetrics.startTime = block.timestamp + _delayStartHours.mul(3600);
     poolMetrics.closingTime = block.timestamp + poolMetrics.duration;
+    
+    FullRewards = true;
     }
 
 //==EVENTS
@@ -475,9 +477,6 @@ contract DeFiat_Farming {
 
     
 //BASICS 
-    function setFee(uint256 _fee) public onlyPoolOperator {
-        poolMetrics.stakingFee = _fee;
-    }
     function currentTime() public view returns (uint256) {
         return SafeMath.min(block.timestamp, poolMetrics.closingTime); //allows expiration
     } // SafeMath.min(now, endTime)
@@ -493,7 +492,7 @@ contract DeFiat_Farming {
                                                  
             return  _previousPoints.add(_previousStake.mul(_timeHeld));    //generated points since event
     }
-    function lockPoolPoints() public returns (uint256 ) { //ON STAKE/UNSTAKE EVENT
+    function lockPoolPoints() internal returns (uint256 ) { //ON STAKE/UNSTAKE EVENT
             uint256 _currentPoints = viewPoolPoints() ;     // snapshot
             poolMetrics.lastStakingEvent = currentTime();   // update lastStakingEvent
             return poolMetrics.stakingPoints = _currentPoints;
@@ -511,12 +510,11 @@ contract DeFiat_Farming {
             if(_result > poolMetrics.stakingPoints){_result = poolMetrics.stakingPoints;}
             return _result;
     }
-    function lockPointsOf(address _address) public returns (uint256) {
+    function lockPointsOf(address _address) internal returns (uint256) {
             uint256 _currentPoints =  viewPointsOf(_address); 
             userMetrics[_address].lastStakingEvent = currentTime(); 
             return userMetrics[_address].stakingPoints = _currentPoints;
     }
-
 
 //staking & unstaking
     function stake(uint256 _amount) public poolLive antiSpam(1) { //updateReward and checkStart are modifiers
@@ -557,11 +555,6 @@ contract DeFiat_Farming {
     }
  
 //Rewards
-    function eligibleRewardOf(address _address) public returns(uint256) {
-         lockPointsOf(_address);lockPoolPoints(); //eligibilty rate + locks
-         uint256 _reward = viewEligibleRewardOf(_address);
-        return _reward;
-    }  
     
     //to pass INTERNAL
     function viewEligibleRewardOf(address _address) public view returns(uint256) {
@@ -586,7 +579,11 @@ contract DeFiat_Farming {
         
         return _reward;
     }
-    
+    function eligibleRewardOf(address _address) internal returns(uint256) {
+         lockPointsOf(_address);lockPoolPoints(); //eligibilty rate + locks
+         uint256 _reward = viewEligibleRewardOf(_address);
+        return _reward;
+    }  
     
     function takeRewards() public antiSpam(1) poolStarted{ //10 blocks between rewards
         require(poolMetrics.rewards > 0, "No Rewards in the Pool");
@@ -609,26 +606,22 @@ contract DeFiat_Farming {
         }
     }
 
-/*
-    function exit() external poolStarted{
-        unStake(userMetrics[msg.sender].stake);
-        takeRewards(); //will not work as the antispam is up
-    }
-*/
-    
     function myStake() public view returns(uint256) {
         return userMetrics[msg.sender].stake;
     }
+    function myStakeShare() public view returns(uint256) {
+        return (userMetrics[msg.sender].stake).mul(100000).div(poolMetrics.staked);
+    } //base 100,000
     function myRewards() public view returns(uint256) {
         return viewEligibleRewardOf(msg.sender);
     }
-    
+
 
 //== OPERATOR FUNCTIONS ==
 
     address public poolOperator;
     
-    function setPoolOperator(address _address) public onlyPoolOperator {
+    function setPoolOperator(address _address) public onlyPoolOperator poolEnded {
         poolOperator = _address;
     }
     modifier onlyPoolOperator() {
@@ -636,11 +629,10 @@ contract DeFiat_Farming {
         _;
     }
     
-    bool public FullRewards = false;
+    bool public FullRewards;
     function setFullRewards(bool _bool) public onlyPoolOperator {
         FullRewards = _bool;
     }
-    
     function loadRewards(uint256 _amount) public { //load tokens in the rewards pool.
         
         uint256 _balanceNow = IERC20(address(poolMetrics.rewardToken)).balanceOf(address(this));
@@ -648,29 +640,29 @@ contract DeFiat_Farming {
         uint256 amount = IERC20(address(poolMetrics.rewardToken)).balanceOf(address(this)).sub(_balanceNow); //actually received
         
         poolMetrics.rewards = SafeMath.add(poolMetrics.rewards,amount);
-        poolMetrics.staked = SafeMath.add(poolMetrics.staked,amount); // initializes
+        poolMetrics.staked = SafeMath.add(poolMetrics.staked,1); // initializes, avoids Throw
         //lockPoolPoints();
+    }    
+    function setFee(uint256 _fee) public onlyPoolOperator {
+        poolMetrics.stakingFee = _fee;
     }
-
-//== UTILS ===
-function flushPool(address _recipient, address _ERC20address) external onlyPoolOperator { // poolEnded returns(bool) {
-        uint256 _amount = IERC20(_ERC20address).balanceOf(address(this));
-        IERC20(_ERC20address).transfer(_recipient, _amount); //use of the _ERC20 traditional transfer
-        //return true;
-    } //get tokens sent by error to contract
     
-function killPool() public { //onlyPoolOperator poolEnded returns(bool) {
-        selfdestruct(msg.sender);
-        //return true;
-    } //frees space on the ETH chain
-
+    function flushPool(address _recipient, address _ERC20address) external onlyPoolOperator poolEnded { // poolEnded returns(bool) {
+            uint256 _amount = IERC20(_ERC20address).balanceOf(address(this));
+            IERC20(_ERC20address).transfer(_recipient, _amount); //use of the _ERC20 traditional transfer
+            //return true;
+        } //get tokens sent by error to contract
+    function killPool() public onlyPoolOperator poolEnded { //onlyPoolOperator poolEnded returns(bool) {
+            selfdestruct(msg.sender);
+            //return true;
+        } //frees space on the ETH chain
 
 }
 
 
 //== END CONTRACT ==
 pragma solidity ^0.5.0;
-interface Interface_DFT_farming {
+interface X_DFTfarming {
     // at address: 
     function stake(uint256 amount) external; //stake shitcoins
     function unStake(uint256 amount) external; //wd Stake only
@@ -681,9 +673,14 @@ interface Interface_DFT_farming {
     // 100000000000000000000 = 100 TOKENS
 }
 
-interface InterfaceToken {
+interface X_Defiat_Token {
     // at address: 0xB571d40e4A7087C1B73ce6a3f29EaDfCA022C5B2
     function balanceOf(address account) external ;
     function approve(address spender, uint256 amount) external;
+}
+interface X_Defiat_Points {
+    // 0x70C7d7856E1558210CFbf27b7F17853655752453
+    function overrideDiscount(address _address, uint256 _newDiscount) external;
+    //whitelist the Locking Contract at 100 (100%) discount
 }
 
