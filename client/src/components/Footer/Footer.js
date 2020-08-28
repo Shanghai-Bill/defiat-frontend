@@ -10,7 +10,7 @@ import {
 } from "reactstrap";
 import { SocialButtons } from '../SocialButtons';
 import logo from 'assets/img/defiat.png'
-import pdf from 'assets/files/DFT-DeFiat-Whitepaper-august24th2020.pdf'
+import pdf from 'assets/files/DFT-DeFiat-Whitepaper-V1-August28th2020.pdf'
 
 export const Footer = () => {
   return (

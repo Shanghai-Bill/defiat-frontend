@@ -3,7 +3,7 @@ export default {
   networks: {
     1: {
       name: "main",
-      token: "0xd48c66B57ed4b4F10C58001c1F2264b3a6b28f44",
+      token: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
       points: "0x8c9d8f5CC3427F460e20F63b36992f74AA19e27d",
       gov: "0x3Aa3303877A0D1c360a9FE2693AE9f31087A1381",
       farming: ""
