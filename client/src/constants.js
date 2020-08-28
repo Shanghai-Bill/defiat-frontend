@@ -3,9 +3,9 @@ export default {
   networks: {
     1: {
       name: "main",
-      token: "",
-      points: "",
-      gov: "",
+      token: "0xd48c66B57ed4b4F10C58001c1F2264b3a6b28f44",
+      points: "0x8c9d8f5CC3427F460e20F63b36992f74AA19e27d",
+      gov: "0x3Aa3303877A0D1c360a9FE2693AE9f31087A1381",
       farming: ""
     },
     4: {

@@ -34,6 +34,7 @@ const Dashboard = (props) => {
   } = props;
 
   const [showDashboard, setShowDashboard] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [activeTab, setTab] = useState('wallet');
 
   useEffect(() => {
@@ -48,13 +49,6 @@ const Dashboard = (props) => {
         // Get the contract instance.
         const networkId = await w3.eth.net.getId();
         const ntk = constants.networks[networkId];
-        
-        // Remove this when adding contract to main net
-        if (networkId === 1) {
-          setNetwork({ network: ntk });
-          return;
-        }
-
 
         const smartContracts = {
           token: new w3.eth.Contract(DeFiat_Token.abi, ntk["token"]),
@@ -67,14 +61,16 @@ const Dashboard = (props) => {
         setAccount({ accounts: accts });
         setContractInstance({ contracts: smartContracts });
         setNetwork({ network: ntk });
+        setLoading(false);
         setShowDashboard(true);
       } catch (error) {
         // Catch any errors for any of the above operations.
-        // alert(`Failed to load web3, accounts, or contract. Check console for details.`);
         console.error(error);
+        setLoading(false);
       }
     }
     if (accounts && accounts.length && contracts && network) {
+      setLoading(false);
       setShowDashboard(true);
     } else {
       loadWeb3();
@@ -85,67 +81,72 @@ const Dashboard = (props) => {
     <>
       <div className="wrapper">
         <div className="page-header">
-          {/* <img
-            alt="..."
-            className="path"
-            src={require("assets/img/path4.png")}
-          /> */}
-
           <div className="content">
-            {network === undefined || network.name === 'main' ? ( // remove this statement on mainnet launch
-              <Row className="justify-content-center">
-                <Col lg="3">
-                  <img alt="loading" src={require("assets/img/LoadingScales.gif")} />
-                  <h2>Awaiting Mainnet Launch</h2>
-                </Col>
-              </Row>
+            {isLoading ? (
+              <div className="content-center">
+                <Row className="justify-content-center">
+                  <Col lg="3">
+                    <img alt="loading" src={require("assets/img/LoadingScales.gif")} />
+                  </Col>
+                </Row>
+              </div>
             ) : (
               <>
-                {showDashboard ? (
-                  <>
-                    <Container>
-                      <Nav tabs>
-                        <NavItem>
-                          <NavLink
-                            className={activeTab === 'wallet' ? 'active' : '' }
-                            onClick={() => setTab('wallet')}
-                            style={{cursor:"pointer"}}
-                          >
-                            Account
-                          </NavLink>
-                        </NavItem>
-                        <NavItem>
-                          <NavLink
-                            className={activeTab === 'staking' ? 'active' : '' }
-                            onClick={() => setTab('staking')}
-                            style={{cursor:"pointer"}}
-                          >
-                            Staking
-                          </NavLink>
-                        </NavItem>
-                      </Nav>
-                      <TabContent activeTab={activeTab}>
-                        <TabPane tabId="wallet">
-                          <Wallet 
-                            contracts={contracts} 
-                            accounts={accounts}
-                            network={network} 
-                          />
-                        </TabPane>
-                        <TabPane tabId="staking">
-                          <Staking
-                            contracts={contracts} 
-                            accounts={accounts}
-                            network={network} 
-                          />
-                        </TabPane>
-                      </TabContent>
-                    </Container>
-                  </>
-                ) : (
+                {!showDashboard ? (
                   <div className="content-center" onClick={() => console.log(props)}>
                     <NoWallet />
                   </div>
+                ) : (
+                  <>
+                    {network.name === 'main' ? (
+                      <Container>
+                        <Wallet 
+                          contracts={contracts} 
+                          accounts={accounts}
+                          network={network} 
+                        />
+                      </Container>
+                    ) : (
+                      <Container>
+                        <Nav tabs>
+                          <NavItem>
+                            <NavLink
+                              className={activeTab === 'wallet' ? 'active' : '' }
+                              onClick={() => setTab('wallet')}
+                              style={{cursor:"pointer"}}
+                            >
+                              Account
+                            </NavLink>
+                          </NavItem>
+                          <NavItem>
+                            <NavLink
+                              className={activeTab === 'staking' ? 'active' : '' }
+                              onClick={() => setTab('staking')}
+                              style={{cursor:"pointer"}}
+                            >
+                              Staking
+                            </NavLink>
+                          </NavItem>
+                        </Nav>
+                        <TabContent activeTab={activeTab}>
+                          <TabPane tabId="wallet">
+                            <Wallet 
+                              contracts={contracts} 
+                              accounts={accounts}
+                              network={network} 
+                            />
+                          </TabPane>
+                          <TabPane tabId="staking">
+                            <Staking
+                              contracts={contracts} 
+                              accounts={accounts}
+                              network={network} 
+                            />
+                          </TabPane>
+                        </TabContent>
+                      </Container>
+                    )}
+                  </>
                 )}
               </>
             )}

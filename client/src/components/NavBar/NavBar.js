@@ -113,7 +113,7 @@ export const NavBar = () => {
             <NavItem className="p-0">
               <Button 
                 color="primary"
-                href="https://app.uniswap.org/#/swap"
+                href="https://app.uniswap.org/#/swap?inputCurrency=0xd48c66B57ed4b4F10C58001c1F2264b3a6b28f44"
                 target="_blank"
               >
                 Get DFT

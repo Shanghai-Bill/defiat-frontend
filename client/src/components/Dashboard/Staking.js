@@ -22,7 +22,7 @@ export const Staking = ({
   const [stakeAmountInput, setStakeAmountInput] = useState('');
   const [unstakeAmountInput, setUnstakeAmountInput] = useState('');
   const [showApproveButton, setShowApproveButton] = useState(true);
-  const [updatingApproval, setUpdatingApproval] = useState(false);
+  const [isApproving, setApproving] = useState(false);
   const [isUnstaking, setUnstaking] = useState(false);
   const [isStaking, setStaking] = useState(false);
   const [isClaiming, setClaiming] = useState(false);
@@ -44,12 +44,10 @@ export const Staking = ({
         contracts["token"].methods.allowance(accounts[0], network["farming"]).call(),
         contracts["farming"].methods.userMetrics(accounts[0]).call(),
         contracts["farming"].methods.poolMetrics().call(),
-        
+        contracts["farming"].methods.viewEligibleRewardOf(accounts[0]).call()
         //contracts["farming"].methods.eligibileRewardsOf(accounts[0]).call(),
         //contracts["farming"].methods.
       ])
-
-      console.log(network)
 
       const userMetrics = values[2];
       const poolMetrics = values[3];
@@ -59,7 +57,7 @@ export const Staking = ({
         tokenBalance: (values[0] / (10 ** 18)).toFixed(2),
         stakingAllowance: values[1],
         stakedBalance: (userMetrics.stake / (10 ** 18)).toFixed(2),
-        availableRewards: userMetrics.rewardAccrued,
+        availableRewards: (values[4] / (10 ** 18)).toFixed(2),
         totalPoolRewards: (poolMetrics.rewards / (10 ** 18)).toFixed(2),
         totalPoolStaked: ((poolMetrics.staked / (10 ** 18)).toFixed(2)), //- (poolMetrics.rewards / (10 ** 18))),
         currentPoolFee: (poolMetrics.stakingFee / 10)
@@ -78,80 +76,87 @@ export const Staking = ({
   }, []);
 
   const approveStaking = async () => {
+    setApproving(true);
     const totalSupply = await contracts["token"].methods.totalSupply().call();
-    setUpdatingApproval(true);
     contracts["token"].methods.approve(network["farming"], totalSupply).send({from: accounts[0]})
       .then((data) => {
-        console.log(data)
         toast.success(`✅ Successfully approved DFT staking.`);
-        setShowApproveButton(false);
-        setUpdatingApproval(false);
       })
       .catch((err) => {
-        console.log(err)
-        toast.error("⛔️ Encountered an error, could not approve DFT staking.")
-        setUpdatingApproval(false);
+        // console.log(err);
+        toast.error("⛔️ Encountered an error, could not approve DFT staking.");
+      })
+      .finally(() => {
+        setApproving(false);
       });
   }
 
   const stakeToken = async () => {
-    const stakeAmount = new BigNumber(+stakeAmountInput * (10 ** 18))
+    setStaking(true);
+    const sAmount = parseFloat(stakeAmountInput);
+    const stakeAmount = new BigNumber(sAmount).multipliedBy(10 ** 18);
     contracts["farming"].methods.stake(stakeAmount).send({from: accounts[0]})
       .then((data) => {
-        console.log(data)
         toast.success(`✅ Successfully staked ${stakeAmountInput} DFT.`);
         setStakingState({
           ...stakingState,
-          stakedBalance: stakingState.stakedBalance + +stakeAmountInput,
-          tokenBalance: stakingState.tokenBalance - +stakeAmountInput
+          stakedBalance: stakingState.stakedBalance + sAmount,
+          tokenBalance: stakingState.tokenBalance - sAmount
         })
-        setStakeAmountInput('')
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
         toast.error("⛔️ Encountered an error, could not stake tokens.")
-        setStakeAmountInput('')
+      })
+      .finally(() => {
+        setStakeAmountInput('');
+        setStaking(false);
       });
   }
 
   const unStakeToken = async () => {
-    const unstakeAmount = new BigNumber(+unstakeAmountInput * (10 ** 18))
+    setUnstaking(true);
+    const uAmount = parseFloat(unstakeAmountInput);
+    const unstakeAmount = new BigNumber(uAmount).multipliedBy(10 ** 18);
     contracts["farming"].methods.unStake(unstakeAmount).send({from: accounts[0]})
       .then((data) => {
-        console.log(data)
         toast.success(`✅ Successfully unstaked ${unstakeAmountInput} DFT.`);
         setStakingState({
           ...stakingState,
-          stakedBalance: stakingState.stakedBalance - +unstakeAmountInput,
-          tokenBalance: stakingState.tokenBalance + +unstakeAmountInput
+          stakedBalance: stakingState.stakedBalance - uAmount,
+          tokenBalance: stakingState.tokenBalance + uAmount
         })
-        setStakeAmountInput('')
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err);
         toast.error("⛔️ Encountered an error, could not unstake tokens.")
-        setStakeAmountInput('')
+      })
+      .finally(() => {
+        setUnstaking(false);
+        setStakeAmountInput('');
       });
   }
 
   // take reward
   const takeRewards = () => {
-    const { availableRewards } = stakingState;
+    setClaiming(true);
+    const rewards = parseFloat(stakingState.availableRewards);
     contracts["farming"].methods.takeRewards().send({from: accounts[0]})
       .then((data) => {
-        console.log(data)
-        toast.success(`✅ Successfully claimed ${availableRewards} DFT.`);
-        setStakeAmountInput('')
+        toast.success(`✅ Successfully claimed ${rewards} DFT.`);
+        const updatedBalance = +stakingState.tokenBalance + +rewards;
         setStakingState({
           ...stakingState,
           availableRewards: 0,
-          tokenBalance: stakingState.tokenBalance + availableRewards
-        })
+          tokenBalance: updatedBalance
+        });
       })
       .catch((err) => {
-        console.log(err)
-        toast.error("⛔️ Encountered an error, could not unstake tokens.")
-        setStakeAmountInput('')
+        // console.log(err)
+        toast.error("⛔️ Encountered an error, could not claim rewards.")
+      })
+      .finally(() => {
+        setClaiming(false);
       });
   }
 
@@ -208,11 +213,12 @@ export const Staking = ({
                   <p>Rewards Available: <b>{stakingState.availableRewards} DFT</b></p>
                   <div className="d-flex justify-content-center w-100">
                     <Button 
-                      className="w-100" 
+                      className={`w-100`} 
                       color="info"
                       onClick={() => takeRewards()}
+                      disabled={isClaiming}
                     >
-                      Claim Rewards
+                      {isClaiming ? "Claiming Rewards..." : "Claim Rewards"}
                     </Button>
                   </div>
                 </CardBody>
@@ -238,16 +244,18 @@ export const Staking = ({
                         className="w-100"
                         color="info"
                         onClick={() => approveStaking()}
+                        disabled={isApproving}
                       >
-                        Approve DFT
+                        {isApproving ? "Approving..." : "Approve DFT"}
                       </Button>
                     ) : (
                       <Button 
-                        className={`w-100 ${shouldDisableButton(stakeAmountInput, stakingState.tokenBalance) ? "disabled" : ""}`}
+                        className="w-100"
                         color="info"
                         onClick={() => stakeToken()}
+                        disabled={isStaking || shouldDisableButton(stakeAmountInput, stakingState.tokenBalance)}
                       >
-                        Stake DFT
+                        {isStaking ? "Staking..." : "Stake DFT"}
                       </Button>
                     )}
                   </div>
@@ -267,11 +275,12 @@ export const Staking = ({
                   
                   <div className="d-flex justify-content-center w-100">
                     <Button 
-                      className={`w-100 ${shouldDisableButton(unstakeAmountInput, stakingState.stakedBalance) ? "disabled" : ""}`}
+                      className="w-100"
                       color="info"
                       onClick={() => unStakeToken()}
+                      disabled={isUnstaking || shouldDisableButton(unstakeAmountInput, stakingState.stakedBalance)}
                     >
-                      Unstake DFT
+                      {isUnstaking ? "Unstaking..." : "Unstake DFT"}
                     </Button>
                   </div>
                 </CardBody>

@@ -51,7 +51,7 @@ export const Wallet = ({
         feeRate: values[7]
       });
       setLoading(false);
-      console.log(contracts)
+      //console.log(contracts)
     }
     getWalletData();
   }, []);
@@ -221,7 +221,7 @@ export const Wallet = ({
                     <Button 
                       className="w-100"
                       color="success"
-                      href="https://app.uniswap.org/#/swap"
+                      href={`https://app.uniswap.org/#/swap?inputCurrency=${network["token"]}`}
                       target="_blank"
                     >
                       Buy DFT on UniSwap
