@@ -47,8 +47,8 @@ export const Wallet = ({
         totalSupply,
         loyaltyPoints,
         discountRate: values[5],
-        burnRate: values[6],
-        feeRate: values[7]
+        burnRate: values[6] / 100,
+        feeRate: values[7] / 100
       });
       setLoading(false);
       //console.log(contracts)
