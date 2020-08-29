@@ -112,16 +112,20 @@ export const Wallet = ({
           <Row>
             <Col lg="4" className="d-flex">
               <DashboardCard 
+                id="balance"
                 header={walletState.balance}
                 title="DFT Balance"
                 color="info"
+                tooltip="The total amount of DFT in your connected ERC20 wallet."
               />
             </Col>
             <Col lg="4" className="d-flex">
               <DashboardCard 
+                id="supply"
                 header={walletState.totalSupply}
                 title="Total DFT Supply"
                 color="info"
+                tooltip="The total amount of DFT in existence. Initial supply of 500K."
               />
             </Col>
             <Col lg="4" className="d-flex">
@@ -158,16 +162,20 @@ export const Wallet = ({
           <Row>
             <Col lg="4" className="d-flex">
               <DashboardCard 
+                id="points"
                 header={walletState.loyaltyPoints}
                 title="DFT Points Balance"
                 color="primary"
+                tooltip="The total amount of DFTP in your connected ERC20 wallet. Holding DFTP makes you eligible for new Discount Levels."
               />
             </Col>
             <Col lg="4" className="d-flex">
-              <DashboardCard 
+              <DashboardCard
+                id="discount"
                 header={`${walletState.discountRate}%`}
                 title="Discount Rate"
                 color="primary"
+                tooltip="The discount rate you receive on the base network fee and burn rates."
               />
             </Col>
             <Col lg="4" className="d-flex">
@@ -203,16 +211,20 @@ export const Wallet = ({
           <Row>
             <Col lg="4" className="d-flex">
               <DashboardCard
+                id="fees"
                 header={`${walletState.feeRate}%`}
                 title="Network Fee Rate"
                 color="success"
+                tooltip="The base fee rate taken from each transaction on the network (excluding exchanges). Fees taken are redistributed through DFT staking rewards."
               />
             </Col>
             <Col lg="4" className="d-flex">
               <DashboardCard
+                id="burn"
                 header={`${walletState.burnRate}%`}
                 title="Network Burn Rate"
                 color="success"
+                tooltip="The base burn rate taken from each transaction on the network (excluding exchanges). Burned DFT are removed from the total supply and are unable to be transferred or spent."
               />
             </Col>
             <Col lg="4" className="d-flex">

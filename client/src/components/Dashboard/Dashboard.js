@@ -23,7 +23,7 @@ import { toast } from 'react-toastify'
 const Dashboard = (props) => {
   const {
     location,
-    //web3,
+    web3,
     setWeb3,
     accounts,
     setAccount,
@@ -138,6 +138,7 @@ const Dashboard = (props) => {
                           </TabPane>
                           <TabPane tabId="staking">
                             <Staking
+                              web3={web3}
                               contracts={contracts} 
                               accounts={accounts}
                               network={network} 

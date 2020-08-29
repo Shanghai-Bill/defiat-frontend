@@ -14,6 +14,7 @@ import { toast } from 'react-toastify'
 import BigNumber from "bignumber.js"
 
 export const Staking = ({
+  web3,
   contracts,
   accounts,
   network
@@ -39,29 +40,7 @@ export const Staking = ({
 
   useEffect(() => {
     async function getStakingData() {
-      const values = await Promise.all([
-        contracts["token"].methods.balanceOf(accounts[0]).call(),
-        contracts["token"].methods.allowance(accounts[0], network["farming"]).call(),
-        contracts["farming"].methods.userMetrics(accounts[0]).call(),
-        contracts["farming"].methods.poolMetrics().call(),
-        contracts["farming"].methods.viewEligibleRewardOf(accounts[0]).call()
-        //contracts["farming"].methods.eligibileRewardsOf(accounts[0]).call(),
-        //contracts["farming"].methods.
-      ])
-
-      const userMetrics = values[2];
-      const poolMetrics = values[3];
-
-      setStakingState({
-        ...stakingState,
-        tokenBalance: (values[0] / (10 ** 18)).toFixed(2),
-        stakingAllowance: values[1],
-        stakedBalance: (userMetrics.stake / (10 ** 18)).toFixed(2),
-        availableRewards: (values[4] / (10 ** 18)).toFixed(2),
-        totalPoolRewards: (poolMetrics.rewards / (10 ** 18)).toFixed(2),
-        totalPoolStaked: ((poolMetrics.staked / (10 ** 18)).toFixed(2)), //- (poolMetrics.rewards / (10 ** 18))),
-        currentPoolFee: (poolMetrics.stakingFee / 10)
-      })
+      const values = await loadData();
 
       console.log(values)
       // if we have already approved staking, show the approve button
@@ -74,6 +53,34 @@ export const Staking = ({
 
     getStakingData();
   }, []);
+
+  const loadData = async () => {
+    const values = await Promise.all([
+      contracts["token"].methods.balanceOf(accounts[0]).call(),
+      contracts["token"].methods.allowance(accounts[0], network["farming"]).call(),
+      contracts["farming"].methods.userMetrics(accounts[0]).call(),
+      contracts["farming"].methods.poolMetrics().call(),
+      contracts["farming"].methods.viewEligibleRewardOf(accounts[0]).call()
+      //contracts["farming"].methods.eligibileRewardsOf(accounts[0]).call(),
+      //contracts["farming"].methods.
+    ])
+
+    const userMetrics = values[2];
+    const poolMetrics = values[3];
+
+    setStakingState({
+      ...stakingState,
+      tokenBalance: (values[0] / (10 ** 18)).toFixed(2),
+      stakingAllowance: values[1],
+      stakedBalance: (userMetrics.stake / (10 ** 18)).toFixed(2),
+      availableRewards: (values[4] / (10 ** 18)).toFixed(2),
+      totalPoolRewards: (poolMetrics.rewards / (10 ** 18)).toFixed(2),
+      totalPoolStaked: ((poolMetrics.staked / (10 ** 18)).toFixed(2)), //- (poolMetrics.rewards / (10 ** 18))),
+      currentPoolFee: (poolMetrics.stakingFee / 10)
+    })
+
+    return values;
+  }
 
   const approveStaking = async () => {
     setApproving(true);
@@ -94,15 +101,12 @@ export const Staking = ({
   const stakeToken = async () => {
     setStaking(true);
     const sAmount = parseFloat(stakeAmountInput);
-    const stakeAmount = new BigNumber(sAmount).multipliedBy(10 ** 18);
+    const tokens = web3.utils.toWei(stakeAmountInput.toString(), 'ether');
+    const stakeAmount = web3.utils.toBN(tokens);
     contracts["farming"].methods.stake(stakeAmount).send({from: accounts[0]})
       .then((data) => {
         toast.success(`✅ Successfully staked ${stakeAmountInput} DFT.`);
-        setStakingState({
-          ...stakingState,
-          stakedBalance: stakingState.stakedBalance + sAmount,
-          tokenBalance: stakingState.tokenBalance - sAmount
-        })
+        loadData();
       })
       .catch((err) => {
         // console.log(err)
@@ -117,15 +121,12 @@ export const Staking = ({
   const unStakeToken = async () => {
     setUnstaking(true);
     const uAmount = parseFloat(unstakeAmountInput);
-    const unstakeAmount = new BigNumber(uAmount).multipliedBy(10 ** 18);
+    const tokens = web3.utils.toWei(unstakeAmountInput.toString(), 'ether');
+    const unstakeAmount = web3.utils.toBN(tokens);
     contracts["farming"].methods.unStake(unstakeAmount).send({from: accounts[0]})
       .then((data) => {
         toast.success(`✅ Successfully unstaked ${unstakeAmountInput} DFT.`);
-        setStakingState({
-          ...stakingState,
-          stakedBalance: stakingState.stakedBalance - uAmount,
-          tokenBalance: stakingState.tokenBalance + uAmount
-        })
+        loadData();
       })
       .catch((err) => {
         // console.log(err);
@@ -145,11 +146,7 @@ export const Staking = ({
       .then((data) => {
         toast.success(`✅ Successfully claimed ${rewards} DFT.`);
         const updatedBalance = +stakingState.tokenBalance + +rewards;
-        setStakingState({
-          ...stakingState,
-          availableRewards: 0,
-          tokenBalance: updatedBalance
-        });
+        loadData();
       })
       .catch((err) => {
         // console.log(err)
