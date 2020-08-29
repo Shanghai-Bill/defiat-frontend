@@ -13,7 +13,7 @@ export default {
       token: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
       points: "0x70c7d7856e1558210cfbf27b7f17853655752453",
       gov: "0x064fd7d9c228e8a4a2bf247b432a34d6e1cb9442",
-      farming: "0x0B1990aEAaAd252dc9C57207E9f76Fd4FBD12958"
+      farming: "0x6D8830631f049fE8c7Fe339f9752DC4cAAD640D3"
      }
   }
 };
