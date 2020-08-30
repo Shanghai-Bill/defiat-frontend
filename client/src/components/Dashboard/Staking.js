@@ -11,7 +11,6 @@ import {
   Button
 } from 'reactstrap'
 import { toast } from 'react-toastify'
-import BigNumber from "bignumber.js"
 
 export const Staking = ({
   web3,
@@ -42,9 +41,9 @@ export const Staking = ({
     async function getStakingData() {
       const values = await loadData();
 
-      console.log(values)
+      const farmingAllowance = values[1];
       // if we have already approved staking, show the approve button
-      if (values[1] > 0) {
+      if (farmingAllowance > 0) {
         setShowApproveButton(false);
       }
 
@@ -70,16 +69,21 @@ export const Staking = ({
 
     setStakingState({
       ...stakingState,
-      tokenBalance: (values[0] / (10 ** 18)).toFixed(2),
+      tokenBalance: parseValue(values[0]),
       stakingAllowance: values[1],
-      stakedBalance: (userMetrics.stake / (10 ** 18)).toFixed(2),
-      availableRewards: (values[4] / (10 ** 18)).toFixed(2),
-      totalPoolRewards: (poolMetrics.rewards / (10 ** 18)).toFixed(2),
-      totalPoolStaked: ((poolMetrics.staked / (10 ** 18)).toFixed(2)), //- (poolMetrics.rewards / (10 ** 18))),
-      currentPoolFee: (poolMetrics.stakingFee / 10)
+      stakedBalance: parseValue(userMetrics.stake),
+      availableRewards: parseValue(values[4]),
+      totalPoolRewards: parseValue(poolMetrics.rewards),
+      totalPoolStaked: parseValue(poolMetrics.staked),
+      currentPoolFee: (poolMetrics.stakingFee / 10).toFixed(2)
     })
 
     return values;
+  }
+
+  const parseValue = (value) => {
+    const wei = web3.utils.fromWei(value)
+    return (Math.floor(parseFloat(wei * 100)) / 100).toFixed(2);
   }
 
   const approveStaking = async () => {
@@ -88,6 +92,7 @@ export const Staking = ({
     contracts["token"].methods.approve(network["farming"], totalSupply).send({from: accounts[0]})
       .then((data) => {
         toast.success(`✅ Successfully approved DFT staking.`);
+        setShowApproveButton(false);
       })
       .catch((err) => {
         // console.log(err);
@@ -106,7 +111,6 @@ export const Staking = ({
     contracts["farming"].methods.stake(stakeAmount).send({from: accounts[0]})
       .then((data) => {
         toast.success(`✅ Successfully staked ${stakeAmountInput} DFT.`);
-        loadData();
       })
       .catch((err) => {
         // console.log(err)
@@ -115,6 +119,7 @@ export const Staking = ({
       .finally(() => {
         setStakeAmountInput('');
         setStaking(false);
+        loadData();
       });
   }
 
@@ -126,7 +131,6 @@ export const Staking = ({
     contracts["farming"].methods.unStake(unstakeAmount).send({from: accounts[0]})
       .then((data) => {
         toast.success(`✅ Successfully unstaked ${unstakeAmountInput} DFT.`);
-        loadData();
       })
       .catch((err) => {
         // console.log(err);
@@ -135,6 +139,7 @@ export const Staking = ({
       .finally(() => {
         setUnstaking(false);
         setStakeAmountInput('');
+        loadData();
       });
   }
 
@@ -145,8 +150,6 @@ export const Staking = ({
     contracts["farming"].methods.takeRewards().send({from: accounts[0]})
       .then((data) => {
         toast.success(`✅ Successfully claimed ${rewards} DFT.`);
-        const updatedBalance = +stakingState.tokenBalance + +rewards;
-        loadData();
       })
       .catch((err) => {
         // console.log(err)
@@ -154,6 +157,7 @@ export const Staking = ({
       })
       .finally(() => {
         setClaiming(false);
+        loadData();
       });
   }
 

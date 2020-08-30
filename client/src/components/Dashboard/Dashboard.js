@@ -16,9 +16,9 @@ import {
 import { NoWallet } from './NoWallet';
 import { Wallet } from './Wallet';
 import { Staking } from './Staking';
-import { withRouter } from 'react-router-dom'
+import { withRouter, useRouteMatch, useHistory } from 'react-router-dom'
 import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Container } from 'reactstrap';
-import { toast } from 'react-toastify'
+
 
 const Dashboard = (props) => {
   const {
@@ -35,7 +35,8 @@ const Dashboard = (props) => {
 
   const [showDashboard, setShowDashboard] = useState(false);
   const [isLoading, setLoading] = useState(true);
-  const [activeTab, setTab] = useState('wallet');
+  const { path } = useRouteMatch();
+  const history = useHistory();
 
   useEffect(() => {
     async function loadWeb3() {
@@ -61,11 +62,14 @@ const Dashboard = (props) => {
         setAccount({ accounts: accts });
         setContractInstance({ contracts: smartContracts });
         setNetwork({ network: ntk });
-        setLoading(false);
+        //setLoading(false);
         setShowDashboard(true);
+        // history.push(`${url}/account`)
       } catch (error) {
         // Catch any errors for any of the above operations.
         console.error(error);
+        
+      } finally {
         setLoading(false);
       }
     }
@@ -76,6 +80,10 @@ const Dashboard = (props) => {
       loadWeb3();
     }
   }, [location])
+
+  const handleTab = (tabId) => {
+    history.push(tabId);
+  }
 
   return (
     <>
@@ -93,50 +101,50 @@ const Dashboard = (props) => {
             ) : (
               <>
                 {!showDashboard ? (
-                  <div className="content-center" onClick={() => console.log(props)}>
+                  <div className="content-center">
                     <NoWallet />
                   </div>
                 ) : (
                   <>
                     {network.name === 'main' ? (
-                      <Container>
-                        <Wallet 
-                          contracts={contracts} 
-                          accounts={accounts}
-                          network={network} 
-                        />
-                      </Container>
+                      <Wallet
+                        web3={web3}
+                        contracts={contracts} 
+                        accounts={accounts}
+                        network={network} 
+                      />
                     ) : (
                       <Container>
                         <Nav tabs>
                           <NavItem>
                             <NavLink
-                              className={activeTab === 'wallet' ? 'active' : '' }
-                              onClick={() => setTab('wallet')}
+                              className={history.location.pathname === path ? 'active' : '' }
+                              onClick={() => handleTab(`${path}`)}
                               style={{cursor:"pointer"}}
                             >
-                              Account
+                              Wallet
                             </NavLink>
                           </NavItem>
                           <NavItem>
                             <NavLink
-                              className={activeTab === 'staking' ? 'active' : '' }
-                              onClick={() => setTab('staking')}
+                              className={history.location.pathname === path + '/staking' ? 'active' : '' }
+                              onClick={() => handleTab(`${path}/staking`)}
                               style={{cursor:"pointer"}}
                             >
                               Staking
                             </NavLink>
                           </NavItem>
                         </Nav>
-                        <TabContent activeTab={activeTab}>
-                          <TabPane tabId="wallet">
-                            <Wallet 
+                        <TabContent activeTab={history.location.pathname}>
+                          <TabPane tabId={path}>
+                            <Wallet
+                              web3={web3}
                               contracts={contracts} 
                               accounts={accounts}
                               network={network} 
                             />
                           </TabPane>
-                          <TabPane tabId="staking">
+                          <TabPane tabId={path +'/staking'}>
                             <Staking
                               web3={web3}
                               contracts={contracts} 

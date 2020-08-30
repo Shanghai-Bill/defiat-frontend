@@ -20,7 +20,7 @@ export const NoWallet = () => {
         <Col lg="6">
           <h3>
             Please connect your Ethereum wallet via Metamask
-            or another browser-based extension to access the DeFiat dashboard
+            or another browser-based extension to access the DeFiat Dashboard.
           </h3>
         </Col>
       </Row>     

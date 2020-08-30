@@ -11,6 +11,7 @@ import { DashboardCard } from './DashboardCard'
 import { toast } from 'react-toastify'
 
 export const Wallet = ({
+  web3,
   accounts,
   contracts,
   network
@@ -29,32 +30,33 @@ export const Wallet = ({
   useEffect(() => {
     async function getWalletData() {
       const values = await Promise.all([
-        contracts["token"].methods.decimals().call(),
         contracts["token"].methods.balanceOf(accounts[0]).call(),
         contracts["token"].methods.totalSupply().call(),
-        contracts["points"].methods.decimals().call(),
         contracts["points"].methods.balanceOf(accounts[0]).call(),
         contracts["points"].methods.viewDiscountOf(accounts[0]).call(),
         contracts["gov"].methods.viewBurnRate().call(),
-        contracts["gov"].methods.viewFeeRate().call(),
-        contracts["token"].methods.symbol().call()
+        contracts["gov"].methods.viewFeeRate().call()
       ])
-      const balance = (+values[1] / (10 ** +values[0])).toFixed(2)
-      const totalSupply = (+values[2] / (10 ** +values[0])).toFixed(2)
-      const loyaltyPoints = +values[4] / (10 ** +values[3])
+      const balance = parseValue(values[0])
+      const totalSupply = parseValue(values[1])
+      const loyaltyPoints = parseValue(values[2])
       setWalletState({
         balance,
         totalSupply,
         loyaltyPoints,
-        discountRate: values[5],
-        burnRate: values[6] / 100,
-        feeRate: values[7] / 100
+        discountRate: values[3],
+        burnRate: (values[4] / 100).toFixed(2),
+        feeRate: (values[5] / 100).toFixed(2)
       });
       setLoading(false);
-      //console.log(contracts)
     }
     getWalletData();
   }, []);
+
+  const parseValue = (value) => {
+    const wei = web3.utils.fromWei(value)
+    return (Math.floor(parseFloat(wei * 100)) / 100).toFixed(2);
+  }
 
   const checkDiscount = async () => {
     const decimals = await contracts["points"].methods.decimals().call();
