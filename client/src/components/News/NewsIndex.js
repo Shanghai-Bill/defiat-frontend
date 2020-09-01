@@ -1,31 +1,39 @@
-import React from 'react'
-import { Container } from 'reactstrap'
-import { NewsModule } from './NewsModule'
-import postData from 'assets/files/posts.json'
+import React from 'react';
+import { Container } from 'reactstrap';
+import { NewsModule } from './NewsModule';
 
-export const NewsIndex = ({baseUrl}) => {
+export const NewsIndex = ({ mediumPosts }) => {
+
+  const returnMediumPosts = () => {
+    if(mediumPosts.length !== 0){
+      return(
+        mediumPosts.mediumPosts.items.map((item) => (
+          <NewsModule
+            link={item.link}
+            thumbnail={item.thumbnail}
+            title={item.title}
+            description={item.description}
+            author={item.author}
+            date={item.pubDate}
+            key={item.title}
+          />
+        ))
+      )
+    }
+  }
+
   return (
     <>
       <div className="wrapper">
         <div className="page-header">
           <div className="content">
-            <h2 className="display-2">News</h2>
+            <h2 className="display-2">Latest News & Events</h2>
             <Container>
-              {postData.reverse().map((post, i) => (
-                <NewsModule
-                  key={i}
-                  title={post.title}
-                  subtitle={post.subtitle}
-                  datePublished={post.datePublished}
-                  author={post.author}
-                  imagePath={`${process.env.PUBLIC_URL}/${post.image}`}
-                  route={baseUrl + "/" + post.id}
-                />
-              ))}
+            {returnMediumPosts()}
             </Container>
           </div>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
