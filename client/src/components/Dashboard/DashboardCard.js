@@ -25,7 +25,7 @@ export const DashboardCard = ({
           {tooltip}
         </Tooltip>
 
-        <div className=" d-flex justify-content-between mb-2">
+        <div className="d-flex justify-content-between mb-2">
           <h3 className="mb-0">{header}</h3>
           {/* <FiInfo className={`text-${color} hover`} height="30" /> */}
           <MdInfoOutline className={`text-${color} h3 mb-0`} id={`tooltip-${id}`} />

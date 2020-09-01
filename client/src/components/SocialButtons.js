@@ -47,7 +47,7 @@ export const SocialButtons = () => {
         <Button
           className="btn-icon btn-simple btn-round btn-neutral d-inline-flex justify-content-center align-items-center"
           color="default"
-          href="https://github.com/QuantSoldier/defiat"
+          href="https://github.com/defiat-crypto/defiat"
           target="_blank"
         >
           <FaGithub />

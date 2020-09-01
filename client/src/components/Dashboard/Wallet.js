@@ -9,6 +9,7 @@ import {
 } from 'reactstrap'
 import { DashboardCard } from './DashboardCard'
 import { toast } from 'react-toastify'
+import { Link } from 'react-router-dom'
 
 export const Wallet = ({
   web3,
@@ -26,32 +27,43 @@ export const Wallet = ({
     burnRate: 0,
     feeRate: 0
   })
+  const [blockNumber, setBlockNumber] = useState(0);
 
   useEffect(() => {
-    async function getWalletData() {
-      const values = await Promise.all([
-        contracts["token"].methods.balanceOf(accounts[0]).call(),
-        contracts["token"].methods.totalSupply().call(),
-        contracts["points"].methods.balanceOf(accounts[0]).call(),
-        contracts["points"].methods.viewDiscountOf(accounts[0]).call(),
-        contracts["gov"].methods.viewBurnRate().call(),
-        contracts["gov"].methods.viewFeeRate().call()
-      ])
-      const balance = parseValue(values[0])
-      const totalSupply = parseValue(values[1])
-      const loyaltyPoints = parseValue(values[2])
-      setWalletState({
-        balance,
-        totalSupply,
-        loyaltyPoints,
-        discountRate: values[3],
-        burnRate: (values[4] / 100).toFixed(2),
-        feeRate: (values[5] / 100).toFixed(2)
-      });
-      setLoading(false);
-    }
-    getWalletData();
+    const subscription = web3.eth.subscribe('newBlockHeaders', (error, result) => {
+      if (!error) {
+        setBlockNumber(result.number);
+        getWalletData();
+        return;
+      }
+      console.error(error);
+    })
+
+    return () => subscription.unsubscribe();
   }, []);
+
+  const getWalletData = async () => {
+    const values = await Promise.all([
+      contracts["token"].methods.balanceOf(accounts[0]).call(),
+      contracts["token"].methods.totalSupply().call(),
+      contracts["points"].methods.balanceOf(accounts[0]).call(),
+      contracts["points"].methods.viewDiscountOf(accounts[0]).call(),
+      contracts["gov"].methods.viewBurnRate().call(),
+      contracts["gov"].methods.viewFeeRate().call()
+    ])
+    const balance = parseValue(values[0])
+    const totalSupply = parseValue(values[1])
+    const loyaltyPoints = parseValue(values[2])
+    setWalletState({
+      balance,
+      totalSupply,
+      loyaltyPoints,
+      discountRate: (+values[3]).toFixed(2),
+      burnRate: (values[4] / 100).toFixed(2),
+      feeRate: (values[5] / 100).toFixed(2)
+    });
+    isLoading && setLoading(false);
+  }
 
   const parseValue = (value) => {
     const wei = web3.utils.fromWei(value)
@@ -62,7 +74,7 @@ export const Wallet = ({
     const decimals = await contracts["points"].methods.decimals().call();
     const currentLevel = await contracts["points"].methods.viewEligibilityOf(accounts[0]).call();
     const nextLevelPoints = await contracts["points"].methods._discountTranches(currentLevel+1).call();
-    const loyaltyPointsNeeded = (nextLevelPoints - walletState.loyaltyPoints) / (10 ** decimals);
+    const loyaltyPointsNeeded = (nextLevelPoints / 1e18) - (walletState.loyaltyPoints / 1e18);
 
     if (loyaltyPointsNeeded <= 0) {
       toast.success("✅ You are eligible for the next Discount Tier! Click Update Discount!")
@@ -111,6 +123,7 @@ export const Wallet = ({
         </div>
       ) : (
         <Container>
+          {/* <h1 className="text-left mt-2 mb-4">Block Number: <b>{blockNumber}</b></h1> */}
           <Row>
             <Col lg="4" className="d-flex">
               <DashboardCard 
@@ -251,6 +264,10 @@ export const Wallet = ({
               </Card>
             </Col>
           </Row>
+          <Link to="/">
+            <Button>Back To Home</Button>
+          </Link>
+          
         </Container>
       )}
     </>

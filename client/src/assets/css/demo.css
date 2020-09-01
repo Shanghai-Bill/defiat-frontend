@@ -499,3 +499,12 @@
   content: "";
   background: rgba(0, 0, 0, .5);
 }
+
+.modal-body::-webkit-scrollbar {
+  width: 0.7em;
+  background: #1d253b;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: #ba54f5;
+}

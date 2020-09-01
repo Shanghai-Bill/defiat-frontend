@@ -7,7 +7,6 @@ const initialState = {
 };
 
 export default function rootReducer(state = initialState, action) {
-  //console.log('In offer Reducer', action)
   const { type } = action;
   switch (type) {
     case SET_WEB3: {

@@ -44,8 +44,8 @@ export const StatSection = () => {
                     orchestrated by DFT holders. Every time a transaction occurs on
                     the network, a fee is distributed to network participants and
                     tokens are burned to facilitate the transaction, naturally decreasing
-                    supply. Transaction fees are rewarded as staking rewards, creating a
-                    circular economy
+                    supply. Transaction fees are repurposed as staking rewards, creating a
+                    circular economy.
                   </p>
                   <br />
                   <Link

@@ -16,8 +16,8 @@ import {
 import { NoWallet } from './NoWallet';
 import { Wallet } from './Wallet';
 import { Staking } from './Staking';
-import { withRouter, useRouteMatch, useHistory } from 'react-router-dom'
-import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Container } from 'reactstrap';
+import { withRouter, useRouteMatch, useHistory, Route, Switch } from 'react-router-dom'
+import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Container, NavbarText } from 'reactstrap';
 
 
 const Dashboard = (props) => {
@@ -127,7 +127,7 @@ const Dashboard = (props) => {
                           </NavItem>
                           <NavItem>
                             <NavLink
-                              className={history.location.pathname === path + '/staking' ? 'active' : '' }
+                              className={history.location.pathname.includes(path + '/staking') ? 'active' : '' }
                               onClick={() => handleTab(`${path}/staking`)}
                               style={{cursor:"pointer"}}
                             >
@@ -135,24 +135,25 @@ const Dashboard = (props) => {
                             </NavLink>
                           </NavItem>
                         </Nav>
-                        <TabContent activeTab={history.location.pathname}>
-                          <TabPane tabId={path}>
+        
+                        <Switch>
+                          <Route path={path} exact>
                             <Wallet
                               web3={web3}
                               contracts={contracts} 
                               accounts={accounts}
                               network={network} 
                             />
-                          </TabPane>
-                          <TabPane tabId={path +'/staking'}>
+                            </Route>
+                          <Route path={`${path}/staking`}>
                             <Staking
                               web3={web3}
                               contracts={contracts} 
                               accounts={accounts}
                               network={network} 
                             />
-                          </TabPane>
-                        </TabContent>
+                          </Route>
+                        </Switch>
                       </Container>
                     )}
                   </>
