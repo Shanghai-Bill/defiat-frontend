@@ -36,7 +36,7 @@ export default {
           img: require("assets/img/liquidity-lab.png"),
           poolTitle: "Liquidity Laboratory",
           poolSubtitle: "Stake DFT-UNI-V2, earn DFT",
-          poolAddress: "0xd49A73078E9bD0C6A61616900E3f2010D8C80A20",
+          poolAddress: "0x85Ec0832418faff9eF2d69128Cfe86F52d4D4aeF",
           stakedSymbol: "DFT",
           rewardSymbol: "UNI-V2",
           basePool: "0x5c2Fed8e40cE254e63Be59553e5188f6398fB195",
