@@ -21,6 +21,7 @@ export default {
           poolTitle: "DeFiat Dungeon",
           poolSubtitle: "Stake DFT, Earn DFT",
           poolAddress: "0x5c2Fed8e40cE254e63Be59553e5188f6398fB195",
+          basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
           stakedSymbol: "DFT",
           rewardSymbol: "DFT",
           isLiquidityToken: false
@@ -37,9 +38,9 @@ export default {
           poolTitle: "Liquidity Laboratory",
           poolSubtitle: "Stake DFT-UNI-V2, earn DFT",
           poolAddress: "0x85Ec0832418faff9eF2d69128Cfe86F52d4D4aeF",
+          basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
           stakedSymbol: "UNI-V2",
           rewardSymbol: "DFT",
-          basePool: "0x5c2Fed8e40cE254e63Be59553e5188f6398fB195",
           isLiquidityToken: true
         },
       ]

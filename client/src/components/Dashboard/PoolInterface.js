@@ -368,7 +368,7 @@ export const PoolInterface = ({
             <Button 
               color="primary"
               target="_blank"
-              href={poolContent.isLiquidityToken ? `https://app.uniswap.org/#/add/${poolContent.basePool}/ETH` : `https://app.uniswap.org/#/swap?inputCurrency=${contractId}`}
+              href={poolContent.isLiquidityToken ? `https://app.uniswap.org/#/add/${poolContent.basePool}/ETH` : `https://app.uniswap.org/#/swap?inputCurrency=${poolContent.basePool}`}
             >
               Get {stakingState.stakedSymbol} on Uniswap
             </Button>
