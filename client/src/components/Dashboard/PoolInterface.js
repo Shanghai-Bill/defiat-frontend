@@ -415,7 +415,7 @@ export const PoolInterface = ({
               <Button
                 className="m-0 w-100"
                 color="info"
-                disabled={isStaking || (stakeAction === "Stake" ? shouldDisableButton(stakingState.longTokenBalance) : shouldDisableButton(userMetrics.stake))}
+                disabled={isStaking || (stakeAction === "Stake" ? shouldDisableButton(stakingState.longTokenBalance / 1e18) : shouldDisableButton(userMetrics.stake / 1e18))}
                 onClick={stakeAction === "Stake" ? () => stakeToken() : () => unStakeToken()}  
               >
                 {stakeAction === "Stake" ? (
