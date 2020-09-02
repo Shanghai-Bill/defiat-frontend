@@ -37,8 +37,8 @@ export default {
           poolTitle: "Liquidity Laboratory",
           poolSubtitle: "Stake DFT-UNI-V2, earn DFT",
           poolAddress: "0x85Ec0832418faff9eF2d69128Cfe86F52d4D4aeF",
-          stakedSymbol: "DFT",
-          rewardSymbol: "UNI-V2",
+          stakedSymbol: "UNI-V2",
+          rewardSymbol: "DFT",
           basePool: "0x5c2Fed8e40cE254e63Be59553e5188f6398fB195",
           isLiquidityToken: true
         },
