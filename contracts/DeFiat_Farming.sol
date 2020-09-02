@@ -1,4 +1,11 @@
-// 10000000000000000000000 = 10,000 tokens (for testing / copy paste)
+// 10000000000000000000000 = 10,000 tokens
+// r.DFT: 0xB571d40e4A7087C1B73ce6a3f29EaDfCA022C5B2
+// r.UNI: 0xB571d40e4A7087C1B73ce6a3f29EaDfCA022C5B2
+// previosu POOLS to flushPool
+// 0x85Ec0832418faff9eF2d69128Cfe86F52d4D4aeF DFT-DFT
+// 0x5c2Fed8e40cE254e63Be59553e5188f6398fB195 UNI-DFT
+
+
 
 /*
 * Copyright (c) 2020 DeFiat.net
@@ -22,10 +29,77 @@
 */
 
 // File: @openzeppelin/contracts/math/Math.sol
-//
+
+// File: @openzeppelin/contracts/utils/Address.sol
+pragma solidity ^0.6.0;
+/**
+ * @dev Collection of functions related to the address type
+ */
+library Address {
+    /**
+     * @dev Returns true if `account` is a contract.
+     *
+     * This test is non-exhaustive, and there may be false-negatives: during the
+     * execution of a contract's constructor, its address will be reported as
+     * not containing a contract.
+     *
+     * IMPORTANT: It is unsafe to assume that an address for which this
+     * function returns false is an externally-owned account (EOA) and not a
+     * contract.
+     */
+    function isContract(address account) internal view returns (bool) {
+        // This method relies in extcodesize, which returns 0 for contracts in
+        // construction, since the code is only stored at the end of the
+        // constructor execution.
+
+        // According to EIP-1052, 0x0 is the value returned for not-yet created accounts
+        // and 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 is returned
+        // for accounts without code, i.e. `keccak256('')`
+        bytes32 codehash;
+        bytes32 accountHash = 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470;
+        // solhint-disable-next-line no-inline-assembly
+        assembly { codehash := extcodehash(account) }
+        return (codehash != 0x0 && codehash != accountHash);
+    }
+
+    /**
+     * @dev Converts an `address` into `address payable`. Note that this is
+     * simply a type cast: the actual underlying value is not changed.
+     *
+     * _Available since v2.4.0._
+     */
+    function toPayable(address account) internal pure returns (address payable) {
+        return address(uint160(account));
+    }
+
+    /**
+     * @dev Replacement for Solidity's `transfer`: sends `amount` wei to
+     * `recipient`, forwarding all available gas and reverting on errors.
+     *
+     * https://eips.ethereum.org/EIPS/eip-1884[EIP1884] increases the gas cost
+     * of certain opcodes, possibly making contracts go over the 2300 gas limit
+     * imposed by `transfer`, making them unable to receive funds via
+     * `transfer`. {sendValue} removes this limitation.
+     *
+     * https://diligence.consensys.net/posts/2019/09/stop-using-soliditys-transfer-now/[Learn more].
+     *
+     * IMPORTANT: because control is transferred to `recipient`, care must be
+     * taken to not create reentrancy vulnerabilities. Consider using
+     * {ReentrancyGuard} or the
+     * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].
+     *
+     * _Available since v2.4.0._
+     */
+    function sendValue(address payable recipient, uint256 amount) internal {
+        require(address(this).balance >= amount, "Address: insufficient balance");
+
+        // solhint-disable-next-line avoid-call-value
+        (bool success, ) = recipient.call.value(amount)("");
+        require(success, "Address: unable to send value, recipient may have reverted");
+    }
+}
 
 // File: @openzeppelin/contracts/math/SafeMath.sol
-pragma solidity ^0.6.0;
 /**
  * @dev Wrappers over Solidity's arithmetic operations with added overflow
  * checks.
@@ -205,7 +279,6 @@ library SafeMath{
 }
 
 // File: @openzeppelin/contracts/GSN/Context.sol
-pragma solidity ^0.6.0;
 /*
  * @dev Provides information about the current execution context, including the
  * sender of the transaction and its data. While these are generally available
@@ -233,7 +306,6 @@ contract Context {
 }
 
 // File: @openzeppelin/contracts/ownership/Ownable.sol
-pragma solidity ^0.6.0;
 /**
  * @dev Contract module which provides a basic access control mechanism, where
  * there is an account (an owner) that can be granted exclusive access to
@@ -310,7 +382,6 @@ contract Ownable is Context {
 } //adding ALLOWED method
 
 // File: @openzeppelin/contracts/token/ERC20/IERC20.sol
-pragma solidity ^0.6.0;
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP. Does not include
  * the optional functions; to access them see {ERC20Detailed}.
@@ -326,83 +397,11 @@ interface IERC20 {
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
-// File: @openzeppelin/contracts/utils/Address.sol
-pragma solidity ^0.6.0;
-/**
- * @dev Collection of functions related to the address type
- */
-library Address {
-    /**
-     * @dev Returns true if `account` is a contract.
-     *
-     * This test is non-exhaustive, and there may be false-negatives: during the
-     * execution of a contract's constructor, its address will be reported as
-     * not containing a contract.
-     *
-     * IMPORTANT: It is unsafe to assume that an address for which this
-     * function returns false is an externally-owned account (EOA) and not a
-     * contract.
-     */
-    function isContract(address account) internal view returns (bool) {
-        // This method relies in extcodesize, which returns 0 for contracts in
-        // construction, since the code is only stored at the end of the
-        // constructor execution.
-
-        // According to EIP-1052, 0x0 is the value returned for not-yet created accounts
-        // and 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 is returned
-        // for accounts without code, i.e. `keccak256('')`
-        bytes32 codehash;
-        bytes32 accountHash = 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470;
-        // solhint-disable-next-line no-inline-assembly
-        assembly { codehash := extcodehash(account) }
-        return (codehash != 0x0 && codehash != accountHash);
-    }
-
-    /**
-     * @dev Converts an `address` into `address payable`. Note that this is
-     * simply a type cast: the actual underlying value is not changed.
-     *
-     * _Available since v2.4.0._
-     */
-    function toPayable(address account) internal pure returns (address payable) {
-        return address(uint160(account));
-    }
-
-    /**
-     * @dev Replacement for Solidity's `transfer`: sends `amount` wei to
-     * `recipient`, forwarding all available gas and reverting on errors.
-     *
-     * https://eips.ethereum.org/EIPS/eip-1884[EIP1884] increases the gas cost
-     * of certain opcodes, possibly making contracts go over the 2300 gas limit
-     * imposed by `transfer`, making them unable to receive funds via
-     * `transfer`. {sendValue} removes this limitation.
-     *
-     * https://diligence.consensys.net/posts/2019/09/stop-using-soliditys-transfer-now/[Learn more].
-     *
-     * IMPORTANT: because control is transferred to `recipient`, care must be
-     * taken to not create reentrancy vulnerabilities. Consider using
-     * {ReentrancyGuard} or the
-     * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].
-     *
-     * _Available since v2.4.0._
-     */
-    function sendValue(address payable recipient, uint256 amount) internal {
-        require(address(this).balance >= amount, "Address: insufficient balance");
-
-        // solhint-disable-next-line avoid-call-value
-        (bool success, ) = recipient.call.value(amount)("");
-        require(success, "Address: unable to send value, recipient may have reverted");
-    }
-}
-
-
-
-
 
 pragma solidity ^0.6.0;
 
 
-contract DeFiat_Farming {
+contract DeFiat_Farming_v5 {
     using SafeMath for uint256;
 
     //Structs
@@ -411,15 +410,17 @@ contract DeFiat_Farming {
         uint256 staked;             // sum of tokens staked in the contract
         uint256 stakingFee;         // entry fee
         
-        uint256 stakingPoints;
+        uint256 stakingPoints;      // baseline for share of stake
+        uint256 rewardsPoints;      // baseline for rewards
 
         address rewardToken;
-        uint256 rewards;        // sum of rewards in the pool
+        uint256 rewards;        // rewards still in the pool
+        uint256 totalRewards;   // totalRewards to be consumed (fees + loaded)
 
         uint256 startTime;      // when the pool opens
         uint256 closingTime;    // when the pool closes. 
         uint256 duration;       // duration of the staking
-        uint256 lastStakingEvent;   // last time metrics were updated.
+        uint256 lastEvent;   // last time metrics were updated.
         
         uint256  ratePerToken;      // CALCULATED pool reward Rate per Token (calculated based on total stake and time)
     }
@@ -427,8 +428,8 @@ contract DeFiat_Farming {
 
     struct UserMetrics {
             uint256 stake;          // native token stake (balanceOf)
-            uint256 stakingPoints;  // acrrued over time. Does not take into account current ones
-            uint256 lastStakingEvent;
+            uint256 stakingPoints;  // acrruing over time. Does not take into account current ones
+            uint256 lastEvent;
             
             uint256 rewardAccrued;  // accrued rewards over time based on staking points
             uint256 rewardsPaid;    // what the user already consumed, to remove from rewardsAccrued
@@ -439,15 +440,15 @@ contract DeFiat_Farming {
 
 //== constructor 
     constructor(address _stakedToken, address _rewardToken, uint256 _feeBase1000, uint256 _durationHours, uint256 _delayStartHours) public {
-    poolOperator = msg.sender;
-    
-    poolMetrics.stakedToken = address(_stakedToken);
-    poolMetrics.rewardToken = address(_rewardToken);
-    poolMetrics.stakingFee = _feeBase1000; //3%
-    
-    poolMetrics.duration = _durationHours.mul(3600); // ~7 1/4 days --> 1 week of staking // NOT ENOUGH. Go 1months.
-    poolMetrics.startTime = block.timestamp + _delayStartHours.mul(3600);
-    poolMetrics.closingTime = block.timestamp + poolMetrics.duration;
+        poolOperator = msg.sender;
+        
+        poolMetrics.stakedToken = address(_stakedToken);
+        poolMetrics.rewardToken = address(_rewardToken);
+        poolMetrics.stakingFee = _feeBase1000; //3%
+        
+        poolMetrics.duration = _durationHours.mul(3600); // ~7 1/4 days --> 1 week of staking // NOT ENOUGH. Go 1months.
+        poolMetrics.startTime = block.timestamp + _delayStartHours.mul(3600);
+        poolMetrics.closingTime = block.timestamp + poolMetrics.duration;
     }
 
 //==EVENTS
@@ -471,7 +472,7 @@ contract DeFiat_Farming {
         _;
     }
     modifier antiSpam(uint256 _blocks) {
-        require(block.number > userMetrics[msg.sender].lastTxBlock.add(_blocks), "Wait 1 BLOCK between Transactions");
+        require(block.number >= userMetrics[msg.sender].lastTxBlock.add(_blocks), "Wait between Transactions");
         userMetrics[msg.sender].lastTxBlock = block.number; //update
         _;
     } 
@@ -482,6 +483,15 @@ contract DeFiat_Farming {
     function setFee(uint256 _fee) public onlyPoolOperator {
         poolMetrics.stakingFee = _fee;
     }
+    
+    //testnet only
+    function setRewardToken(address _token) public onlyPoolOperator {
+        poolMetrics.rewardToken = _token;
+    }
+    function setStakingToken(address _token) public onlyPoolOperator {
+        poolMetrics.stakedToken = _token;
+    }
+    
     function currentTime() public view returns (uint256) {
         return SafeMath.min(block.timestamp, poolMetrics.closingTime); //allows expiration
     } // SafeMath.min(now, endTime)
@@ -492,24 +502,23 @@ contract DeFiat_Farming {
             uint256 _previousStake = poolMetrics.staked;             // previous stake snapshot
             
             uint256 _timeHeld = currentTime().sub(
-                        SafeMath.max(poolMetrics.lastStakingEvent, poolMetrics.startTime)
-                                                 );                 // time held with _previousStake
-                                                 
+                        SafeMath.max(poolMetrics.lastEvent, poolMetrics.startTime)
+                                                 );                 // time held since lastEvent.
+            
             return  _previousPoints.add(_previousStake.mul(_timeHeld));    //generated points since event
     }
     function lockPoolPoints() public returns (uint256 ) { //ON STAKE/UNSTAKE EVENT
             uint256 _currentPoints = viewPoolPoints() ;     // snapshot
-            poolMetrics.lastStakingEvent = currentTime();   // update lastStakingEvent
+            poolMetrics.lastEvent = currentTime();   // update lastEvent
             return poolMetrics.stakingPoints = _currentPoints;
         } 
-    
     function viewPointsOf(address _address) public view returns(uint256) {
             uint256 _currentPoints = userMetrics[_address].stakingPoints;    // snapshot
             uint256 _previousStake = userMetrics[_address].stake;            // stake before event
         
             uint256 _timeHeld = currentTime().sub(
-                        SafeMath.max(userMetrics[_address].lastStakingEvent, poolMetrics.startTime)
-                                                 );                          // time held with _previousStake
+                        SafeMath.max(userMetrics[_address].lastEvent, poolMetrics.startTime)
+                                                 );                          // time held since lastEvent
             
             uint256 _result = _currentPoints.add(_previousStake.mul(_timeHeld));   
             if(_result > poolMetrics.stakingPoints){_result = poolMetrics.stakingPoints;}
@@ -517,113 +526,114 @@ contract DeFiat_Farming {
     }
     function lockPointsOf(address _address) public returns (uint256) {
             uint256 _currentPoints =  viewPointsOf(_address); 
-            userMetrics[_address].lastStakingEvent = currentTime(); 
+            userMetrics[_address].lastEvent = currentTime(); 
             return userMetrics[_address].stakingPoints = _currentPoints;
     }
 
 
-//staking & unstaking
+//Staking & unstaking
     function stake(uint256 _amount) public poolLive antiSpam(1) { //updateReward and checkStart are modifiers
         require(_amount > 0, "Cannot stake 0");
         
-        uint256 _balanceNow = IERC20(address(poolMetrics.stakedToken)).balanceOf(address(this));
-        IERC20(poolMetrics.stakedToken).transferFrom(msg.sender, address(this), _amount); //will require allowance
-        uint256 amount = IERC20(address(poolMetrics.stakedToken)).balanceOf(address(this)).sub(_balanceNow); //actually received
+        // calculate true amount received
+            uint256 _balanceNow = IERC20(address(poolMetrics.stakedToken)).balanceOf(address(this));
+            IERC20(poolMetrics.stakedToken).transferFrom(msg.sender, address(this), _amount); //will require allowance
+            uint256 amount = IERC20(address(poolMetrics.stakedToken)).balanceOf(address(this)).sub(_balanceNow); //actually received
         
+        // discount amount by fee, add fee to totalRewards
+            uint256 _fee = amount.mul(poolMetrics.stakingFee).div(1000);
+            poolMetrics.totalRewards = poolMetrics.totalRewards.add(_fee);
+            poolMetrics.rewards = poolMetrics.rewards.add(_fee);
         
-        //discount amount by fee
-        uint256 _fee = amount.mul(poolMetrics.stakingFee).div(1000);
-        amount = amount.sub(_fee);
+        // update poolMetrics and userMetrics with discounted amount;
+            amount = amount.sub(_fee);
+            
+            lockPoolPoints(); // stores poolPoints metrics;
+            poolMetrics.staked = poolMetrics.staked.add(amount); 
         
-        poolMetrics.rewards = poolMetrics.rewards.add(_fee);
-        
-        poolMetrics.staked = poolMetrics.staked.add(amount);
-        lockPoolPoints();
+            lockPointsOf(msg.sender); // stores userPoints metrics;
+            userMetrics[msg.sender].stake = userMetrics[msg.sender].stake.add(amount);
 
-        userMetrics[msg.sender].stake = userMetrics[msg.sender].stake.add(amount);
-        lockPointsOf(msg.sender);
-
-   
-       emit userStaking(msg.sender, amount, "Staking... ... ");
-    } // stake visibility is public and  overriding StakeToken's stake() function
+        // emit
+            emit userStaking(msg.sender, amount, "Staking... ... ");
+    }
+    
     function unStake(uint256 amount) public antiSpam(1) poolStarted{ 
         require(amount > 0, "Cannot withdraw 0");
         require(amount <- userMetrics[msg.sender].stake, "Cannot withdraw more than stake");
         IERC20(poolMetrics.stakedToken).transfer(msg.sender, amount);
         
-        lockPoolPoints(); //using the previous stake
+        lockPoolPoints(); //updates since previous stake
         poolMetrics.staked = poolMetrics.staked.sub(amount);
         
-        lockPointsOf(msg.sender); //using the previous stake
+        lockPointsOf(msg.sender); //update since previous stake
         userMetrics[msg.sender].stake = userMetrics[msg.sender].stake.sub(amount);
         
         emit userWithdrawal(msg.sender, amount, "Widhtdrawal");
     }
  
-//Rewards
-    function eligibleRewardOf(address _address) public returns(uint256) {
-         lockPointsOf(_address);lockPoolPoints(); //eligibilty rate + locks
-         uint256 _reward = viewEligibleRewardOf(_address);
-        return _reward;
-    }  
-    
-    //to pass INTERNAL
-    function viewEligibleRewardOf(address _address) public view returns(uint256) {
-        require(poolMetrics.rewards > 0, "No Rewards in the Pool");
-        
-        uint256 _baseLineRewards = poolMetrics.rewards;
-        if(Boosted == false){ _baseLineRewards = SafeMath.min(poolMetrics.staked, poolMetrics.rewards);}
-
-        // baseline is the min( staked, rewards); avoids ultra_farming > staking pool EXPERIMENTAL
-        
-        uint256 _rate =  viewPointsOf(_address).mul(1e18).div(viewPoolPoints()); //eligibilty rate at full period.
-        
-        //need to discount for TIME NOW. 100% is eligible at the END of the period.
-        uint256 _elapsed = currentTime().sub(poolMetrics.startTime);
-        uint256 _timeRate = _elapsed.mul(1e18).div(poolMetrics.duration);
-
-        _rate = _rate.mul(_timeRate).div(1e18);
-        uint256 _reward = _baseLineRewards.mul(_rate).div(1e18);  //apply rate on pool rewards
-        
-        return _reward;
-    }
-    
-    
-    function takeRewards() public antiSpam(1) poolStarted{ //10 blocks between rewards
-        require(poolMetrics.rewards > 0, "No Rewards in the Pool");
-        
-        uint256 _reward = eligibleRewardOf(msg.sender);
-        
-        if (_reward > 0) { //gas saver
-            poolMetrics.rewards = poolMetrics.rewards.sub(_reward);           // update pool rewards
-            poolMetrics.stakingPoints = poolMetrics.stakingPoints.sub(userMetrics[msg.sender].stakingPoints); //erase points
-            
-            userMetrics[msg.sender].rewardsPaid = _reward;   // update user paid rewards
-            userMetrics[msg.sender].stakingPoints = 0; //erase points
-            
-            IERC20(poolMetrics.rewardToken).transfer(msg.sender, _reward);  // transfer
-            
-            eligibleRewardOf(msg.sender); //relaunch counter
-            
-            emit RewardTaken(msg.sender, _reward, "Rewards Sent");          
-            
-        }
-    }
-
     function unstakeAll() external poolStarted{
         unStake(userMetrics[msg.sender].stake);
     }
-
     function myStake() public view returns(uint256) {
         return userMetrics[msg.sender].stake;
     }
-    function myRewards() public view returns(uint256) {
-        return viewEligibleRewardOf(msg.sender);
+    
+//Rewards 
+    function eligibleRewardOf(address _address) public returns(uint256) {
+        lockPointsOf(_address);lockPoolPoints(); //lock
+        uint256 _reward = viewEligibleRewardOf(_address);
+        return _reward;
+    }  
+    function viewEligibleRewardOf(address _address) public view returns(uint256) {
+        require(poolMetrics.rewards > 0, "No Rewards in the Pool");
+        
+        // POOL REWARDS BASE
+        uint256 _elapsedTime = SafeMath.sub(currentTime(), poolMetrics.startTime);
+        uint256 _poolRewardsBase;
+        
+        // BOOST (boost allows for full rewards even when the pool staking is low)
+        if(Boosted == true){
+            _poolRewardsBase = poolMetrics.totalRewards
+                                .mul(_elapsedTime).div(poolMetrics.duration);}
+        else {
+            _poolRewardsBase = SafeMath.min(poolMetrics.staked, poolMetrics.totalRewards)
+                                .mul(_elapsedTime).div(poolMetrics.duration);}
+        
+        //USER STAKING POINTS RATE
+        uint256 _pointsRate =  viewPointsOf(_address).mul(1e18).div(viewPoolPoints()); //1e18 staking% of user.
+        //user and pool points have accrued over time with staking.
+
+
+        //USER POOLxPOINTS RATE
+        uint256 _reward = _poolRewardsBase.mul(_pointsRate).div(1e18);  //convert Points rate to pool totalRewards
+        
+        //return _reward factoring greylist
+        if(poolMetrics.rewards == 0) {_reward = 0;}
+        //if(greylist[_msgSender()] = true){_rewards = _rewards.div(100);} //gift to our fellow Twitter hackers ;-)
+        return _reward;
     }
     
+    function takeRewards() public antiSpam(1) poolStarted{ //1 blocks between actions
 
+        uint256 _reward = eligibleRewardOf(msg.sender); //locks times and events. store _reward
+        require (_reward > 0, "No rewards for the user");
+        
+        poolMetrics.rewards = poolMetrics.rewards.sub(_reward);     // update pool rewards live counter
+            
+        userMetrics[msg.sender].rewardsPaid = _reward;   // update user paid rewards
+        userMetrics[msg.sender].stakingPoints = 0;       // erase staking points from user (points have been converted)
+            
+        IERC20(poolMetrics.rewardToken).transfer(msg.sender, _reward);  // transfer reward
+        eligibleRewardOf(msg.sender);                                   // relaunch counters
+        emit RewardTaken(msg.sender, _reward, "Rewards Sent");  
+    }
+    
+    function myRewards() public view returns(uint256) {
+        return  viewEligibleRewardOf(msg.sender);
+    }
+    
 //== OPERATOR FUNCTIONS ==
-
     address public poolOperator;
     
     function setPoolOperator(address _address) public onlyPoolOperator {
@@ -634,20 +644,26 @@ contract DeFiat_Farming {
         _;
     }
     
-    bool public Boosted = false;
+    bool public Boosted = false; //allows faster rewards at start
     function setBoostedRewards(bool _bool) public onlyPoolOperator {
         Boosted = _bool;
     }
     
-    function loadRewards(uint256 _amount) public { //load tokens in the rewards pool.
-        
+    function loadRewards(uint256 _amount) public { //load tokens in the rewards pool. recalculates pool rewardsPoints.
+        lockPoolPoints();
+        uint256 _previousPoints = poolMetrics.rewardsPoints; //when reloading
+       
         uint256 _balanceNow = IERC20(address(poolMetrics.rewardToken)).balanceOf(address(this));
         IERC20(address(poolMetrics.rewardToken)).transferFrom( msg.sender,  address(this),  _amount);     // !! need to allow contract 1st
         uint256 amount = IERC20(address(poolMetrics.rewardToken)).balanceOf(address(this)).sub(_balanceNow); //actually received
         
-        poolMetrics.rewards = SafeMath.add(poolMetrics.rewards,amount);
-        poolMetrics.staked = SafeMath.add(poolMetrics.staked,amount); // initializes
-        //lockPoolPoints();
+        uint256 _timeRemaining = SafeMath.sub(poolMetrics.closingTime, currentTime()); //to add more points on reload.
+        poolMetrics.rewardsPoints = SafeMath.mul(_timeRemaining, poolMetrics.rewards).add(_previousPoints);
+        
+        poolMetrics.totalRewards = poolMetrics.totalRewards.add(amount);
+        poolMetrics.rewards = poolMetrics.rewards.add(amount);
+        poolMetrics.staked = SafeMath.add(poolMetrics.staked,1e18); //avoids div/0 underflow
+
     }
 
 //== UTILS === (only work when pool has ended)
@@ -662,7 +678,6 @@ function killPool() public onlyPoolOperator poolEnded returns(bool) {
     } //frees space on the ETH chain
 
 }
-
 
 //== END CONTRACT ==
 pragma solidity ^0.6.0;
@@ -687,5 +702,4 @@ interface I_Defiat_Points {
     function overrideDiscount(address _address, uint256 _newDiscount) external;
     //whitelist the Locking Contract at 100 (100%) discount
 }
-//1000000000000000000 = 1 
 
