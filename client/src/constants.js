@@ -20,7 +20,7 @@ export default {
           img: require("assets/img/defiat-dungeon.png"),
           poolTitle: "DeFiat Dungeon",
           poolSubtitle: "Stake DFT, Earn DFT",
-          poolAddress: "0x5c2Fed8e40cE254e63Be59553e5188f6398fB195",
+          poolAddress: "0xe11Ac10354e375A3C48330e5c4546B9E6C29f3F8",
           basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
           stakedSymbol: "DFT",
           rewardSymbol: "DFT",
