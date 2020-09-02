@@ -161,7 +161,7 @@ export const PoolInterface = ({
     setStaking(true);
     const tokens = web3.utils.toWei(stakeAmountInput.toString(), 'ether');
     const stakeAmount = web3.utils.toBN(tokens);
-    contracts["farming"].methods.stake(stakeAmount).send({from: accounts[0]})
+    farmingContract.methods.stake(stakeAmount).send({from: accounts[0]})
       .then((data) => {
         toast.success(`✅ Successfully staked ${stakeAmountInput} ${stakingState.stakedSymbol}.`);
       })
@@ -179,7 +179,7 @@ export const PoolInterface = ({
     setStaking(true);
     const tokens = web3.utils.toWei(stakeAmountInput.toString(), 'ether');
     const unstakeAmount = web3.utils.toBN(tokens);
-    contracts["farming"].methods.unStake(unstakeAmount).send({from: accounts[0]})
+    farmingContract.methods.unStake(unstakeAmount).send({from: accounts[0]})
       .then((data) => {
         toast.success(`✅ Successfully unstaked ${stakeAmountInput} ${stakingState.stakedSymbol}.`);
       })
@@ -197,7 +197,7 @@ export const PoolInterface = ({
   const takeRewards = () => {
     setClaiming(true);
     const rewards = parseFloat(stakingState.availableRewards);
-    contracts["farming"].methods.takeRewards().send({from: accounts[0]})
+    farmingContract.methods.takeRewards().send({from: accounts[0]})
       .then((data) => {
         toast.success(`✅ Successfully claimed ${rewards} ${stakingState.rewardSymbol}.`);
       })
