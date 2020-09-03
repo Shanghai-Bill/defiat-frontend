@@ -404,7 +404,7 @@ library Address {
 //========
 
 
-contract DeFiat_Farming_v7 {
+contract DeFiat_Farming_v8 {
     using SafeMath for uint256;
 
     //Structs
@@ -581,11 +581,12 @@ contract DeFiat_Farming_v7 {
     
 //staking & unstaking
 
-    modifier antiWhale(uint256 _amount) {
-        require(_amount.mul(100).div(poolMetrics.staked) < 20, "Max stake is 20% of the pool");
+    modifier antiWhale(address _address, uint256 _amount) {
+        uint256 _userRate =  viewPointsOf(_address).mul(1e18).div(viewPoolPoints());
+        require(_userRate.mul(100).div(1e18) < 20, "User stake% share too high. Leave some for the smaller guys ;-)");
         _;
     } // avoids large chinks being deposited and limits small holders rewards shrinking because of lost share of pool
-    function stake(uint256 _amount) public poolLive antiSpam(1) antiWhale(_amount){
+    function stake(uint256 _amount) public poolLive antiSpam(1) antiWhale(msg.sender, _amount){
         require(_amount > 0, "Cannot stake 0");
         
         //initialize
@@ -628,16 +629,16 @@ contract DeFiat_Farming_v7 {
     }
  
 
-    function myStake() public view returns(uint256) {
-        return userMetrics[msg.sender].stake;
+    function myStake(address _address) public view returns(uint256) {
+        return userMetrics[_address].stake;
     }
-    function myStakeShare() public view returns(uint256) {
-        return (userMetrics[msg.sender].stake).mul(100000).div(poolMetrics.staked);
+    function myStakeShare(address _address) public view returns(uint256) {
+        return (userMetrics[_address].stake).mul(100000).div(poolMetrics.staked);
     } //base 100,000
-    function myRewards() public view returns(uint256) {
+    function myRewards(address _address) public view returns(uint256) {
         //delayed start obfuscation (avoids disturbances in the force...)
         if(block.timestamp <= poolMetrics.startTime){return 0;}
-        else { return userMetrics[msg.sender].rewardAccrued.add(viewAdditionalRewardOf(msg.sender));} //previousLock + time based extra
+        else { return userMetrics[_address].rewardAccrued.add(viewAdditionalRewardOf(_address));} //previousLock + time based extra
     }
 
 
