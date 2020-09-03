@@ -8,12 +8,12 @@ const app = express();
 app.use(helmet());
 
 // serve static assets normally
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+app.use(express.static(path.join(__dirname, 'build')));
 
 // handle every other route with index.html, which will contain
 // a script tag to your application's JavaScript file(s).
 app.get('*', function (request, response) {
-  response.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  response.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 app.listen(port);

@@ -8,17 +8,12 @@
     "migrate": "cd contracts && npm run deploy",
     "start": "cd client && npm start",
     "publish": "lerna publish",
-    "server": "node server.js",
-    "client": "cd client && npm run build"
+    "server": "cd server && node server.js",
+    "build": "cd client && npm run build && mv build ../server"
   },
   "devDependencies": {
     "lerna": "^3.4.3",
     "solc": "^0.6.2",
     "truffle": "^5.1.37"
-  },
-  "dependencies": {
-    "express": "^4.17.1",
-    "helmet": "^4.1.0",
-    "path": "^0.12.7"
   }
 }
