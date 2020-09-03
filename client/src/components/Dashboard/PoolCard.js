@@ -39,7 +39,9 @@ export const PoolCard = ({
     // rewards distributed per hour per 1 staked token
     const rewardsPerHourPerToken = rewardsPerHour / (poolMetrics.staked / 1e18);
     // annual simple rate 
-    const rate = rewardsPerHourPerToken * 24 * 365;
+    const tokensPerYear = rewardsPerHourPerToken * 24 * 365;
+    // convert to percentage
+    const rate = tokensPerYear * 100;
     return rate.toFixed(2);
   }
 
