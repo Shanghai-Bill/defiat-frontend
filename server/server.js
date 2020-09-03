@@ -13,7 +13,7 @@ app.use(
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'"],
       connectSrc: ["*.rss2json.com"],
-      styleSrcElem: ["*"],
+      styleSrcElem: ["*", "'unsafe-inline'"],
       fontSrc: ["*"],
       imgSrc: ["*", "'self'", "data:", "https:"],
       objectSrc: ["'self'"],
