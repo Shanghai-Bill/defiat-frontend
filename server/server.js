@@ -5,7 +5,9 @@ const port = process.env.PORT || 8080;
 const app = express();
 
 // use helmet
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: false
+}));
 
 // serve static assets normally
 app.use(express.static(path.join(__dirname, 'build')));
