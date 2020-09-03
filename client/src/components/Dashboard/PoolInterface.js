@@ -16,7 +16,7 @@ import {
 import { Link, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import IERC20 from 'contracts/_ERC20.json'
-import DeFiat_Farming from 'contracts/DeFiat_Farming_v5.json'
+import DeFiat_Farming from 'contracts/DeFiat_Farming_v6.json'
 import { MdInfoOutline } from 'react-icons/md'
 
 export const PoolInterface = ({
@@ -237,6 +237,9 @@ export const PoolInterface = ({
 
   // determine if the initial amount is within bounds
   const shouldDisableButton = (maxBound) => {
+    if (stakeAmountInput.includes('.') && stakeAmountInput.split(".")[1].length > 18) {
+      return true
+    }
     if (isNaN(stakeAmountInput) || +stakeAmountInput <= 0 || +stakeAmountInput > maxBound) {
       return true;
     }
@@ -415,7 +418,7 @@ export const PoolInterface = ({
               <Button
                 className="m-0 w-100"
                 color="info"
-                disabled={isStaking || (stakeAction === "Stake" ? shouldDisableButton(stakingState.longTokenBalance / 1e18) : shouldDisableButton(userMetrics.stake / 1e18))}
+                disabled={isStaking || (stakeAction === "Stake" ? shouldDisableButton(web3.utils.fromWei(stakingState.longTokenBalance)) : shouldDisableButton(web3.utils.fromWei(userMetrics.stake)))}
                 onClick={stakeAction === "Stake" ? () => stakeToken() : () => unStakeToken()}  
               >
                 {stakeAction === "Stake" ? (
