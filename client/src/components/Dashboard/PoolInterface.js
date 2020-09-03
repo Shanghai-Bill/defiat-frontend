@@ -317,7 +317,7 @@ export const PoolInterface = ({
               <Card className="shadow">
                 <CardBody className="text-left">
                   <Tooltip placement="left" isOpen={tooltip2Open} target={`tooltip-2`} toggle={toggle2}>
-                    This is the total amount of {stakingState.stakedSymbol} that you have staked into this pool.
+                    This is the total amount of {stakingState.stakedSymbol} that you have staked into this pool. You must approve the staking contract before you can stake.
                   </Tooltip>
                   <div className="d-flex justify-content-between align-items-center mb-2">
                     <div className="d-flex align-items-end">
@@ -335,7 +335,7 @@ export const PoolInterface = ({
                       onClick={() => approveStaking()}
                       disabled={isApproving}
                     >
-                      {isApproving ? "Approving..." : "Approve"}
+                      {isApproving ? "Approving..." : `Approve ${stakingState.stakedBalance} Staking`}
                     </Button>
                   ) : (
                     <Row>
