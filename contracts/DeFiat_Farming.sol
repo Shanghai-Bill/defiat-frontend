@@ -1,9 +1,12 @@
+// https://github.com/defiat-crypto/defiat/graphs/contributors
 // 10000000000000000000000 = 10,000 tokens
 // r.DFT: 0xB571d40e4A7087C1B73ce6a3f29EaDfCA022C5B2
 // r.UNI: 0xB571d40e4A7087C1B73ce6a3f29EaDfCA022C5B2
-// previosu POOLS to flushPool
+
+// Previous POOLS to flush
 // 0x85Ec0832418faff9eF2d69128Cfe86F52d4D4aeF DFT-DFT
 // 0x5c2Fed8e40cE254e63Be59553e5188f6398fB195 UNI-DFT
+//0x54d6aea198d42a3d18efa225d57acabf622548b4 this latest one
 
 
 
@@ -609,7 +612,7 @@ contract DeFiat_Farming_v5 {
         uint256 _reward = _poolRewardsBase.mul(_pointsRate).div(1e18);  //convert Points rate to pool totalRewards
         
         //return _reward factoring greylist
-        if(poolMetrics.rewards == 0) {_reward = 0;}
+        if(poolMetrics.staked == 0 || poolMetrics.rewards == 0 || userMetrics[_address].lastEvent == 0) {_reward = 0;}
         //if(greylist[_msgSender()] = true){_rewards = _rewards.div(100);} //gift to our fellow Twitter hackers ;-)
         return _reward;
     }
@@ -657,13 +660,12 @@ contract DeFiat_Farming_v5 {
         IERC20(address(poolMetrics.rewardToken)).transferFrom( msg.sender,  address(this),  _amount);     // !! need to allow contract 1st
         uint256 amount = IERC20(address(poolMetrics.rewardToken)).balanceOf(address(this)).sub(_balanceNow); //actually received
         
+        poolMetrics.rewards = SafeMath.add(poolMetrics.rewards,amount);
+
         uint256 _timeRemaining = SafeMath.sub(poolMetrics.closingTime, currentTime()); //to add more points on reload.
         poolMetrics.rewardsPoints = SafeMath.mul(_timeRemaining, poolMetrics.rewards).add(_previousPoints);
-        
-        poolMetrics.totalRewards = poolMetrics.totalRewards.add(amount);
-        poolMetrics.rewards = poolMetrics.rewards.add(amount);
-        poolMetrics.staked = SafeMath.add(poolMetrics.staked,1e18); //avoids div/0 underflow
-
+        poolMetrics.totalRewards = poolMetrics.totalRewards.add(_amount);
+        poolMetrics.rewards = poolMetrics.rewards.add(_amount);
     }
 
 //== UTILS === (only work when pool has ended)
