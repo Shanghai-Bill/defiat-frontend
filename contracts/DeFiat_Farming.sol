@@ -552,7 +552,6 @@ contract DeFiat_Farming_v11 {
         return _reward;
     }
     
-    
     function eligibleRewardOf(address _address) internal returns(uint256) {
         uint256 _additional = viewAdditionalRewardOf(_address); //stakeShare * poolRewards(sinceLastEvent)
         pointsSnapshot(_address); //updates lastEvent
@@ -560,7 +559,6 @@ contract DeFiat_Farming_v11 {
         userMetrics[_address].stakingPoints = 0; //remove the points from the user (to avoid accrual with zero stake)
         return userMetrics[_address].rewardAccrued;
     }  
-    
     function takeRewards() public antiSpam(1) poolStarted{ //1 blocks between rewards
         require(poolMetrics.rewards > 0, "No Rewards in the Pool");
         uint256 _reward = eligibleRewardOf(msg.sender); //returns already accrued + additional (also resets time counters)
@@ -627,13 +625,15 @@ contract DeFiat_Farming_v11 {
         //finalize
         emit userWithdrawal(msg.sender, amount, "Widhtdrawal");
     }
- 
 
     function myStake(address _address) public view returns(uint256) {
         return userMetrics[_address].stake;
     }
     function myStakeShare(address _address) public view returns(uint256) {
         return (userMetrics[_address].stake).mul(100000).div(poolMetrics.staked);
+    } //base 100,000
+    function myPointsShare(address _address) public view returns(uint256) {  //weighted average of your stake over time vs the pool
+        return viewPointsOf(_address).mul(100000).div(viewPoolPoints());
     } //base 100,000
     function myRewards(address _address) public view returns(uint256) {
         //delayed start obfuscation (avoids disturbances in the force...)
