@@ -16,7 +16,7 @@ import {
 import { Link, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import IERC20 from 'contracts/_ERC20.json'
-import DeFiat_Farming from 'contracts/DeFiat_Farming.json'
+import DeFiat_Farming from 'contracts/DeFiat_Farming_v5.json'
 import { MdInfoOutline } from 'react-icons/md'
 
 export const PoolInterface = ({
@@ -88,21 +88,21 @@ export const PoolInterface = ({
   const loadData = async () => {
     const farmingContract = new web3.eth.Contract(DeFiat_Farming.abi, contractId);
     const poolMetrics = await farmingContract.methods.poolMetrics().call();
-    const stakedContract = new web3.eth.Contract(IERC20.abi, poolMetrics.stakedToken);
+    const tokenContract = new web3.eth.Contract(IERC20.abi, poolMetrics.stakedToken);
     const rewardContract = new web3.eth.Contract(IERC20.abi, poolMetrics.rewardToken);
     setFarmingContract(farmingContract);
-    setTokenContract(stakedContract);
+    setTokenContract(tokenContract);
     setRewardContract(rewardContract);
 
 
     // Implement edge cases for decimal amounts that are different than 18
     // stakedContract.methods.decimals().call(),
     const values = await Promise.all([
-      stakedContract.methods.symbol().call(),
+      tokenContract.methods.symbol().call(),
       rewardContract.methods.symbol().call(),
 
-      stakedContract.methods.balanceOf(accounts[0]).call(),
-      stakedContract.methods.allowance(accounts[0], contractId).call(),
+      tokenContract.methods.balanceOf(accounts[0]).call(),
+      tokenContract.methods.allowance(accounts[0], contractId).call(),
 
 
       farmingContract.methods.userMetrics(accounts[0]).call(),

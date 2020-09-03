@@ -79,7 +79,7 @@ const Dashboard = (props) => {
     } else {
       loadWeb3();
     }
-  }, [location])
+  }, [])
 
   const handleTab = (tabId) => {
     history.push(tabId);
