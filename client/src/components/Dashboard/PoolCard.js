@@ -32,13 +32,15 @@ export const PoolCard = ({
 
 
   const apy = () => {
-    const timeRemaining = +poolMetrics.closingTime - +(new Date().getTime())
-    const rate = ((poolMetrics.rewards / 1e18) / timeRemaining) ;
-    console.log(rate)
-
-
-    return 0 
-
+    // calculate time remaining (ms) and convert to hours
+    const timeRemainingInHours = ((+poolMetrics.closingTime * 1000) - new Date().getTime()) / 3600000;
+    // rewards remaining per hour
+    const rewardsPerHour = ((poolMetrics.rewards / 1e18) / timeRemainingInHours);
+    // rewards distributed per hour per 1 staked token
+    const rewardsPerHourPerToken = rewardsPerHour / (poolMetrics.staked / 1e18);
+    // annual simple rate 
+    const rate = rewardsPerHourPerToken * 24 * 365;
+    return rate.toFixed(2);
   }
 
 
@@ -59,7 +61,7 @@ export const PoolCard = ({
             <DisplayRow title="Pool Closes:" value={poolClose} />
             
             <DisplayRow title="Pool Fee:" value={poolFee} />
-            {/* <DisplayRow title="APY:" value={apy() + "%"} /> */}
+            <DisplayRow title="APY:" value={apy() + "%"} />
           </div>
             
             <Button 
