@@ -85,7 +85,7 @@ export const Roadmap = () => {
               <TimelineConnector />
             </TimelineSeparator>
             <TimelineContent>
-              <ScrollAnimation animateIn="fadeInLeft">
+              <ScrollAnimation animateIn="fadeInRight">
                 <Card>
                   <CardBody>
                     <CardTitle>Decentralize Mastermind Rights</CardTitle>
@@ -106,7 +106,7 @@ export const Roadmap = () => {
               <TimelineConnector />
             </TimelineSeparator>
             <TimelineContent>
-              <ScrollAnimation animateIn="fadeInRight">
+              <ScrollAnimation animateIn="fadeInLeft">
                 <Card>
                   <CardBody>
                     <CardTitle>UniStake/Staking</CardTitle>
@@ -125,7 +125,7 @@ export const Roadmap = () => {
               <TimelineConnector />
             </TimelineSeparator>
             <TimelineContent>
-              <ScrollAnimation animateIn="fadeInLeft">
+              <ScrollAnimation animateIn="fadeInRight">
                 <Card>
                   <CardBody>
                     <CardTitle>DeFiX Burn Events</CardTitle>
