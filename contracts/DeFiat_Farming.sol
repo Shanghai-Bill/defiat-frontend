@@ -1,6 +1,6 @@
 
 
-// 10000000000000000000000 = 10,000 tokens
+// 1000000000000000000000 = 1,000 tokens
 
 // r.DFT: 0xB571d40e4A7087C1B73ce6a3f29EaDfCA022C5B2
 // r.UNI: 0xB571d40e4A7087C1B73ce6a3f29EaDfCA022C5B2
@@ -404,7 +404,7 @@ library Address {
 //========
 
 
-contract DeFiat_Farming_v8 {
+contract DeFiat_Farming_v11 {
     using SafeMath for uint256;
 
     //Structs
@@ -429,7 +429,7 @@ contract DeFiat_Farming_v8 {
 
     struct UserMetrics {
             uint256 stake;          // native token stake (balanceOf)
-            uint256 stakingPoints;  // acrrued over time. Does not take into account current ones
+            uint256 stakingPoints;  // temporary variable used within functions. Always 0 between blocks
             uint256 lastEvent;
 
             uint256 rewardAccrued;  // accrued rewards over time based on staking points
@@ -529,12 +529,12 @@ contract DeFiat_Farming_v8 {
     
 //Rewards
     function viewTrancheReward(uint256 _period) internal view returns(uint256) {
-        uint256 _poolRewards = poolMetrics.rewards;
+        uint256 _poolRewards = poolMetrics.rewards; //tokens
         if(FullRewards == false){ _poolRewards = SafeMath.min(poolMetrics.staked, poolMetrics.rewards);} 
         // baseline is the min( staked, rewards); avoids ultra_farming > staking pool - EXPERIMENTAL
         
-        uint256 _timeRate = _period.mul(1e18).div(poolMetrics.duration);
-        return _poolRewards.mul(_timeRate).div(poolMetrics.duration); //tranche of rewards on period
+        uint256 _timeRate = _period.mul(1e18).div(poolMetrics.duration); //1e18
+        return _poolRewards.mul(_timeRate).div(1e18); //tranche of rewards on period
     }
     function viewAdditionalRewardOf(address _address) internal view returns(uint256) { // rewards generated since last Event
         require(poolMetrics.rewards > 0, "No Rewards in the Pool");
@@ -557,6 +557,7 @@ contract DeFiat_Farming_v8 {
         uint256 _additional = viewAdditionalRewardOf(_address); //stakeShare * poolRewards(sinceLastEvent)
         pointsSnapshot(_address); //updates lastEvent
         userMetrics[_address].rewardAccrued = userMetrics[_address].rewardAccrued.add(_additional); //updates user's accrued
+        userMetrics[_address].stakingPoints = 0; //remove the points from the user (to avoid accrual with zero stake)
         return userMetrics[_address].rewardAccrued;
     }  
     
@@ -581,12 +582,11 @@ contract DeFiat_Farming_v8 {
     
 //staking & unstaking
 
-    modifier antiWhale(address _address, uint256 _amount) {
-        uint256 _userRate =  viewPointsOf(_address).mul(1e18).div(viewPoolPoints());
-        require(_userRate.mul(100).div(1e18) < 20, "User stake% share too high. Leave some for the smaller guys ;-)");
+    modifier antiWhale(address _address) {
+        require(myStakeShare(_address) < 20000, "User stake% share too high. Leave some for the smaller guys ;-)"); //max 20%
         _;
     } // avoids large chinks being deposited and limits small holders rewards shrinking because of lost share of pool
-    function stake(uint256 _amount) public poolLive antiSpam(1) antiWhale(msg.sender, _amount){
+    function stake(uint256 _amount) public poolLive antiSpam(1) antiWhale(msg.sender){
         require(_amount > 0, "Cannot stake 0");
         
         //initialize
@@ -674,12 +674,12 @@ contract DeFiat_Farming_v8 {
         poolMetrics.stakingFee = _fee;
     }
     
-    function flushPool(address _recipient, address _ERC20address) external onlyPoolOperator poolEnded { // poolEnded returns(bool) {
+    function flushPool(address _recipient, address _ERC20address) external onlyPoolOperator { // poolEnded { // poolEnded returns(bool) {
             uint256 _amount = IERC20(_ERC20address).balanceOf(address(this));
             IERC20(_ERC20address).transfer(_recipient, _amount); //use of the _ERC20 traditional transfer
             //return true;
         } //get tokens sent by error to contract
-    function killPool() public onlyPoolOperator poolEnded { //onlyPoolOperator poolEnded returns(bool) {
+    function killPool() public onlyPoolOperator { // poolEnded { //onlyPoolOperator poolEnded returns(bool) {
             selfdestruct(msg.sender);
             //return true;
         } //frees space on the ETH chain
