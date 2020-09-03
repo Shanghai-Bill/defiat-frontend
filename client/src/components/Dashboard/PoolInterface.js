@@ -16,7 +16,7 @@ import {
 import { Link, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import IERC20 from 'contracts/_ERC20.json'
-import DeFiat_Farming from 'contracts/DeFiat_Farming_v8.json'
+import DeFiat_Farming from 'contracts/DeFiat_Farming_v11.json'
 import { MdInfoOutline } from 'react-icons/md'
 
 export const PoolInterface = ({
@@ -237,6 +237,9 @@ export const PoolInterface = ({
 
   // determine if the initial amount is within bounds
   const shouldDisableButton = (maxBound) => {
+    if (stakeAction === 'Stake' && stakingState.stakedBalance > (stakingState.totalPoolStaked * 0.20)) {
+      return true;
+    }
     if (stakeAmountInput.includes('.') && stakeAmountInput.split(".")[1].length > 18) {
       return true
     }
@@ -318,6 +321,7 @@ export const PoolInterface = ({
                 <CardBody className="text-left">
                   <Tooltip placement="left" isOpen={tooltip2Open} target={`tooltip-2`} toggle={toggle2}>
                     This is the total amount of {stakingState.stakedSymbol} that you have staked into this pool. You must approve the staking contract before you can stake.
+                    Anti-Whale gates are in effect, you may not stake more than 20% of the total pool.
                   </Tooltip>
                   <div className="d-flex justify-content-between align-items-center mb-2">
                     <div className="d-flex align-items-end">
