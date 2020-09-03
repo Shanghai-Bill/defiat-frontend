@@ -14,7 +14,7 @@ import { toast } from 'react-toastify'
 import { PoolCard } from './PoolCard';
 import { Route, Switch, useRouteMatch, useHistory } from 'react-router-dom'
 import { PoolInterface } from './PoolInterface';
-import DeFiat_Farming from 'contracts/DeFiat_Farming_v6.json'
+import DeFiat_Farming from 'contracts/DeFiat_Farming_v8.json'
 
 export const Staking = ({
   web3,

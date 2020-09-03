@@ -16,16 +16,16 @@ export default {
       farming: "0x5c2Fed8e40cE254e63Be59553e5188f6398fB195",
       liquidity: "0xd49A73078E9bD0C6A61616900E3f2010D8C80A20",
       pools: [
-        {
-          img: require("assets/img/defiat-dungeon.png"),
-          poolTitle: "DeFiat Dungeon",
-          poolSubtitle: "Stake DFT, Earn DFT",
-          poolAddress: "0x92Dc51744781E024243F0E46Ec48E7eB3890AE46",
-          basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
-          stakedSymbol: "DFT",
-          rewardSymbol: "DFT",
-          isLiquidityToken: false
-        },
+        // {
+        //   img: require("assets/img/defiat-dungeon.png"),
+        //   poolTitle: "DeFiat Dungeon",
+        //   poolSubtitle: "Stake DFT, Earn DFT",
+        //   poolAddress: "0x92Dc51744781E024243F0E46Ec48E7eB3890AE46",
+        //   basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
+        //   stakedSymbol: "DFT",
+        //   rewardSymbol: "DFT",
+        //   isLiquidityToken: false
+        // },
         // {
         //   img: require("assets/img/points-palace.png"),
         //   poolTitle: "Points Palace",
@@ -33,16 +33,16 @@ export default {
         //   poolAddress: "0x5c2Fed8e40cE254e63Be59553e5188f6398fB195",
         //   isLiquidityToken: false
         // },
-        // {
-        //   img: require("assets/img/liquidity-lab.png"),
-        //   poolTitle: "Liquidity Laboratory",
-        //   poolSubtitle: "Stake DFT-UNI-V2, earn DFT",
-        //   poolAddress: "0x85Ec0832418faff9eF2d69128Cfe86F52d4D4aeF",
-        //   basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
-        //   stakedSymbol: "UNI-V2",
-        //   rewardSymbol: "DFT",
-        //   isLiquidityToken: true
-        // },
+        {
+          img: require("assets/img/liquidity-lab.png"),
+          poolTitle: "Liquidity Laboratory",
+          poolSubtitle: "Stake DFT, earn DFT",
+          poolAddress: "0xB9F4f04DA7f30509C3A9fE69E9745C9337E56da5",
+          basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
+          stakedSymbol: "DFT",
+          rewardSymbol: "DFT",
+          isLiquidityToken: false
+        },
       ]
      }
   },

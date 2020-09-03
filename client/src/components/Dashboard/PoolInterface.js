@@ -16,7 +16,7 @@ import {
 import { Link, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import IERC20 from 'contracts/_ERC20.json'
-import DeFiat_Farming from 'contracts/DeFiat_Farming_v6.json'
+import DeFiat_Farming from 'contracts/DeFiat_Farming_v8.json'
 import { MdInfoOutline } from 'react-icons/md'
 
 export const PoolInterface = ({
@@ -106,7 +106,7 @@ export const PoolInterface = ({
 
 
       farmingContract.methods.userMetrics(accounts[0]).call(),
-      farmingContract.methods.viewEligibleRewardOf(accounts[0]).call()
+      farmingContract.methods.myRewards(accounts[0]).call()
     ])
 
     //console.log(values)
@@ -335,7 +335,7 @@ export const PoolInterface = ({
                       onClick={() => approveStaking()}
                       disabled={isApproving}
                     >
-                      {isApproving ? "Approving..." : `Approve ${stakingState.stakedBalance} Staking`}
+                      {isApproving ? "Approving..." : `Approve ${stakingState.stakedSymbol} Staking`}
                     </Button>
                   ) : (
                     <Row>
