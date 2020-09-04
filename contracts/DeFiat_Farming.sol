@@ -1,10 +1,9 @@
-/// v11 0x04dCF7D4a3aFda23F9B35caB88D0157AFEf9cb16
-// v8 0xB9F4f04DA7f30509C3A9fE69E9745C9337E56da5
-// v7 0x1C0003e37BcebFd5bA22c32A59De5f7AdFE37ADD
-// v6 0x92Dc51744781E024243F0E46Ec48E7eB3890AE46
+// LATEST VERSION - READY TO BE AUDITED BY HACKEN
+
 // 1000000000000000000000 = 1,000 tokens
 
-/// r.DFT: 0xB571d40e4A7087C1B73ce6a3f29EaDfCA022C5B2
+//TESTNET
+// r.DFT: 0xB571d40e4A7087C1B73ce6a3f29EaDfCA022C5B2
 // r.UNI: 0xB571d40e4A7087C1B73ce6a3f29EaDfCA022C5B2
 // r.DFTP: 0x70c7d7856e1558210cfbf27b7f17853655752453
 
@@ -475,11 +474,11 @@ contract DeFiat_Farming_v12 {
         _;
     }
     modifier poolEnded() {
-        require(block.timestamp > poolMetrics.closingTime,"Pool not started Yet"); //good for delayed starts.
+        require(block.timestamp > poolMetrics.closingTime,"Pool not ended Yet"); //good for delayed starts.
         _;
     }
     modifier antiSpam(uint256 _blocks) {
-        require(block.number > userMetrics[msg.sender].lastTxBlock.add(_blocks), "Wait 1 BLOCK between Transactions");
+        require(block.number > userMetrics[msg.sender].lastTxBlock.add(_blocks), "Wait X BLOCKS between Transactions");
         userMetrics[msg.sender].lastTxBlock = block.number; //update
         _;
     } 
@@ -580,7 +579,9 @@ contract DeFiat_Farming_v12 {
         uint256 _reward = lockRewardOf(msg.sender); //returns already accrued + additional (also resets time counters)
 
         userMetrics[msg.sender].rewardsPaid = _reward;   // update user paid rewards
-        userMetrics[msg.sender].rewardAccrued = 0; //flush previously accrued rewards
+        
+        userMetrics[msg.sender].rewardAccrued = 0; //flush previously accrued rewards.
+        
         poolMetrics.rewards = poolMetrics.rewards.sub(_reward);           // update pool rewards
             
         IERC20(poolMetrics.rewardToken).transfer(msg.sender, _reward);  // transfer
@@ -732,4 +733,7 @@ interface X_Defiat_Points {
     // 0x70C7d7856E1558210CFbf27b7F17853655752453
     function overrideDiscount(address _address, uint256 _newDiscount) external;
     //whitelist the Locking Contract at 100 (100%) discount
+}
+interface X_flusher {
+    function flushPool(address _recipient, address _ERC20address) external;
 }
