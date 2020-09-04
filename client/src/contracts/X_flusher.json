@@ -1,13 +1,26 @@
 {
-  "contractName": "Context",
+  "contractName": "X_flusher",
   "abi": [
     {
-      "inputs": [],
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_ERC20address",
+          "type": "address"
+        }
+      ],
+      "name": "flushPool",
+      "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "constructor"
+      "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.6.6+commit.6c089d02\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/noahcoomer/source/defiat/contracts/DeFiat_Farming.sol\":\"Context\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/noahcoomer/source/defiat/contracts/DeFiat_Farming.sol\":{\"keccak256\":\"0xcd60031df58a63c5d003baa71a9d8e36e7ce8a1789d4ca3fcdccb00d8dee43ce\",\"urls\":[\"bzz-raw://048ada879d73fcb7fde2bee22d2bd0a50c45825447b0f0500ad8fc5b0bf7f90b\",\"dweb:/ipfs/QmTDzKAvQFWrp981ptQ4VZHrL8oDuTiE5C1iqRHVN4wzvi\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.6.6+commit.6c089d02\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_recipient\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_ERC20address\",\"type\":\"address\"}],\"name\":\"flushPool\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/noahcoomer/source/defiat/contracts/DeFiat_Farming.sol\":\"X_flusher\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/noahcoomer/source/defiat/contracts/DeFiat_Farming.sol\":{\"keccak256\":\"0xcd60031df58a63c5d003baa71a9d8e36e7ce8a1789d4ca3fcdccb00d8dee43ce\",\"urls\":[\"bzz-raw://048ada879d73fcb7fde2bee22d2bd0a50c45825447b0f0500ad8fc5b0bf7f90b\",\"dweb:/ipfs/QmTDzKAvQFWrp981ptQ4VZHrL8oDuTiE5C1iqRHVN4wzvi\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -49599,7 +49612,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-09-04T23:38:13.410Z",
+  "updatedAt": "2020-09-04T23:38:14.117Z",
   "devdoc": {
     "methods": {}
   },

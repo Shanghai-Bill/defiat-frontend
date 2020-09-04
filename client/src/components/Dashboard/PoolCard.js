@@ -57,7 +57,7 @@ export const PoolCard = ({
           <div className="mt-2 mb-2">
 
             <DisplayRow title="Total Staked:" value={totalStaked} />
-            <DisplayRow title="Pool Rewards:" value={totalRewards} />
+            {/* <DisplayRow title="Pool Rewards:" value={totalRewards} /> */}
             
             <DisplayRow title="Pool Opens:" value={poolOpen} />
             <DisplayRow title="Pool Closes:" value={poolClose} />
