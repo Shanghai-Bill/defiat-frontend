@@ -1,8 +1,10 @@
-
-
+/// v11 0x04dCF7D4a3aFda23F9B35caB88D0157AFEf9cb16
+// v8 0xB9F4f04DA7f30509C3A9fE69E9745C9337E56da5
+// v7 0x1C0003e37BcebFd5bA22c32A59De5f7AdFE37ADD
+// v6 0x92Dc51744781E024243F0E46Ec48E7eB3890AE46
 // 1000000000000000000000 = 1,000 tokens
 
-// r.DFT: 0xB571d40e4A7087C1B73ce6a3f29EaDfCA022C5B2
+/// r.DFT: 0xB571d40e4A7087C1B73ce6a3f29EaDfCA022C5B2
 // r.UNI: 0xB571d40e4A7087C1B73ce6a3f29EaDfCA022C5B2
 // r.DFTP: 0x70c7d7856e1558210cfbf27b7f17853655752453
 
@@ -404,7 +406,7 @@ library Address {
 //========
 
 
-contract DeFiat_Farming_v11 {
+contract DeFiat_Farming_v12 {
     using SafeMath for uint256;
 
     //Structs
@@ -429,7 +431,8 @@ contract DeFiat_Farming_v11 {
 
     struct UserMetrics {
             uint256 stake;          // native token stake (balanceOf)
-            uint256 stakingPoints;  // temporary variable used within functions. Always 0 between blocks
+            uint256 stakingPoints;  // staking points at lastEvent
+            uint256 poolPoints;     // pool point at lastEvent
             uint256 lastEvent;
 
             uint256 rewardAccrued;  // accrued rewards over time based on staking points
@@ -451,6 +454,7 @@ contract DeFiat_Farming_v11 {
     poolMetrics.startTime = block.timestamp + _delayStartHours.mul(3600);
     poolMetrics.closingTime = block.timestamp + poolMetrics.duration;
     
+    poolMetrics.stakingPoints = 1; //avoirds div by 0 at start
     FullRewards = true;
     }
 
@@ -498,15 +502,15 @@ contract DeFiat_Farming_v11 {
                                                  
             return  _previousPoints.add(_previousStake.mul(_timeHeld));    //generated points since event
     }
-    function lockPoolPoints() internal returns (uint256 ) { //ON STAKE/UNSTAKE EVENT
-            uint256 _currentPoints = viewPoolPoints() ;     // snapshot
+    function lockPoolPoints() internal returns (uint256) { //ON STAKE/UNSTAKE EVENT
+            poolMetrics.stakingPoints = viewPoolPoints();
             poolMetrics.lastEvent = currentTime();   // update lastStakingEvent
-            return poolMetrics.stakingPoints = _currentPoints;
+            return poolMetrics.stakingPoints;
         } 
     
     function viewPointsOf(address _address) public view returns(uint256) {
             uint256 _previousPoints = userMetrics[_address].stakingPoints;    // snapshot
-            uint256 _previousStake = userMetrics[_address].stake;            // stake before event
+            uint256 _previousStake = userMetrics[_address].stake;             // stake before event
         
             uint256 _timeHeld = currentTime().sub(
                         SafeMath.max(userMetrics[_address].lastEvent, poolMetrics.startTime)
@@ -518,11 +522,13 @@ contract DeFiat_Farming_v11 {
             return _result;
     }
     function lockPointsOf(address _address) internal returns (uint256) {
-            uint256 _currentPoints =  viewPointsOf(_address); 
+            userMetrics[_address].poolPoints = viewPoolPoints();  // snapshot of pool points at lockEvent
+            userMetrics[_address].stakingPoints = viewPointsOf(_address); 
             userMetrics[_address].lastEvent = currentTime(); 
-            return userMetrics[_address].stakingPoints = _currentPoints;
+
+            return userMetrics[_address].stakingPoints;
     }
-    function pointsSnapshot(address _address) internal returns (bool) {
+    function pointsSnapshot(address _address) public returns (bool) {
         lockPointsOf(_address);lockPoolPoints();
         return true;
     }
@@ -530,52 +536,59 @@ contract DeFiat_Farming_v11 {
 //Rewards
     function viewTrancheReward(uint256 _period) internal view returns(uint256) {
         uint256 _poolRewards = poolMetrics.rewards; //tokens
+        
         if(FullRewards == false){ _poolRewards = SafeMath.min(poolMetrics.staked, poolMetrics.rewards);} 
         // baseline is the min( staked, rewards); avoids ultra_farming > staking pool - EXPERIMENTAL
         
-        uint256 _timeRate = _period.mul(1e18).div(poolMetrics.duration); //1e18
+        uint256 _timeRate = _period.mul(1e18).div(poolMetrics.duration);
         return _poolRewards.mul(_timeRate).div(1e18); //tranche of rewards on period
     }
-    function viewAdditionalRewardOf(address _address) internal view returns(uint256) { // rewards generated since last Event
+    function viewAdditionalRewardOf(address _address) public view returns(uint256) { // rewards generated since last Event
         require(poolMetrics.rewards > 0, "No Rewards in the Pool");
         
-        // user weighted average share of Pool sice day1
-        uint256 _userRate =  viewPointsOf(_address).mul(1e18).div(viewPoolPoints()); //can drop if pool size increases -> slows rewards generation
+        //calculates the delta of pool points and user points since last Event
+        uint256 _deltaUser = viewPointsOf(_address).sub(userMetrics[msg.sender].stakingPoints); // points generated since lastEvent
+        uint256 _deltaPool = viewPoolPoints().sub(userMetrics[msg.sender].poolPoints);          // pool points generated since lastEvent
+        
+        // user weighted average share of Pool since lastEvent
+        
+        uint256 _userRateOnPeriod = 0;
+        if(_deltaPool > 1){_userRateOnPeriod =_deltaUser.mul(1e18).div(_deltaPool);} //can drop if pool size increases within period -> slows rewards generation
         
         // Pool Yield Rate 
-        uint256 _elapsed = currentTime().sub(
+        uint256 _period = currentTime().sub(
                             SafeMath.max(userMetrics[_address].lastEvent, poolMetrics.startTime)  
                             );        // time elapsed since last reward or pool started (if never taken rewards)
 
-        uint256 _reward = viewTrancheReward(_elapsed).mul(_userRate).div(1e18);  //user rate on pool rewards' tranche
+        // Calculate reward
+        uint256 _reward = viewTrancheReward(_period).mul(_userRateOnPeriod).div(1e18);  //user rate on pool rewards' tranche
 
         return _reward;
     }
     
-    function eligibleRewardOf(address _address) internal returns(uint256) {
-        uint256 _additional = viewAdditionalRewardOf(_address); //stakeShare * poolRewards(sinceLastEvent)
-        pointsSnapshot(_address); //updates lastEvent
-        userMetrics[_address].rewardAccrued = userMetrics[_address].rewardAccrued.add(_additional); //updates user's accrued
-        userMetrics[_address].stakingPoints = 0; //remove the points from the user (to avoid accrual with zero stake)
+    function lockRewardOf(address _address) public returns(uint256) {
+        uint256 _additional = viewAdditionalRewardOf(_address); //stakeShare(sinceLastEvent) * poolRewards(sinceLastEvent)
+        userMetrics[_address].rewardAccrued = userMetrics[_address].rewardAccrued.add(_additional); //snapshot rewards.
+        
+        pointsSnapshot(_address); //updates lastEvent and points
         return userMetrics[_address].rewardAccrued;
     }  
-    function takeRewards() public antiSpam(1) poolStarted{ //1 blocks between rewards
+    
+    function takeRewards() public poolStarted antiSpam(1) { //1 blocks between rewards
         require(poolMetrics.rewards > 0, "No Rewards in the Pool");
-        uint256 _reward = eligibleRewardOf(msg.sender); //returns already accrued + additional (also resets time counters)
-         //update Staking Event
         
-        if (_reward > 0) { //gas saver
-            userMetrics[msg.sender].rewardsPaid = _reward;   // update user paid rewards
-            userMetrics[msg.sender].rewardAccrued = 0; //flush previously accrued rewards
-            poolMetrics.rewards = poolMetrics.rewards.sub(_reward);           // update pool rewards
+        uint256 _reward = lockRewardOf(msg.sender); //returns already accrued + additional (also resets time counters)
+
+        userMetrics[msg.sender].rewardsPaid = _reward;   // update user paid rewards
+        userMetrics[msg.sender].rewardAccrued = 0; //flush previously accrued rewards
+        poolMetrics.rewards = poolMetrics.rewards.sub(_reward);           // update pool rewards
             
-            IERC20(poolMetrics.rewardToken).transfer(msg.sender, _reward);  // transfer
+        IERC20(poolMetrics.rewardToken).transfer(msg.sender, _reward);  // transfer
             
-            eligibleRewardOf(msg.sender); //relaunch counter
+        pointsSnapshot(msg.sender); //updates lastEvent
+        //lockRewardOf(msg.sender);
             
-            emit RewardTaken(msg.sender, _reward, "Rewards Sent");          
-            
-        }
+        emit RewardTaken(msg.sender, _reward, "Rewards Sent");          
     }
     
 //staking & unstaking
@@ -584,11 +597,12 @@ contract DeFiat_Farming_v11 {
         require(myStakeShare(_address) < 20000, "User stake% share too high. Leave some for the smaller guys ;-)"); //max 20%
         _;
     } // avoids large chinks being deposited and limits small holders rewards shrinking because of lost share of pool
+    
     function stake(uint256 _amount) public poolLive antiSpam(1) antiWhale(msg.sender){
         require(_amount > 0, "Cannot stake 0");
         
         //initialize
-        userMetrics[msg.sender].rewardAccrued = eligibleRewardOf(msg.sender); //Locks previous eligible rewards based on lastRewardEvent and lastStakingEvent
+        userMetrics[msg.sender].rewardAccrued = lockRewardOf(msg.sender); //Locks previous eligible rewards based on lastRewardEvent and lastStakingEvent
 
         //receive staked
         uint256 _balanceNow = IERC20(address(poolMetrics.stakedToken)).balanceOf(address(this));
@@ -604,40 +618,44 @@ contract DeFiat_Farming_v11 {
         userMetrics[msg.sender].stake = userMetrics[msg.sender].stake.add(amount);
 
         //finalize
+        pointsSnapshot(msg.sender); //updates lastEvent
         emit userStaking(msg.sender, amount, "Staking... ... ");
         
-    } // stake visibility is public and  overriding StakeToken's stake() function
-    function unStake(uint256 amount) public antiSpam(1) poolStarted{ 
-        require(amount > 0, "Cannot withdraw 0");
-        require(amount <= userMetrics[msg.sender].stake, "Cannot withdraw more than stake");
+    } 
+    
+    function unStake(uint256 _amount) public poolStarted antiSpam(1) { 
+        require(_amount > 0, "Cannot withdraw 0");
+        require(_amount <= userMetrics[msg.sender].stake, "Cannot withdraw more than stake");
         
         // transfer unstaked
-        IERC20(poolMetrics.stakedToken).transfer(msg.sender, amount);
+        IERC20(poolMetrics.stakedToken).transfer(msg.sender, _amount);
         
         //initialize
-        userMetrics[msg.sender].rewardAccrued = eligibleRewardOf(msg.sender); //snapshot of  previous eligible rewards based on lastStakingEvent
+        userMetrics[msg.sender].rewardAccrued = lockRewardOf(msg.sender); //snapshot of  previous eligible rewards based on lastStakingEvent
 
         
         // update metrics
-        poolMetrics.staked = poolMetrics.staked.sub(amount);
-        userMetrics[msg.sender].stake = userMetrics[msg.sender].stake.sub(amount);
+        poolMetrics.staked = poolMetrics.staked.sub(_amount);
+        userMetrics[msg.sender].stake = userMetrics[msg.sender].stake.sub(_amount);
         
         //finalize
-        emit userWithdrawal(msg.sender, amount, "Widhtdrawal");
+        emit userWithdrawal(msg.sender, _amount, "Widhtdrawal");
     }
 
     function myStake(address _address) public view returns(uint256) {
         return userMetrics[_address].stake;
     }
     function myStakeShare(address _address) public view returns(uint256) {
-        return (userMetrics[_address].stake).mul(100000).div(poolMetrics.staked);
+        if(poolMetrics.staked == 0){return 0;}
+        else {
+        return (userMetrics[_address].stake).mul(100000).div(poolMetrics.staked);}
     } //base 100,000
     function myPointsShare(address _address) public view returns(uint256) {  //weighted average of your stake over time vs the pool
         return viewPointsOf(_address).mul(100000).div(viewPoolPoints());
-    } //base 100,000
+    } //base 100,000. Drops when taking rewards.=> Refills after (favors strong hands)
     function myRewards(address _address) public view returns(uint256) {
         //delayed start obfuscation (avoids disturbances in the force...)
-        if(block.timestamp <= poolMetrics.startTime){return 0;}
+        if(block.timestamp <= poolMetrics.startTime || poolMetrics.rewards == 0){return 0;}
         else { return userMetrics[_address].rewardAccrued.add(viewAdditionalRewardOf(_address));} //previousLock + time based extra
     }
 
@@ -646,7 +664,7 @@ contract DeFiat_Farming_v11 {
 
     address public poolOperator;
     
-    function setPoolOperator(address _address) public onlyPoolOperator poolEnded {
+    function setPoolOperator(address _address) public onlyPoolOperator {
         poolOperator = _address;
     }
     modifier onlyPoolOperator() {
@@ -673,6 +691,11 @@ contract DeFiat_Farming_v11 {
     function setFee(uint256 _fee) public onlyPoolOperator {
         poolMetrics.stakingFee = _fee;
     }
+    function extendDuration(uint256 _extensionDays) public onlyPoolOperator {
+        poolMetrics.closingTime = poolMetrics.closingTime.add(_extensionDays*24*3600);
+        //will impact reward's yield
+    }
+    
     
     function flushPool(address _recipient, address _ERC20address) external onlyPoolOperator { // poolEnded { // poolEnded returns(bool) {
             uint256 _amount = IERC20(_ERC20address).balanceOf(address(this));
