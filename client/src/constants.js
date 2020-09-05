@@ -26,16 +26,16 @@ export default {
           rewardSymbol: "DFT",
           isLiquidityToken: false
         },
-        {
-          img: require("assets/img/points-palace.png"),
-          poolTitle: "Points Palace",
-          poolSubtitle: "Stake DFT, earn DFTP",
-          poolAddress: "0x995804C14d1AaF5bf3E52Cb18e3feaF1a24725e8",
-          basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
-          stakedSymbol: "DFT",
-          rewardSymbol: "DFTP",
-          isLiquidityToken: false
-        },
+        // {
+        //   img: require("assets/img/points-palace.png"),
+        //   poolTitle: "Points Palace",
+        //   poolSubtitle: "Stake DFT, earn DFTP",
+        //   poolAddress: "0x995804C14d1AaF5bf3E52Cb18e3feaF1a24725e8",
+        //   basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
+        //   stakedSymbol: "DFT",
+        //   rewardSymbol: "DFTP",
+        //   isLiquidityToken: false
+        // },
         {
           img: require("assets/img/liquidity-lab.png"),
           poolTitle: "Liquidity Laboratory",
