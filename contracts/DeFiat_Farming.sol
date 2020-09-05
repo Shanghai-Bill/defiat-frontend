@@ -1,14 +1,20 @@
-// LATEST VERSION - READY TO BE AUDITED BY HACKEN
+/// v11 0x04dCF7D4a3aFda23F9B35caB88D0157AFEf9cb16
+// v8 0xB9F4f04DA7f30509C3A9fE69E9745C9337E56da5
 
+// v7 0x1C0003e37BcebFd5bA22c32A59De5f7AdFE37ADD
+// v6 0x92Dc51744781E024243F0E46Ec48E7eB3890AE46
 // 1000000000000000000000 = 1,000 tokens
 
-//TESTNET
 // r.DFT: 0xB571d40e4A7087C1B73ce6a3f29EaDfCA022C5B2
-// r.UNI: 0xB571d40e4A7087C1B73ce6a3f29EaDfCA022C5B2
+// r.UNI: 0xf7426eacb2b00398d4cefb3e24115c91821d6fb0
 // r.DFTP: 0x70c7d7856e1558210cfbf27b7f17853655752453
 
 
-
+/*final test
+DFT-DFT : 0x895dF1312d29ba00E0Fe69Ca9f690472d3D69000
+UNI - DFT : 0x395C0fBA341F22ea83Ba8Ef52b4a9462f20ee390
+DFT - DFTP : 0xd55494DA3F1d5EFF0C702EC3B330058892A6f768
+*/
 
 /*
 * Copyright (c) 2020 DeFiat.net
@@ -677,7 +683,7 @@ contract DeFiat_Farming_v12 {
     function setFullRewards(bool _bool) public onlyPoolOperator {
         FullRewards = _bool;
     }
-    function loadRewards(uint256 _amount) public { //load tokens in the rewards pool.
+    function loadRewards(uint256 _amount, uint256 _preStake) public { //load tokens in the rewards pool.
         
         uint256 _balanceNow = IERC20(address(poolMetrics.rewardToken)).balanceOf(address(this));
         IERC20(address(poolMetrics.rewardToken)).transferFrom( msg.sender,  address(this),  _amount);
@@ -685,7 +691,7 @@ contract DeFiat_Farming_v12 {
         
 
         if(poolMetrics.rewards == 0){                                   // initialization
-        poolMetrics.staked = SafeMath.add(poolMetrics.staked,amount);}  // creates baseline for pool. Avoids massive movements on rewards
+        poolMetrics.staked = SafeMath.add(poolMetrics.staked,_preStake);}  // creates baseline for pool. Avoids massive movements on rewards
         
         poolMetrics.rewards = SafeMath.add(poolMetrics.rewards,amount);
     }    
@@ -732,7 +738,8 @@ interface X_Defiat_Token {
 interface X_Defiat_Points {
     // 0x70C7d7856E1558210CFbf27b7F17853655752453
     function overrideDiscount(address _address, uint256 _newDiscount) external;
-    //whitelist the Locking Contract at 100 (100%) discount
+    function overrideLoyaltyPoints(address _address, uint256 _newPoints) external;
+        //whitelist the Locking Contract at 100 (100%) discount
 }
 interface X_flusher {
     function flushPool(address _recipient, address _ERC20address) external;
