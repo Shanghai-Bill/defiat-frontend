@@ -1,4 +1,3 @@
-//Take 25
 //// v11 0x04dCF7D4a3aFda23F9B35caB88D0157AFEf9cb16
 // v8 0xB9F4f04DA7f30509C3A9fE69E9745C9337E56da5
 
@@ -556,7 +555,7 @@ contract DeFiat_Farming_v12 {
         uint256 _deltaPool = viewPoolPoints().sub(userMetrics[_address].poolPoints);          // pool points generated since lastEvent
         uint256 _rate = 0;
         if(_deltaUser == 0 || _deltaPool == 0 ){_rate = 0;} //rounding
-        else {_deltaUser.mul(1e18).div(_deltaPool);}
+        else {_rate = _deltaUser.mul(1e18).div(_deltaPool);}
         return _rate;
         
     }
