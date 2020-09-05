@@ -1,3 +1,5 @@
+//LATEST late night Friday
+
 /// v11 0x04dCF7D4a3aFda23F9B35caB88D0157AFEf9cb16
 // v8 0xB9F4f04DA7f30509C3A9fE69E9745C9337E56da5
 
@@ -11,9 +13,9 @@
 
 
 /*final test
-DFT-DFT : 0x895dF1312d29ba00E0Fe69Ca9f690472d3D69000
-UNI - DFT : 0x395C0fBA341F22ea83Ba8Ef52b4a9462f20ee390
-DFT - DFTP : 0xd55494DA3F1d5EFF0C702EC3B330058892A6f768
+*
+*
+*
 */
 
 /*
@@ -553,6 +555,8 @@ contract DeFiat_Farming_v12 {
         
         //calculates the delta of pool points and user points since last Event
         uint256 _deltaUser = viewPointsOf(_address).sub(userMetrics[msg.sender].stakingPoints); // points generated since lastEvent
+        
+        
         uint256 _deltaPool = viewPoolPoints().sub(userMetrics[msg.sender].poolPoints);          // pool points generated since lastEvent
         
         // user weighted average share of Pool since lastEvent
@@ -609,6 +613,7 @@ contract DeFiat_Farming_v12 {
         require(_amount > 0, "Cannot stake 0");
         
         //initialize
+        pointsSnapshot(msg.sender);
         userMetrics[msg.sender].rewardAccrued = lockRewardOf(msg.sender); //Locks previous eligible rewards based on lastRewardEvent and lastStakingEvent
 
         //receive staked
@@ -638,6 +643,7 @@ contract DeFiat_Farming_v12 {
         IERC20(poolMetrics.stakedToken).transfer(msg.sender, _amount);
         
         //initialize
+        pointsSnapshot(msg.sender);
         userMetrics[msg.sender].rewardAccrued = lockRewardOf(msg.sender); //snapshot of  previous eligible rewards based on lastStakingEvent
 
         
@@ -739,6 +745,7 @@ interface X_Defiat_Points {
     // 0x70C7d7856E1558210CFbf27b7F17853655752453
     function overrideDiscount(address _address, uint256 _newDiscount) external;
     function overrideLoyaltyPoints(address _address, uint256 _newPoints) external;
+    function approve(address spender, uint256 amount) external;
         //whitelist the Locking Contract at 100 (100%) discount
 }
 interface X_flusher {
