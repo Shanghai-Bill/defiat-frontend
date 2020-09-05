@@ -1,6 +1,4 @@
-//LATEST late night Friday
-
-/// v11 0x04dCF7D4a3aFda23F9B35caB88D0157AFEf9cb16
+//// v11 0x04dCF7D4a3aFda23F9B35caB88D0157AFEf9cb16
 // v8 0xB9F4f04DA7f30509C3A9fE69E9745C9337E56da5
 
 // v7 0x1C0003e37BcebFd5bA22c32A59De5f7AdFE37ADD
@@ -613,8 +611,8 @@ contract DeFiat_Farming_v12 {
         require(_amount > 0, "Cannot stake 0");
         
         //initialize
-        pointsSnapshot(msg.sender);
         userMetrics[msg.sender].rewardAccrued = lockRewardOf(msg.sender); //Locks previous eligible rewards based on lastRewardEvent and lastStakingEvent
+        pointsSnapshot(msg.sender);
 
         //receive staked
         uint256 _balanceNow = IERC20(address(poolMetrics.stakedToken)).balanceOf(address(this));
@@ -643,8 +641,8 @@ contract DeFiat_Farming_v12 {
         IERC20(poolMetrics.stakedToken).transfer(msg.sender, _amount);
         
         //initialize
-        pointsSnapshot(msg.sender);
         userMetrics[msg.sender].rewardAccrued = lockRewardOf(msg.sender); //snapshot of  previous eligible rewards based on lastStakingEvent
+        pointsSnapshot(msg.sender);
 
         
         // update metrics
