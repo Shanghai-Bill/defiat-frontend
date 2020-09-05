@@ -86,14 +86,13 @@ export const PoolInterface = ({
   }, [])
 
   const loadData = async () => {
-    const farmingContract = new web3.eth.Contract(DeFiat_Farming.abi, contractId);
-    const poolMetrics = await farmingContract.methods.poolMetrics().call();
-    const tokenContract = new web3.eth.Contract(IERC20.abi, poolMetrics.stakedToken);
-    const rewardContract = new web3.eth.Contract(IERC20.abi, poolMetrics.rewardToken);
-    setFarmingContract(farmingContract);
-    setTokenContract(tokenContract);
-    setRewardContract(rewardContract);
-
+      const farmingContract = farmingContract || new web3.eth.Contract(DeFiat_Farming.abi, contractId);
+      const poolMetrics = await farmingContract.methods.poolMetrics().call();
+      const tokenContract = tokenContract || new web3.eth.Contract(IERC20.abi, poolMetrics.stakedToken);
+      const rewardContract = rewardContract || new web3.eth.Contract(IERC20.abi, poolMetrics.rewardToken);
+      isLoading && setFarmingContract(farmingContract);
+      isLoading && setTokenContract(tokenContract);
+      isLoading && setRewardContract(rewardContract);
 
     // Implement edge cases for decimal amounts that are different than 18
     // stakedContract.methods.decimals().call(),
@@ -106,28 +105,27 @@ export const PoolInterface = ({
 
 
       farmingContract.methods.userMetrics(accounts[0]).call(),
-      farmingContract.methods.myRewards(accounts[0]).call()
+      farmingContract.methods.myRewards(accounts[0]).call(),
+      farmingContract.methods.viewAdditionalRewardOf(accounts[0]).call(),
+      farmingContract.methods.myStake(accounts[0]).call(),
     ])
 
-    //console.log(values)
     const userMetrics = values[4];
     const stakingAllowance = values[3];
     
-
-    //console.log(userMetrics)
     setUserMetrics(userMetrics);
     setStakingState({
-      ...stakingState,
+      //...stakingState,
       stakedSymbol: values[0],
       rewardSymbol: values[1],
       longTokenBalance: values[2],
       tokenBalance: parseValue(values[2]),
       stakingAllowance,
-      stakedBalance: parseValue(userMetrics.stake),
+      stakedBalance: parseValue(values[7]),
       availableRewards: parseValue(values[5]),
-      totalPoolRewards: parseValue(poolMetrics.rewards),
+      // totalPoolRewards: parseValue(poolMetrics.rewards),
       totalPoolStaked: parseValue(poolMetrics.staked),
-      currentPoolFee: (poolMetrics.stakingFee / 10).toFixed(2)
+      // currentPoolFee: (poolMetrics.stakingFee / 10).toFixed(2)
     })
 
     if (showApproveButton && stakingAllowance > 0) setShowApproveButton(false);
@@ -136,7 +134,7 @@ export const PoolInterface = ({
 
   const parseValue = (value) => {
     const wei = web3.utils.fromWei(value)
-    return (Math.floor(parseFloat(wei * 100)) / 100).toFixed(2);
+    return (Math.floor(+wei * 100) / 100).toFixed(2);
   }
 
   const approveStaking = async () => {
@@ -145,6 +143,7 @@ export const PoolInterface = ({
     console.log(totalSupply)
     tokenContract.methods.approve(contractId, totalSupply).send({from: accounts[0]})
       .then((data) => {
+
         toast.success(`✅ Successfully approved ${stakingState.stakedSymbol} staking.`);
         setShowApproveButton(false);
       })
@@ -158,12 +157,23 @@ export const PoolInterface = ({
   }
 
   const stakeToken = async () => {
+    
     setStaking(true);
+    console.log(stakingState.stakedBalance, stakingState.totalPoolStaked)
+    if (stakeAction === 'Stake' && stakingState.stakedBalance > (stakingState.totalPoolStaked * 0.20)) {
+      toast.warning("🐳 Whale Alert! Your current stake is >= 20% of the total pool. You may not stake more until your staked balance falls below 20%.")
+      setStaking(false);
+      return;
+    }
     const tokens = web3.utils.toWei(stakeAmountInput.toString(), 'ether');
     const stakeAmount = web3.utils.toBN(tokens);
     farmingContract.methods.stake(stakeAmount).send({from: accounts[0]})
       .then((data) => {
-        toast.success(`✅ Successfully staked ${stakeAmountInput} ${stakingState.stakedSymbol}.`);
+        // toast.success(`✅ Successfully staked ${stakeAmountInput} ${stakingState.stakedSymbol}.`);
+        toast.success(<Msg 
+            topMessage={`✅ Successfully staked ${stakeAmountInput} ${stakingState.stakedSymbol}.`} 
+            // bottomLink={`https://etherscan.io/tx/${data.transactionHash}`}
+            />);
       })
       .catch((err) => {
         // console.log(err)
@@ -181,7 +191,8 @@ export const PoolInterface = ({
     const unstakeAmount = web3.utils.toBN(tokens);
     farmingContract.methods.unStake(unstakeAmount).send({from: accounts[0]})
       .then((data) => {
-        toast.success(`✅ Successfully unstaked ${stakeAmountInput} ${stakingState.stakedSymbol}.`);
+        console.log(data)
+        toast.success(<Msg topMessage={`✅ Successfully unstaked ${stakeAmountInput} ${stakingState.stakedSymbol}.`} />);
       })
       .catch((err) => {
         // console.log(err);
@@ -237,9 +248,6 @@ export const PoolInterface = ({
 
   // determine if the initial amount is within bounds
   const shouldDisableButton = (maxBound) => {
-    if (stakeAction === 'Stake' && stakingState.stakedBalance > (stakingState.totalPoolStaked * 0.20)) {
-      return true;
-    }
     if (stakeAmountInput.includes('.') && stakeAmountInput.split(".")[1].length > 18) {
       return true
     }
@@ -442,3 +450,13 @@ export const PoolInterface = ({
     </>
   )
 }
+
+const Msg = ({
+  topMessage,
+  bottomLink
+}) => (
+  <>
+    <p>{topMessage}</p>
+    {bottomLink && (<p><a>{bottomLink}</a></p>)}
+  </>
+)

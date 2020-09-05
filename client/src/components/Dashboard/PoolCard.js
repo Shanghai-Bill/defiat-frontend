@@ -10,8 +10,6 @@ import {
   Col,
   Container
 } from 'reactstrap'
-import { Link } from 'react-router-dom'
-import IERC20 from 'contracts/_ERC20.json'
 
 export const PoolCard = ({
   logo,

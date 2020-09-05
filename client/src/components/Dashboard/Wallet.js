@@ -30,6 +30,7 @@ export const Wallet = ({
   const [blockNumber, setBlockNumber] = useState(0);
 
   useEffect(() => {
+    getWalletData();
     const subscription = web3.eth.subscribe('newBlockHeaders', (error, result) => {
       if (!error) {
         setBlockNumber(result.number);
@@ -245,29 +246,33 @@ export const Wallet = ({
             <Col lg="4" className="d-flex">
               <Card>
                 <CardBody className="d-flex align-items-center justify-content-center w-100">
-                    <Button 
-                      className="w-100"
-                      color="success"
-                      href={`https://app.uniswap.org/#/swap?inputCurrency=${network["token"]}`}
-                      target="_blank"
-                    >
-                      Buy DFT on UniSwap
-                    </Button>
-                    {/* <Button 
-                      className="m-100"
-                      color="success"
-                      onClick={() => transferToken()}
-                    >
-                      Send DFT
-                    </Button> */}
+                  <Row>
+                    <Col>
+                      <div>
+                        <Button 
+                          className="w-100"
+                          color="success"
+                          href={`https://app.uniswap.org/#/swap?inputCurrency=${network["token"]}`}
+                          target="_blank"
+                        >
+                          Buy DFT on UniSwap
+                        </Button>
+                      </div>
+                      <div>
+                        <Button 
+                          className="w-100"
+                          color="success"
+                          href="/"
+                        >
+                          Back To Home
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
                 </CardBody>
               </Card>
             </Col>
           </Row>
-          <Link to="/">
-            <Button>Back To Home</Button>
-          </Link>
-          
         </Container>
       )}
     </>
