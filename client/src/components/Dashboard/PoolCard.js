@@ -10,6 +10,7 @@ import {
   Col,
   Container
 } from 'reactstrap'
+import { useHistory } from 'react-router-dom'
 
 export const PoolCard = ({
   logo,
@@ -20,6 +21,8 @@ export const PoolCard = ({
   rewardSymbol,
   stakedSymbol
 }) => {
+  const history = useHistory();
+
   const isPoolOpen = new Date().getTime() > +poolMetrics.startTime * 1000;
 
   const totalStaked = (poolMetrics.staked / 1e18).toFixed(2) + " " + stakedSymbol; // make this modular
@@ -68,7 +71,7 @@ export const PoolCard = ({
               className="w-100"
               color="primary" 
               disabled={!isPoolOpen || poolMetrics.rewards == 0}
-              href={`/dashboard/staking/${poolAddress}`}
+              onClick={() => history.push(`/dashboard/staking/${poolAddress}`)}
             >
               Go To Pool
             </Button>

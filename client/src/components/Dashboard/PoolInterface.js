@@ -13,6 +13,7 @@ import {
   ModalFooter,
   Tooltip
 } from 'reactstrap'
+import { TooltipMessage } from 'components/TooltipMessage';
 import { Link, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import IERC20 from 'contracts/_ERC20.json'
@@ -30,7 +31,7 @@ export const PoolInterface = ({
 
   const [isLoading, setLoading] = useState(true);
   const [blockNumber, setBlockNumber] = useState(0);
-  const [lastTransaction, setLastTransaction] = useState()
+  const [lastTransaction, setLastTransaction] = useState(0);
 
   // Inputs
   const [stakeAmountInput, setStakeAmountInput] = useState('');
@@ -106,13 +107,16 @@ export const PoolInterface = ({
 
       farmingContract.methods.userMetrics(accounts[0]).call(),
       farmingContract.methods.myRewards(accounts[0]).call(),
-      farmingContract.methods.viewAdditionalRewardOf(accounts[0]).call(),
       farmingContract.methods.myStake(accounts[0]).call(),
+      web3.eth.getBlockNumber()
     ])
 
-    const userMetrics = values[4];
-    const stakingAllowance = values[3];
     
+    const stakingAllowance = values[3];
+    const userMetrics = values[4];
+    const currentBlock = values[7];
+
+    setBlockNumber(currentBlock);
     setUserMetrics(userMetrics);
     setStakingState({
       //...stakingState,
@@ -121,7 +125,7 @@ export const PoolInterface = ({
       longTokenBalance: values[2],
       tokenBalance: parseValue(values[2]),
       stakingAllowance,
-      stakedBalance: parseValue(values[7]),
+      stakedBalance: parseValue(values[6]),
       availableRewards: parseValue(values[5]),
       // totalPoolRewards: parseValue(poolMetrics.rewards),
       totalPoolStaked: parseValue(poolMetrics.staked),
@@ -140,16 +144,14 @@ export const PoolInterface = ({
   const approveStaking = async () => {
     setApproving(true);
     const totalSupply = await tokenContract.methods.totalSupply().call();
-    console.log(totalSupply)
     tokenContract.methods.approve(contractId, totalSupply).send({from: accounts[0]})
       .then((data) => {
-
-        toast.success(`✅ Successfully approved ${stakingState.stakedSymbol} staking.`);
+        toast.success(<TooltipMessage title='✅ Success' message={`Successfully approved ${stakingState.stakedSymbol}-${stakingState.rewardSymbol} staking.`} />);
         setShowApproveButton(false);
       })
       .catch((err) => {
         // console.log(err);
-        toast.error("⛔️ Encountered an error, could not approve staking.");
+        toast.error(<TooltipMessage title="⛔️ Error" message="Encountered an error, could not approve staking." />);
       })
       .finally(() => {
         setApproving(false);
@@ -157,11 +159,11 @@ export const PoolInterface = ({
   }
 
   const stakeToken = async () => {
-    
+    if (checkAntiSpam()) return;
     setStaking(true);
     console.log(stakingState.stakedBalance, stakingState.totalPoolStaked)
     if (stakeAction === 'Stake' && stakingState.stakedBalance > (stakingState.totalPoolStaked * 0.20)) {
-      toast.warning("🐳 Whale Alert! Your current stake is >= 20% of the total pool. You may not stake more until your staked balance falls below 20%.")
+      toast.warning(<TooltipMessage title="🐳 Whale Alert!" message="Your current stake is >= 20% of the total pool. You may not stake more until your staked balance falls below 20%." />)
       setStaking(false);
       return;
     }
@@ -169,36 +171,37 @@ export const PoolInterface = ({
     const stakeAmount = web3.utils.toBN(tokens);
     farmingContract.methods.stake(stakeAmount).send({from: accounts[0]})
       .then((data) => {
-        // toast.success(`✅ Successfully staked ${stakeAmountInput} ${stakingState.stakedSymbol}.`);
-        toast.success(<Msg 
-            topMessage={`✅ Successfully staked ${stakeAmountInput} ${stakingState.stakedSymbol}.`} 
-            // bottomLink={`https://etherscan.io/tx/${data.transactionHash}`}
-            />);
+        toast.success(<TooltipMessage title="✅ Success" message={`Successfully staked ${stakeAmountInput} ${stakingState.stakedSymbol}.`} />)
+        setLastTransaction(data.blockNumber);
       })
       .catch((err) => {
         // console.log(err)
-        toast.error("⛔️ Encountered an error, could not stake tokens.")
+        toast.error(<TooltipMessage title="⛔️ Error" message="Encountered an error, could not stake tokens." />)
       })
       .finally(() => {
+        setOpen(false);
         setStakeAmountInput('');
         setStaking(false);
       });
   }
 
   const unStakeToken = async () => {
+    if (checkAntiSpam()) return;
     setStaking(true);
     const tokens = web3.utils.toWei(stakeAmountInput.toString(), 'ether');
     const unstakeAmount = web3.utils.toBN(tokens);
     farmingContract.methods.unStake(unstakeAmount).send({from: accounts[0]})
       .then((data) => {
-        console.log(data)
-        toast.success(<Msg topMessage={`✅ Successfully unstaked ${stakeAmountInput} ${stakingState.stakedSymbol}.`} />);
+        //console.log(data)
+        toast.success(<TooltipMessage title="✅ Success" message={`Successfully unstaked ${stakeAmountInput} ${stakingState.stakedSymbol}.`} />);
+        setLastTransaction(data.blockNumber);
       })
       .catch((err) => {
         // console.log(err);
-        toast.error("⛔️ Encountered an error, could not unstake tokens.")
+        toast.error(<TooltipMessage title="⛔️ Error" message="Encountered an error, could not unstake tokens." />)
       })
       .finally(() => {
+        setOpen(false);
         setStaking(false);
         setStakeAmountInput('');
       });
@@ -206,19 +209,28 @@ export const PoolInterface = ({
 
   // take reward
   const takeRewards = () => {
+    if (checkAntiSpam()) return;
     setClaiming(true);
-    const rewards = parseFloat(stakingState.availableRewards);
     farmingContract.methods.takeRewards().send({from: accounts[0]})
       .then((data) => {
-        toast.success(`✅ Successfully claimed ${rewards} ${stakingState.rewardSymbol}.`);
+        toast.success(<TooltipMessage title="✅ Success" message={`Successfully claimed ${stakingState.rewardSymbol} rewards.`} />);
+        setLastTransaction(data.blockNumber);
       })
       .catch((err) => {
         // console.log(err)
-        toast.error("⛔️ Encountered an error, could not claim rewards.")
+        toast.error(<TooltipMessage title="⛔️ Error" message="Encountered an error, could not claim rewards." />)
       })
       .finally(() => {
         setClaiming(false);
       });
+  }
+
+  const checkAntiSpam = () => {
+    if (blockNumber === lastTransaction) {
+      toast.warn(<TooltipMessage title="🤖 AntiSpam Alert!" message="You just interacted with this pool! Wait 1 block to perform this action and try again." />)
+      return true;
+    }
+    return false;
   }
 
   const handleStake = () => {
@@ -263,7 +275,7 @@ export const PoolInterface = ({
         <div className="content-center">
           <Row className="justify-content-center">
             <Col lg="3">
-              <img alt="loading" src={require("assets/img/LoadingScales.gif")} />
+              <img alt="loading" src={require("assets/img/Farm-Loading.gif")} />
             </Col>
           </Row>
         </div>
@@ -329,7 +341,7 @@ export const PoolInterface = ({
                 <CardBody className="text-left">
                   <Tooltip placement="left" isOpen={tooltip2Open} target={`tooltip-2`} toggle={toggle2}>
                     This is the total amount of {stakingState.stakedSymbol} that you have staked into this pool. You must approve the staking contract before you can stake.
-                    Anti-Whale gates are in effect, you may not stake more than 20% of the total pool.
+                    Anti-Whale gates are in effect: if you have more than 20% of the total pool, you may not stake more until your % falls below the threshold.
                   </Tooltip>
                   <div className="d-flex justify-content-between align-items-center mb-2">
                     <div className="d-flex align-items-end">
@@ -413,6 +425,7 @@ export const PoolInterface = ({
                     value={stakeAmountInput}
                     onChange={(e) => setStakeAmountInput(e.target.value)}
                     placeholder="Enter an amount..."
+                    disabled={isStaking}
                   />
                 </Col>
                 <Col sm="4">
@@ -420,6 +433,7 @@ export const PoolInterface = ({
                     className="m-0 w-100" 
                     color="primary"
                     onClick={() => handleMax()}
+                    disabled={isStaking}
                   >
                     MAX
                   </Button>
@@ -450,13 +464,3 @@ export const PoolInterface = ({
     </>
   )
 }
-
-const Msg = ({
-  topMessage,
-  bottomLink
-}) => (
-  <>
-    <p>{topMessage}</p>
-    {bottomLink && (<p><a>{bottomLink}</a></p>)}
-  </>
-)

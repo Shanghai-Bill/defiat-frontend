@@ -10,6 +10,7 @@ import {
 import { DashboardCard } from './DashboardCard'
 import { toast } from 'react-toastify'
 import { Link } from 'react-router-dom'
+import { TooltipMessage } from '../TooltipMessage'
 
 export const Wallet = ({
   web3,
@@ -72,15 +73,15 @@ export const Wallet = ({
   }
 
   const checkDiscount = async () => {
-    const decimals = await contracts["points"].methods.decimals().call();
     const currentLevel = await contracts["points"].methods.viewEligibilityOf(accounts[0]).call();
     const nextLevelPoints = await contracts["points"].methods._discountTranches(currentLevel+1).call();
     const loyaltyPointsNeeded = (nextLevelPoints / 1e18) - (walletState.loyaltyPoints / 1e18);
+    console.log(currentLevel, nextLevelPoints, loyaltyPointsNeeded)
 
-    if (loyaltyPointsNeeded <= 0) {
-      toast.success("✅ You are eligible for the next Discount Tier! Click Update Discount!")
+    if (loyaltyPointsNeeded > 0) {
+      toast.success(<TooltipMessage title="✅ Eligible" message="You are eligible for the next Discount Tier! Click Update Discount!" />)
     } else {
-      toast.warn(`⚠️ You are not eligible for the next Discount Tier yet. You need ${loyaltyPointsNeeded} more loyalty points for the next level.`)
+      toast.warn(<TooltipMessage title="⚠️ Not Eligible" message={`You are not eligible for the next Discount Tier yet. You need ${loyaltyPointsNeeded} more loyalty points for the next level.`} />)
     }
   }
 
@@ -94,7 +95,7 @@ export const Wallet = ({
             if (currentLevel !== previousLevel) {
               contracts["points"].methods.viewDiscountOf(accounts[0]).call()
                 .then((discountRate) => {
-                  toast.success(`✅ Successfully updated discount. You are now Discount Tier ${currentLevel}.`);
+                  toast.success(<TooltipMessage title="✅ Success" message={`Successfully updated discount. You are now Discount Tier ${currentLevel}.`} />);
                   setWalletState({
                     ...walletState,
                     discountRate
@@ -102,7 +103,7 @@ export const Wallet = ({
                   setUpdating(false);
                 })
             } else {
-              toast.error("⛔️ Could not update discount. Check your eligibility and try again.")
+              toast.error(<TooltipMessage title="⛔️ Error" message="Could not update discount. Check your eligibility and try again." />)
               setUpdating(false);
             }
           });
@@ -118,7 +119,7 @@ export const Wallet = ({
         <div className="content-center">
           <Row className="justify-content-center">
             <Col lg="3">
-              <img alt="loading" src={require("assets/img/LoadingScales.gif")} />
+              <img alt="loading" src={require("assets/img/Farm-Loading.gif")} />
             </Col>
           </Row>
         </div>
