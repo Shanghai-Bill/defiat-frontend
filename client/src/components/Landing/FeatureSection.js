@@ -72,7 +72,7 @@ export const FeatureSection = () => {
                       <h4 className="info-title">Loyalty Points</h4>
                       <hr className="line-primary" />
                       <p className="text-tertiary">
-                        Secondary, inflationary asset which is earned through network partcipation.
+                        Secondary, inflationary asset which is earned through network participation.
                         Rewards a discount on DFT transaction fee and burn rates.
                       </p>
                     </div>
