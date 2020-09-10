@@ -20,7 +20,7 @@ export default {
           img: require("assets/img/defiat-dungeon.png"),
           poolTitle: "DeFiat Dungeon",
           poolSubtitle: "Stake DFT, earn DFT",
-          poolAddress: "0xFDc1F043dFbD792C66efC1943DF6f565F6834581",
+          poolAddress: "0xE0baC63CBE03285e7c5901cB5e84309888292164",
           basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
           stakedSymbol: "DFT",
           rewardSymbol: "DFT",
@@ -36,16 +36,16 @@ export default {
         //   rewardSymbol: "DFTP",
         //   isLiquidityToken: false
         // },
-        {
-          img: require("assets/img/liquidity-lab.png"),
-          poolTitle: "Liquidity Laboratory",
-          poolSubtitle: "Stake DFT-UNI-V2, earn DFT",
-          poolAddress: "0x23c5294996C7266f968d0E0ee246b8B86275DAF7",
-          basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
-          stakedSymbol: "DFT-UNI-V2",
-          rewardSymbol: "DFT",
-          isLiquidityToken: true
-        },
+        // {
+        //   img: require("assets/img/liquidity-lab.png"),
+        //   poolTitle: "Liquidity Laboratory",
+        //   poolSubtitle: "Stake DFT-UNI-V2, earn DFT",
+        //   poolAddress: "0x23c5294996C7266f968d0E0ee246b8B86275DAF7",
+        //   basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
+        //   stakedSymbol: "DFT-UNI-V2",
+        //   rewardSymbol: "DFT",
+        //   isLiquidityToken: true
+        // },
       ]
      }
   },

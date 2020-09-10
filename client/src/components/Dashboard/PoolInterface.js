@@ -17,7 +17,7 @@ import { TooltipMessage } from 'components/TooltipMessage';
 import { Link, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import IERC20 from 'contracts/_ERC20.json'
-import DeFiat_Farming from 'contracts/DeFiat_Farming_v12.json'
+import DeFiat_Farming from 'contracts/DeFiat_Farming_v13.json'
 import { MdInfoOutline } from 'react-icons/md'
 
 export const PoolInterface = ({
