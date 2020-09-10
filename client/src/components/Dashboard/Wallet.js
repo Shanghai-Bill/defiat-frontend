@@ -9,10 +9,7 @@ import {
 } from 'reactstrap'
 import { DashboardCard } from './DashboardCard'
 import { toast } from 'react-toastify'
-import { Link } from 'react-router-dom'
 import { TooltipMessage } from '../TooltipMessage'
-import Uni_Price from 'contracts/Uni_Price.json'
-import UniV2_Pair from 'contracts/IUniswapV2Pair.json'
 
 export const Wallet = ({
   web3,
@@ -28,7 +25,8 @@ export const Wallet = ({
     loyaltyPoints: 0,
     totalSupply: 0,
     burnRate: 0,
-    feeRate: 0
+    feeRate: 0,
+    loyaltyPointsFull: 0
   })
   const [blockNumber, setBlockNumber] = useState(0);
 
@@ -75,19 +73,23 @@ export const Wallet = ({
   }
 
   const checkDiscount = async () => {
-    const currentLevel = await contracts["points"].methods.viewEligibilityOf(accounts[0]).call();
-    const nextLevelPoints = await contracts["points"].methods._discountTranches(currentLevel+1).call();
-    const loyaltyPointsNeeded = (nextLevelPoints / 1e18) - (walletState.loyaltyPoints / 1e18);
-    console.log(currentLevel, nextLevelPoints, loyaltyPointsNeeded)
+    const eligibleLevel = await contracts["points"].methods.viewEligibilityOf(accounts[0]).call();
+    const currentLevel = await contracts["points"].methods.viewDiscountOf(accounts[0]).call();
 
-    if (loyaltyPointsNeeded > 0) {
+    if (currentLevel < eligibleLevel) {
       toast.success(<TooltipMessage title="✅ Eligible" message="You are eligible for the next Discount Tier! Click Update Discount!" />)
+      return true;
     } else {
+      const nextLevelPoints = await contracts["points"].methods._discountTranches(+currentLevel+1).call();
+      const loyaltyPointsNeeded = (nextLevelPoints / 1e18) - (walletState.loyaltyPoints);
       toast.warn(<TooltipMessage title="⚠️ Not Eligible" message={`You are not eligible for the next Discount Tier yet. You need ${loyaltyPointsNeeded} more loyalty points for the next level.`} />)
+      return false;
     }
   }
 
   const updateDiscount = async () => {
+    const shouldUpdate = await checkDiscount();
+    if (!shouldUpdate) return;
     setUpdating(true);
     const previousLevel = await contracts["points"].methods.viewEligibilityOf(accounts[0]).call();
     contracts["points"].methods.updateMyDiscountOf().send({from: accounts[0]})

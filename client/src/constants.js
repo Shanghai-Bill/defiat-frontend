@@ -103,6 +103,13 @@ export default {
           rewardSymbol: "DFT",
           isLiquidityToken: true
         },
+      ],
+      proposals: [
+        {
+          proposalTitle: "Proposal 1",
+          proposalAddress: "",
+          proposalOperator: "",
+        },
       ]
      }
   },

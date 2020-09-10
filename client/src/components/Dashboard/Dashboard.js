@@ -16,6 +16,8 @@ import {
 import { NoWallet } from './NoWallet';
 import { Wallet } from './Wallet';
 import { Staking } from './Staking';
+import { Proposals } from './Proposals';
+import { Operator } from './Operator';
 import { withRouter, useRouteMatch, useHistory, Route, Switch } from 'react-router-dom'
 import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Container, NavbarText } from 'reactstrap';
 
