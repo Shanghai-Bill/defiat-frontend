@@ -423,7 +423,7 @@ contract DeFiat_Farming_v13 {
             uint256 lastEvent;
 
             uint256 rewardAccrued;  // accrued rewards over time based on staking points
-            uint256 rewardsPaid;    // information only
+            uint256 rewardsPaid;    // for information only
 
             uint256 lastTxBlock;    // latest transaction from the user (antiSpam)
     }
