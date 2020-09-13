@@ -393,7 +393,7 @@ library Address {
 //========
 
 
-contract DeFiat_Farming_v13 {
+contract DeFiat_Farming_v15 {
     using SafeMath for uint256;
 
     //Structs
@@ -520,9 +520,10 @@ contract DeFiat_Farming_v13 {
     
 //==Rewards
     function viewTrancheReward(uint256 _period) internal view returns(uint256) {
-        uint256 _poolRewards = poolMetrics.rewards; //tokens
+        //uint256 _poolRewards = poolMetrics.rewards; //tokens in the pool. Note: This can be setup to a fixed amount (totalRewards)
+        uint256 _poolRewards = totalRewards; 
         
-        if(FullRewards == false){ _poolRewards = SafeMath.min(poolMetrics.staked, poolMetrics.rewards);} 
+        if(FullRewards == false){ _poolRewards = SafeMath.min(poolMetrics.staked, _poolRewards);} 
         // baseline is the min( staked, rewards); avoids ultra_farming > staking pool - EXPERIMENTAL
         
         uint256 _timeRate = _period.mul(1e18).div(poolMetrics.duration);
@@ -591,7 +592,7 @@ contract DeFiat_Farming_v13 {
         require(myStakeShare(_address) < 20000, "User stake% share too high. Leave some for the smaller guys ;-)"); //max 20%
         _;
     } 
-    // avoids large chunks being deposited once a user reached 20%. 
+    // avoids stakes being deposited once a user reached 20%. 
     // Simplistic implementation as if we calculate "futureStake" value very 1st stakers will not be able to deposit.
     
     function stake(uint256 _amount) public poolLive antiSpam(1) antiWhale(msg.sender){
@@ -610,7 +611,7 @@ contract DeFiat_Farming_v13 {
         uint256 _fee = amount.mul(poolMetrics.stakingFee).div(1000);
         amount = amount.sub(_fee);
         
-        poolMetrics.rewards = poolMetrics.rewards.add(_fee);
+        if(poolMetrics.stakedToken == poolMetrics.rewardToken){poolMetrics.rewards = poolMetrics.rewards.add(_fee);}
         poolMetrics.staked = poolMetrics.staked.add(amount);
         userMetrics[msg.sender].stake = userMetrics[msg.sender].stake.add(amount);
 
@@ -669,6 +670,7 @@ contract DeFiat_Farming_v13 {
     }
     
     bool public FullRewards;
+    uint256 totalRewards;
     
     function setFullRewards(bool _bool) public onlyPoolOperator {
         FullRewards = _bool;
@@ -684,6 +686,7 @@ contract DeFiat_Farming_v13 {
         poolMetrics.staked = SafeMath.add(poolMetrics.staked,_preStake);}  // creates baseline for pool. Avoids massive movements on rewards
         
         poolMetrics.rewards = SafeMath.add(poolMetrics.rewards,amount);
+        totalRewards = totalRewards.add(_amount);
     }    
     function setFee(uint256 _fee) public onlyPoolOperator {
         poolMetrics.stakingFee = _fee;
