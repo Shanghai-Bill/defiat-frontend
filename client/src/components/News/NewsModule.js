@@ -4,13 +4,15 @@ import {
   CardBody,
   Row,
   Col,
-  Button
+  Button,
+  Badge
 } from 'reactstrap'
 
 export const NewsModule = ({
   title,
-  subtitle,
-  datePublished,
+  date,
+  author,
+  categories,
   thumbnail,
   link
 }) => {
@@ -23,9 +25,14 @@ export const NewsModule = ({
               <img src={thumbnail} className="rounded shadow-lg" height="100" width="220" alt="splash" />
             </Col>
             <Col className="text-left">
-              <a className="display-3" href={link}>{title}</a>
-              <p>{subtitle}</p>
-              <p className="text-info">{datePublished}</p>
+              <a className="display-4" href={link}>{title}</a>
+              <p>Author: <b>{author}</b></p>
+              <p>Published: <b>{date}</b></p>
+              <Row className="pl-3">
+                {categories && categories.length && categories.map((category, i) => (
+                  <Badge key={i} color="primary">{category}</Badge>
+                ))}
+              </Row>
             </Col>
             <Col lg="3" className="d-flex justify-content-center align-items-center">
               <Button

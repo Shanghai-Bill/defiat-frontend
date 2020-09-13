@@ -11,6 +11,8 @@ import { DashboardCard } from './DashboardCard'
 import { toast } from 'react-toastify'
 import { Link } from 'react-router-dom'
 import { TooltipMessage } from '../TooltipMessage'
+import Uni_Price from 'contracts/Uni_Price.json'
+import UniV2_Pair from 'contracts/IUniswapV2Pair.json'
 
 export const Wallet = ({
   web3,

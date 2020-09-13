@@ -17,7 +17,7 @@ import { TooltipMessage } from 'components/TooltipMessage';
 import { Link, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import IERC20 from 'contracts/_ERC20.json'
-import DeFiat_Farming from 'contracts/DeFiat_Farming_v13.json'
+import DeFiat_Farming from 'contracts/DeFiat_Farming_v15.json'
 import { MdInfoOutline } from 'react-icons/md'
 
 export const PoolInterface = ({
@@ -31,7 +31,7 @@ export const PoolInterface = ({
 
   const [isLoading, setLoading] = useState(true);
   const [blockNumber, setBlockNumber] = useState(0);
-  const [lastTransaction, setLastTransaction] = useState(0);
+  const [lastTransaction, setLastTransaction] = useState(-1);
 
   // Inputs
   const [stakeAmountInput, setStakeAmountInput] = useState('');
@@ -51,6 +51,7 @@ export const PoolInterface = ({
   const [userMetrics, setUserMetrics] = useState({})
 
   const [stakingState, setStakingState] = useState({
+    isPoolClosed: false,
     rewardSymbol: "",
     stakedSymbol: "",
     longTokenBalance: 0,
@@ -120,6 +121,7 @@ export const PoolInterface = ({
     setUserMetrics(userMetrics);
     setStakingState({
       //...stakingState,
+      isPoolClosed: new Date().getTime() > +poolMetrics.closingTime * 1000,
       stakedSymbol: values[0],
       rewardSymbol: values[1],
       longTokenBalance: values[2],
@@ -146,7 +148,7 @@ export const PoolInterface = ({
     const totalSupply = await tokenContract.methods.totalSupply().call();
     tokenContract.methods.approve(contractId, totalSupply).send({from: accounts[0]})
       .then((data) => {
-        toast.success(<TooltipMessage title='✅ Success' message={`Successfully approved ${stakingState.stakedSymbol}-${stakingState.rewardSymbol} staking.`} />);
+        toast.success(<TooltipMessage title='✅ Success' message={`Successfully approved ${stakingState.stakedSymbol}-${stakingState.rewardSymbol} staking.`} txn={data.transactionHash} />);
         setShowApproveButton(false);
       })
       .catch((err) => {
@@ -171,7 +173,7 @@ export const PoolInterface = ({
     const stakeAmount = web3.utils.toBN(tokens);
     farmingContract.methods.stake(stakeAmount).send({from: accounts[0]})
       .then((data) => {
-        toast.success(<TooltipMessage title="✅ Success" message={`Successfully staked ${stakeAmountInput} ${stakingState.stakedSymbol}.`} />)
+        toast.success(<TooltipMessage title="✅ Success" message={`Successfully staked ${stakeAmountInput} ${stakingState.stakedSymbol}.`} txn={data.transactionHash} />)
         setLastTransaction(data.blockNumber);
       })
       .catch((err) => {
@@ -193,7 +195,7 @@ export const PoolInterface = ({
     farmingContract.methods.unStake(unstakeAmount).send({from: accounts[0]})
       .then((data) => {
         //console.log(data)
-        toast.success(<TooltipMessage title="✅ Success" message={`Successfully unstaked ${stakeAmountInput} ${stakingState.stakedSymbol}.`} />);
+        toast.success(<TooltipMessage title="✅ Success" message={`Successfully unstaked ${stakeAmountInput} ${stakingState.stakedSymbol}.`} txn={data.transactionHash} />);
         setLastTransaction(data.blockNumber);
       })
       .catch((err) => {
@@ -213,7 +215,7 @@ export const PoolInterface = ({
     setClaiming(true);
     farmingContract.methods.takeRewards().send({from: accounts[0]})
       .then((data) => {
-        toast.success(<TooltipMessage title="✅ Success" message={`Successfully claimed ${stakingState.rewardSymbol} rewards.`} />);
+        toast.success(<TooltipMessage title="✅ Success" message={`Successfully claimed ${stakingState.rewardSymbol} rewards.`} txn={data.transactionHash} />);
         setLastTransaction(data.blockNumber);
       })
       .catch((err) => {
@@ -297,7 +299,7 @@ export const PoolInterface = ({
           </div>
 
           <div className="p-2 mb-4">
-            <img src={poolContent.img} width="100" height="auto" alt="defiat" />
+            <img src={poolContent.poolLogo} width="100" height="auto" alt="defiat" />
           </div>
           
           <h1 className="text-primary mb-2">
@@ -329,7 +331,7 @@ export const PoolInterface = ({
                     color="info" 
                     className="w-100"
                     onClick={() => takeRewards()}
-                    disabled={isClaiming || +stakingState.availableRewards === 0}
+                    disabled={isClaiming || isStaking || +stakingState.availableRewards === 0}
                   >
                     {isClaiming ? "Claiming Rewards..." : "Claim Rewards"}
                   </Button>
@@ -363,24 +365,23 @@ export const PoolInterface = ({
                     </Button>
                   ) : (
                     <Row>
-                      <Col>
-                        <Button
-                          className="w-100"
-                          color="info"
-                          onClick={() => handleStake()}
-                          // onClick={() => stakeToken()}
-                          // disabled={isStaking || shouldDisableButton(stakeAmountInput, stakingState.tokenBalance)}
-                        >
-                          Stake
-                        </Button>
-                      </Col>
+                      {!stakingState.isPoolClosed && (
+                        <Col>
+                          <Button
+                            className="w-100"
+                            color="info"
+                            onClick={() => handleStake()}
+                          >
+                            Stake
+                          </Button>
+                        </Col>
+                      )}
+                      
                       <Col>
                         <Button
                         className="w-100"
                           color="info"
                           onClick={() => handleUnstake()}
-                          // onClick={() => unStakeToken()}
-                          // disabled={isUnstaking || shouldDisableButton(unstakeAmountInput, stakingState.stakedBalance)}
                         >
                           Unstake
                         </Button>
@@ -444,7 +445,7 @@ export const PoolInterface = ({
               <Button
                 className="m-0 w-100"
                 color="info"
-                disabled={isStaking || (stakeAction === "Stake" ? shouldDisableButton(web3.utils.fromWei(stakingState.longTokenBalance)) : shouldDisableButton(web3.utils.fromWei(userMetrics.stake)))}
+                disabled={isStaking || isClaiming || (stakeAction === "Stake" ? shouldDisableButton(web3.utils.fromWei(stakingState.longTokenBalance)) : shouldDisableButton(web3.utils.fromWei(userMetrics.stake)))}
                 onClick={stakeAction === "Stake" ? () => stakeToken() : () => unStakeToken()}  
               >
                 {stakeAction === "Stake" ? (

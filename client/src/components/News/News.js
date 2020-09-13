@@ -12,11 +12,10 @@ export const News = ({ match }) => {
   useEffect(() => {
     fetch(MEDIUM_URL)
       .then((response) => response.json())
-      .then((mediumObj) =>
-        setMediumPosts({
-          mediumPosts: mediumObj,
-        })
-      );
+      .then((mediumObj) => {
+        setMediumPosts(mediumObj.items)
+        console.log(mediumObj.items)
+      });
   }, []);
 
   let { path } = useRouteMatch();
@@ -25,9 +24,6 @@ export const News = ({ match }) => {
     <>
       <Route exact path={path}>
         <NewsIndex baseUrl={match.url} mediumPosts={mediumPosts} />
-      </Route>
-      <Route path={match.url + '/:postId'}>
-        <Post />
       </Route>
     </>
   );

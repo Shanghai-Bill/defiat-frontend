@@ -4,24 +4,6 @@ import { NewsModule } from './NewsModule';
 
 export const NewsIndex = ({ mediumPosts }) => {
 
-  const returnMediumPosts = () => {
-    if(mediumPosts.length !== 0){
-      return(
-        mediumPosts.mediumPosts.items.map((item) => (
-          <NewsModule
-            link={item.link}
-            thumbnail={item.thumbnail}
-            title={item.title}
-            description={item.description}
-            author={item.author}
-            date={item.pubDate}
-            key={item.title}
-          />
-        ))
-      )
-    }
-  }
-
   return (
     <>
       <div className="wrapper">
@@ -29,7 +11,17 @@ export const NewsIndex = ({ mediumPosts }) => {
           <div className="content">
             <h2 className="display-2">Latest News & Events</h2>
             <Container>
-            {returnMediumPosts()}
+              {mediumPosts.length !== 0 && mediumPosts.map((item, i) => (
+                <NewsModule
+                  key={i}
+                  link={item.link}
+                  thumbnail={item.thumbnail}
+                  title={item.title}
+                  date={item.pubDate}
+                  author={item.author}
+                  categories={item.categories}
+                />
+              ))}
             </Container>
           </div>
         </div>

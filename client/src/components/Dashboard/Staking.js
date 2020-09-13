@@ -14,7 +14,7 @@ import { toast } from 'react-toastify'
 import { PoolCard } from './PoolCard';
 import { Route, Switch, useRouteMatch, useHistory } from 'react-router-dom'
 import { PoolInterface } from './PoolInterface';
-import DeFiat_Farming from 'contracts/DeFiat_Farming_v13.json'
+import DeFiat_Farming from 'contracts/DeFiat_Farming_v15.json'
 
 export const Staking = ({
   web3,
@@ -74,23 +74,15 @@ export const Staking = ({
           <Switch>
             <Route exact path={path}>
               <Row className="justify-content-center mt-4">
-                {network && network.pools.map(({
-                  img,
-                  poolTitle,
-                  poolSubtitle,
-                  poolAddress,
-                  rewardSymbol,
-                  stakedSymbol
-                }, i) => (
+                {network && network.pools.map((pool, i) => (
                   <Col lg="5" key={i}>
                     <PoolCard
-                      logo={img}
-                      poolTitle={poolTitle}
-                      poolSubtitle={poolSubtitle}
-                      poolAddress={poolAddress}
+                      web3={web3}
+                      accounts={accounts}
+                      network={network}
+                      blockNumber={blockNumber}
                       poolMetrics={poolMetrics[i]}
-                      rewardSymbol={rewardSymbol}
-                      stakedSymbol={stakedSymbol}
+                      {...pool}
                     />
                   </Col>
                 ))}
