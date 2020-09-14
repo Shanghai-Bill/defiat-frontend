@@ -8,7 +8,44 @@ export default {
       gov: "0x3Aa3303877A0D1c360a9FE2693AE9f31087A1381",
       price: "0x86d1d85bb861e13ecb49a396cce1b936307e0fb7",
       weth: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-      farming: ""
+      pools: [
+        {
+          poolLogo: require("assets/img/defiat-dungeon.png"),
+          poolTitle: "DeFiat Dungeon",
+          poolSubtitle: "Stake DFT, earn DFT",
+          poolAddress: "0xB508Dd7EeD4517bc66462cd384c0849d99B160fc",
+          basePool: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+          stakedAddress: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+          rewardAddress: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+          stakedSymbol: "DFT",
+          rewardSymbol: "DFT",
+          isLiquidityToken: false
+        },
+        {
+          poolLogo: require("assets/img/points-palace.png"),
+          poolTitle: "Points Palace",
+          poolSubtitle: "Stake DFT, earn DFTP",
+          poolAddress: "0x973a2B39F7D59C0E59097f26C0921b60597aFe57",
+          basePool: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+          stakedAddress: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+          rewardAddress: "0x8c9d8f5CC3427F460e20F63b36992f74AA19e27d",
+          stakedSymbol: "DFT",
+          rewardSymbol: "DFTP",
+          isLiquidityToken: false
+        },
+        {
+          poolLogo: require("assets/img/liquidity-lab.png"),
+          poolTitle: "Liquidity Laboratory",
+          poolSubtitle: "Stake DFT-UNI-V2, earn DFT",
+          poolAddress: "0x7BACeF5001203724B1D8b5480dfb7238fcA1375c",
+          basePool: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+          stakedAddress: "0xe2a1d215d03d7e9fa0ed66355c86678561e4940a",
+          rewardAddress: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+          stakedSymbol: "DFT-UNI-V2",
+          rewardSymbol: "DFT",
+          isLiquidityToken: true
+        },
+      ]
     },
     4: {
       name: "rinkeby",
@@ -17,8 +54,6 @@ export default {
       gov: "0x064fd7d9c228e8a4a2bf247b432a34d6e1cb9442",
       price: "0xdbada9b7e7c6334b1a539e8e1a01c4eb3230d095",
       weth: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
-      farming: "0x5c2Fed8e40cE254e63Be59553e5188f6398fB195",
-      liquidity: "0xd49A73078E9bD0C6A61616900E3f2010D8C80A20",
       pools: [
         {
           poolLogo: require("assets/img/defiat-dungeon.png"),

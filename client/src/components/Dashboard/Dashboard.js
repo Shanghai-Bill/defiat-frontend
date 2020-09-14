@@ -105,58 +105,47 @@ const Dashboard = (props) => {
                     <NoWallet />
                   </div>
                 ) : (
-                  <>
-                    {network.name === 'main' ? (
-                      <Wallet
-                        web3={web3}
-                        contracts={contracts} 
-                        accounts={accounts}
-                        network={network} 
-                      />
-                    ) : (
-                      <Container>
-                        <Nav tabs>
-                          <NavItem>
-                            <NavLink
-                              className={history.location.pathname === path ? 'active' : '' }
-                              onClick={() => handleTab(`${path}`)}
-                              style={{cursor:"pointer"}}
-                            >
-                              Wallet
-                            </NavLink>
-                          </NavItem>
-                          <NavItem>
-                            <NavLink
-                              className={history.location.pathname.includes(path + '/staking') ? 'active' : '' }
-                              onClick={() => handleTab(`${path}/staking`)}
-                              style={{cursor:"pointer"}}
-                            >
-                              Staking
-                            </NavLink>
-                          </NavItem>
-                        </Nav>
-        
-                        <Switch>
-                          <Route path={path} exact>
-                            <Wallet
-                              web3={web3}
-                              contracts={contracts} 
-                              accounts={accounts}
-                              network={network} 
-                            />
-                            </Route>
-                          <Route path={`${path}/staking`}>
-                            <Staking
-                              web3={web3}
-                              contracts={contracts} 
-                              accounts={accounts}
-                              network={network} 
-                            />
-                          </Route>
-                        </Switch>
-                      </Container>
-                    )}
-                  </>
+                  <Container>
+                    <Nav tabs>
+                      <NavItem>
+                        <NavLink
+                          className={history.location.pathname === path ? 'active' : '' }
+                          onClick={() => handleTab(`${path}`)}
+                          style={{cursor:"pointer"}}
+                        >
+                          Wallet
+                        </NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink
+                          className={history.location.pathname.includes(path + '/staking') ? 'active' : '' }
+                          onClick={() => handleTab(`${path}/staking`)}
+                          style={{cursor:"pointer"}}
+                        >
+                          Staking
+                        </NavLink>
+                      </NavItem>
+                    </Nav>
+    
+                    <Switch>
+                      <Route path={path} exact>
+                        <Wallet
+                          web3={web3}
+                          contracts={contracts} 
+                          accounts={accounts}
+                          network={network} 
+                        />
+                        </Route>
+                      <Route path={`${path}/staking`}>
+                        <Staking
+                          web3={web3}
+                          contracts={contracts} 
+                          accounts={accounts}
+                          network={network} 
+                        />
+                      </Route>
+                    </Switch>
+                  </Container>
                 )}
               </>
             )}
