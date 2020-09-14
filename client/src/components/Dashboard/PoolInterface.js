@@ -115,6 +115,7 @@ export const PoolInterface = ({
     
     const stakingAllowance = values[3];
     const userMetrics = values[4];
+    const myRewards = values[5];
     const currentBlock = values[7];
 
     setBlockNumber(currentBlock);
@@ -128,7 +129,7 @@ export const PoolInterface = ({
       tokenBalance: parseValue(values[2]),
       stakingAllowance,
       stakedBalance: parseValue(values[6]),
-      availableRewards: parseValue(values[5]),
+      availableRewards: parseMinValue(myRewards),
       // totalPoolRewards: parseValue(poolMetrics.rewards),
       totalPoolStaked: parseValue(poolMetrics.staked),
       // currentPoolFee: (poolMetrics.stakingFee / 10).toFixed(2)
@@ -138,9 +139,14 @@ export const PoolInterface = ({
     isLoading && setLoading(false);
   }
 
+  const parseMinValue = (value) => {
+    const wei = web3.utils.fromWei(value);
+    return ((+wei * 100) / 100).toFixed(4);
+  }
+
   const parseValue = (value) => {
-    const wei = web3.utils.fromWei(value)
-    return (Math.floor(+wei * 100) / 100).toFixed(2);
+    const wei = web3.utils.fromWei(value);
+    return (Math.floor(+wei * 100) / 100).toFixed(4);
   }
 
   const approveStaking = async () => {
@@ -163,7 +169,7 @@ export const PoolInterface = ({
   const stakeToken = async () => {
     if (checkAntiSpam()) return;
     setStaking(true);
-    console.log(stakingState.stakedBalance, stakingState.totalPoolStaked)
+    //console.log(stakingState.stakedBalance, stakingState.totalPoolStaked)
     if (stakeAction === 'Stake' && stakingState.stakedBalance > (stakingState.totalPoolStaked * 0.20)) {
       toast.warning(<TooltipMessage title="🐳 Whale Alert!" message="Your current stake is >= 20% of the total pool. You may not stake more until your staked balance falls below 20%." />)
       setStaking(false);
