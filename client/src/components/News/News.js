@@ -14,7 +14,6 @@ export const News = ({ match }) => {
       .then((response) => response.json())
       .then((mediumObj) => {
         setMediumPosts(mediumObj.items)
-        console.log(mediumObj.items)
       });
   }, []);
 

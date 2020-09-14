@@ -64,7 +64,6 @@ export const PoolCard = ({
       // otherwise we need to do some additional math
       const uni_v2 = new web3.eth.Contract(Uni_V2.abi, stakedAddress);
       const uni_v2_erc = new web3.eth.Contract(ERC20.abi, stakedAddress);
-      console.log(uni_v2, uni_v2_erc)
 
       // get the token addresses and get the UNIV2 total supply
       const tokens = await Promise.all([
@@ -85,8 +84,6 @@ export const PoolCard = ({
         oracle.methods.getTokenInfo(tokens[nonWethIndex]).call(),
         oracle.methods.getTokenInfo(rewardAddress).call()
       ]);
-      console.log(tokenInfo)
-      
 
       stakedInEth *= (((tokenInfo[0].tokensPerETH / 1e18) * reserves[nonWethIndex]) + reserves[wethIndex]) / totalSupply;
       rewardsInEth *= (tokenInfo[1].tokensPerETH / 1e18);
