@@ -30,7 +30,7 @@ export const PoolCard = ({
   isLiquidityToken
 }) => {
   const history = useHistory();
-  const [poolApy, setPoolApy] = useState((0).toFixed(2));
+  const [poolApr, setPoolApr] = useState((0).toFixed(2));
   const isPoolOpen = new Date().getTime() > +poolMetrics.startTime * 1000;
   const isPoolClosed = new Date().getTime() > +poolMetrics.closingTime * 1000;
 
@@ -40,14 +40,14 @@ export const PoolCard = ({
   const poolFee = (+poolMetrics.stakingFee / 10).toFixed(2) + "%";
 
   useEffect(() => {
-    const getAPY = async () => {
-      const APY =  await apy();
-      setPoolApy(APY);
+    const getAPR = async () => {
+      const APR =  await apr();
+      setPoolApr(APR);
     }
-    getAPY();
+    getAPR();
   }, [poolMetrics])
 
-  const apy = async () => {
+  const apr = async () => {
     // use the price oracle to figure out the price of each token in eth
     const oracle = new web3.eth.Contract(Uni_Price.abi, network["price"]);
     let stakedInEth = poolMetrics.staked / 1e18;
@@ -119,7 +119,7 @@ export const PoolCard = ({
             
             <DisplayRow title="Entry Fee:" value={poolFee} />
             
-            {!isPoolClosed && <DisplayRow title="APY:" value={poolApy + "%"} />}
+            {!isPoolClosed && <DisplayRow title="APR:" value={poolApr + "%"} />}
           </div>
           <Button 
             className="w-100"
