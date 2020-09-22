@@ -1,7 +1,4 @@
 //SPDX-Licence-Identifier: DeFiat.net
-/**
-* @dev simple Bond structure for DeFiat
-*/
 
 pragma solidity ^0.6.0;
 
@@ -65,7 +62,7 @@ contract DeFiat_Bonds is Context {
         return Dungeon(DefiatDungeon).myStake(_address);
     }
         
-    modifier canDeposit(address _address) {
+    modifier canParticpate(address _address) {
         require(myDungeonStake(_address)>= bond.entryReq, "Need to stake more in Dungeon");
         _;
     }
@@ -79,7 +76,7 @@ contract DeFiat_Bonds is Context {
      * If a client sent tokens to the contract, sending 0 tokens to it 
      * will have them to account in the bond.
      */
-    function _deposit(address _address, uint256 _amount) internal canDeposit(_address){
+    function _deposit(address _address, uint256 _amount) internal canParticpate (_address){
         clients[_address].depositDate = block.timestamp; //before to avoid reentrancy
         IERC20(bond.token).transferFrom(_address, address(this), _amount);
         
@@ -118,11 +115,11 @@ contract DeFiat_Bonds is Context {
 
 
 //external functions
-    function deposit(uint256 _amount) external canDeposit(_msgSender()) {
+    function deposit(uint256 _amount) external canParticpate(_msgSender()) {
         _deposit(_msgSender(), _amount);
     }
     
-    function withdraw() external {
+    function withdraw() external canParticpate(_msgSender()) {
         require(canWidthdraw(_msgSender()) == true);
         _widthdraw(_msgSender());
     }
