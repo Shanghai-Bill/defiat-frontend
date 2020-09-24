@@ -383,7 +383,7 @@ contract DeFiat_EXTFarming_V2 {
         return SafeMath.min(200, _userStake.add(100));
     }
     
-    
+   
 //==Points locking    
     function viewPoolPoints() public view returns(uint256) {
             uint256 _previousPoints = poolMetrics.stakingPoints;    // previous points shapshot 
