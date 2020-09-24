@@ -380,7 +380,7 @@ contract DeFiat_EXTFarming_V2 {
     */
     function viewDftBoost(address _address) public view returns(uint256) {
         uint256 _userStake = Idungeon(poolMetrics.DftDungeon).myStake(_address).div(1e18);
-        return SafeMath.max(200, _userStake.add(100));
+        return SafeMath.min(200, _userStake.add(100));
     }
     
     
