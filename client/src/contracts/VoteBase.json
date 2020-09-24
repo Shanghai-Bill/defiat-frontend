@@ -1,12 +1,392 @@
 {
-  "contractName": "SafeMath",
-  "abi": [],
-  "metadata": "{\"compiler\":{\"version\":\"0.6.6+commit.6c089d02\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/noahcoomer/source/defiat/contracts/_Vote.sol\":\"SafeMath\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/noahcoomer/source/defiat/contracts/_Vote.sol\":{\"keccak256\":\"0xc6d5624ba10d21e6018e9150eecef0ee997abccef87d4239b7fe06e066897a6d\",\"urls\":[\"bzz-raw://4408cf5bd30accfff7f3774ec38a9fa0c9b3c5332f75043451f26fb23baf3f27\",\"dweb:/ipfs/Qmf19FwmsN2XmkH6YSBjDX8Rk4eUETQPM8jpwLnw5Uwxr1\"]},\"IERC20.sol\":{\"keccak256\":\"0x7521d73c0b2001a87ce17fdc3ff40191c0b7893b0c48a695011d615d8fda254f\",\"urls\":[\"bzz-raw://a8e2574c57b1cd86bb792748ad24bc1d7d62cce413f18d029a0217456926b067\",\"dweb:/ipfs/QmUuF5cqnokP3MAQtu4VKnewB8F5tycbvmAqbgEuQu7tTt\"]}},\"version\":1}",
-  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220a09fcaa97764178ddf0a1df07c0e41e6c5a2889168bf6ec05c835d9befc0da5564736f6c63430006060033",
-  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220a09fcaa97764178ddf0a1df07c0e41e6c5a2889168bf6ec05c835d9befc0da5564736f6c63430006060033",
+  "contractName": "VoteBase",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_DeFiat_Gov",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_delayStartHours",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_durationHours",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "_voteName",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_voteChoices",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_quorum",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_votingPowerToken",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_rewardToken",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_rewardAmount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "_Defiat_Gov",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "_voteStart",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "_voteEnd",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "_hash",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "_voteName",
+          "type": "bytes32"
+        }
+      ],
+      "name": "voteStarting",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "DeFiat_Gov",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "decisionActivated",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "quorum",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "rewardAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "rewardToken",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalVotes",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "voteChoices",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "voteEnd",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "voteName",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "voteStart",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "votes",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "votingPowerToken",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "votingTokens",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "proposalAction",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "activateDecision",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "voteChoice",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "votePower",
+          "type": "uint256"
+        }
+      ],
+      "name": "vote",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "claimTokens",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "forceVoteEnd",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bool",
+          "name": "_decision",
+          "type": "bool"
+        }
+      ],
+      "name": "forceDecision",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "killContract",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_ERC20address",
+          "type": "address"
+        }
+      ],
+      "name": "widthdrawAnyToken",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.6.6+commit.6c089d02\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_DeFiat_Gov\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_delayStartHours\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_durationHours\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"_voteName\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"_voteChoices\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_quorum\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_votingPowerToken\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_rewardToken\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_rewardAmount\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_Defiat_Gov\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_voteStart\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_voteEnd\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"_hash\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"_voteName\",\"type\":\"bytes32\"}],\"name\":\"voteStarting\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"DeFiat_Gov\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"activateDecision\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"claimTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"decisionActivated\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bool\",\"name\":\"_decision\",\"type\":\"bool\"}],\"name\":\"forceDecision\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"forceVoteEnd\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"killContract\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"proposalAction\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"quorum\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"rewardAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"rewardToken\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalVotes\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"voteChoice\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"votePower\",\"type\":\"uint256\"}],\"name\":\"vote\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"voteChoices\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"voteEnd\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"voteName\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"voteStart\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"votes\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"votingPowerToken\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"votingTokens\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_ERC20address\",\"type\":\"address\"}],\"name\":\"widthdrawAnyToken\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/noahcoomer/source/defiat/contracts/_Vote.sol\":\"VoteBase\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/noahcoomer/source/defiat/contracts/_Vote.sol\":{\"keccak256\":\"0xc6d5624ba10d21e6018e9150eecef0ee997abccef87d4239b7fe06e066897a6d\",\"urls\":[\"bzz-raw://4408cf5bd30accfff7f3774ec38a9fa0c9b3c5332f75043451f26fb23baf3f27\",\"dweb:/ipfs/Qmf19FwmsN2XmkH6YSBjDX8Rk4eUETQPM8jpwLnw5Uwxr1\"]},\"IERC20.sol\":{\"keccak256\":\"0x7521d73c0b2001a87ce17fdc3ff40191c0b7893b0c48a695011d615d8fda254f\",\"urls\":[\"bzz-raw://a8e2574c57b1cd86bb792748ad24bc1d7d62cce413f18d029a0217456926b067\",\"dweb:/ipfs/QmUuF5cqnokP3MAQtu4VKnewB8F5tycbvmAqbgEuQu7tTt\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
   "immutableReferences": {},
-  "sourceMap": "1167:5368:20:-:0;;132:2:-1;166:7;155:9;146:7;137:37;255:7;249:14;246:1;241:23;235:4;232:33;222:2;;269:9;222:2;293:9;290:1;283:20;323:4;314:7;306:22;347:7;338;331:24",
-  "deployedSourceMap": "1167:5368:20:-:0;;;;;;12:1:-1;9;2:12",
+  "sourceMap": "",
+  "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: stupid\n\n/*Readme:\nThis contract needs to be registered as a \"governor\" in the governing contract.\nBelow are the functions that can be used to generate a vote\n\n\nCOPY PASTE THESE \n//== SET EXTERNAL VARIABLES on the DeFiat_Gov contract ==  \n    function setActorLevel(address _address, uint256 _newLevel) external;\n    function changeBurnRate(uint _burnRate) external;\n    function changeFeeRate(uint _feeRate) external;\n    function setFeeDestination(address _nextDest) external;\n    \n//== SET EXTERNAL VARIABLES on the DeFiat_Points contract ==  \n    function setTxTreshold(uint _amount) external;\n    function overrideDiscount(address _address, uint256 _newDiscount) external;\n    function overrideLoyaltyPoints(address _address, uint256 _newPoints) external;\n    function setDiscountTranches(uint256 _tranche, uint256 _pointsNeeded) external;\n    }\n*/\n\n// SPDX-License-Identifier: stupid\n\npragma solidity ^0.6.0;\n\nimport \"IERC20.sol\";\n//import \"https://raw.githubusercontent.com/OpenZeppelin/openzeppelin-contracts/master/contracts/token/ERC20/IERC20.sol\";\n//used to give tokens as rewards (tokens need to be loaded on the contract 1st)\n\nlibrary SafeMath{\n    /**\n     * @dev Returns the addition of two unsigned integers, reverting on\n     * overflow.\n     *\n     * Counterpart to Solidity's `+` operator.\n     *\n     * Requirements:\n     * - Addition cannot overflow.\n     */\n    function add(uint256 a, uint256 b) internal pure returns (uint256) {\n        uint256 c = a + b;\n        require(c >= a, \"SafeMath: addition overflow\");\n\n        return c;\n    }\n\n    /**\n     * @dev Returns the subtraction of two unsigned integers, reverting on\n     * overflow (when the result is negative).\n     *\n     * Counterpart to Solidity's `-` operator.\n     *\n     * Requirements:\n     * - Subtraction cannot overflow.\n     */\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    /**\n     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on\n     * overflow (when the result is negative).\n     *\n     * Counterpart to Solidity's `-` operator.\n     *\n     * Requirements:\n     * - Subtraction cannot overflow.\n     *\n     * _Available since v2.4.0._\n     */\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n\n        return c;\n    }\n\n    /**\n     * @dev Returns the multiplication of two unsigned integers, reverting on\n     * overflow.\n     *\n     * Counterpart to Solidity's `*` operator.\n     *\n     * Requirements:\n     * - Multiplication cannot overflow.\n     */\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        // Gas optimization: this is cheaper than requiring 'a' not being zero, but the\n        // benefit is lost if 'b' is also tested.\n        // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522\n        if (a == 0) {\n            return 0;\n        }\n\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n\n        return c;\n    }\n\n    /**\n     * @dev Returns the integer division of two unsigned integers. Reverts on\n     * division by zero. The result is rounded towards zero.\n     *\n     * Counterpart to Solidity's `/` operator. Note: this function uses a\n     * `revert` opcode (which leaves remaining gas untouched) while Solidity\n     * uses an invalid opcode to revert (consuming all remaining gas).\n     *\n     * Requirements:\n     * - The divisor cannot be zero.\n     */\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {\n        return div(a, b, \"SafeMath: division by zero\");\n    }\n\n    /**\n     * @dev Returns the integer division of two unsigned integers. Reverts with custom message on\n     * division by zero. The result is rounded towards zero.\n     *\n     * Counterpart to Solidity's `/` operator. Note: this function uses a\n     * `revert` opcode (which leaves remaining gas untouched) while Solidity\n     * uses an invalid opcode to revert (consuming all remaining gas).\n     *\n     * Requirements:\n     * - The divisor cannot be zero.\n     *\n     * _Available since v2.4.0._\n     */\n    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        // Solidity only automatically asserts when dividing by 0\n        require(b > 0, errorMessage);\n        uint256 c = a / b;\n        // assert(a == b * c + a % b); // There is no case in which this doesn't hold\n\n        return c;\n    }\n\n    /**\n     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),\n     * Reverts when dividing by zero.\n     *\n     * Counterpart to Solidity's `%` operator. This function uses a `revert`\n     * opcode (which leaves remaining gas untouched) while Solidity uses an\n     * invalid opcode to revert (consuming all remaining gas).\n     *\n     * Requirements:\n     * - The divisor cannot be zero.\n     */\n    function mod(uint256 a, uint256 b) internal pure returns (uint256) {\n        return mod(a, b, \"SafeMath: modulo by zero\");\n    }\n\n    /**\n     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),\n     * Reverts with custom message when dividing by zero.\n     *\n     * Counterpart to Solidity's `%` operator. This function uses a `revert`\n     * opcode (which leaves remaining gas untouched) while Solidity uses an\n     * invalid opcode to revert (consuming all remaining gas).\n     *\n     * Requirements:\n     * - The divisor cannot be zero.\n     *\n     * _Available since v2.4.0._\n     */\n    function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b != 0, errorMessage);\n        return a % b;\n    }\n    \n        /**\n     * @dev Returns the largest of two numbers.\n     */\n    function max(uint256 a, uint256 b) internal pure returns (uint256) {\n        return a >= b ? a : b;\n    }\n\n    /**\n     * @dev Returns the smallest of two numbers.\n     */\n    function min(uint256 a, uint256 b) internal pure returns (uint256) {\n        return a < b ? a : b;\n    }\n\n    /**\n     * @dev Returns the average of two numbers. The result is rounded towards\n     * zero.\n     */\n    function average(uint256 a, uint256 b) internal pure returns (uint256) {\n        // (a + b) / 2 can overflow, so we distribute\n        return (a / 2) + (b / 2) + ((a % 2 + b % 2) / 2);\n    }\n}\n\n\nabstract contract VoteBase {\n\n  address public owner; // contract deployer\n  address public DeFiat_Gov; //governance contract\n\n  bytes32 public voteName; // name to describe the vote\n  uint256 public voteStart; // UTC timestamp for voteStart\n  uint256 public voteEnd; // UTC timestamp for voteEnd\n  bool public decisionActivated; // track whether decision has been activated\n\n  uint256 public quorum; // x / 100 = required % of votes / voting power for vote to be actionable\n  uint256 public totalVotes; // total votes cast\n  uint256[] public voteChoices; // array of choices to vote for \n  mapping (address => uint256) public votes; // address => user vote choice\n  mapping (address => uint256) public votingTokens; // address => locked tokens\n\n  address public votingPowerToken;\n  address public rewardToken;\n  uint256 public rewardAmount;\n\n  event voteStarting(address _Defiat_Gov, uint256 _voteStart, uint256 _voteEnd, bytes32 _hash, bytes32 _voteName);\n\n  modifier OnlyOwner() {\n      require(msg.sender == owner);\n      _;\n  }\n\n  modifier TokenHolder{\n      require(IERC20(votingPowerToken).balanceOf(msg.sender) > 0, \"Only holders can vote\");\n      _;\n  }\n\n  modifier VoteClosed() {\n      require(now > voteEnd, \"Vote is still open\");\n      require(decisionActivated, \"Vote decision must be activated\");\n      _;\n  }\n\n  modifier VoteOpen() {\n      require(now > voteStart, \"Vote is not open\");\n      require(now < voteEnd, \"Voting has expired\");\n      _;\n  }\n\n  modifier CanVote()   {\n      require(votes[msg.sender] == 0, \"Already voted\"); //block time has not been updated\n      _;\n  }\n\n  modifier QuorumReached {\n    require(totalVotes > IERC20(votingPowerToken).totalSupply() * (quorum / 100), \"Not enough votes have been cast\");\n    _;\n  }\n\n  constructor(\n      address _DeFiat_Gov,\n      uint256 _delayStartHours,\n      uint256 _durationHours, \n      bytes32 _voteName,\n      uint256 _voteChoices,\n      uint256 _quorum,\n      address _votingPowerToken, \n      address _rewardToken, \n      uint256 _rewardAmount\n  ) public {\n      owner = msg.sender;\n      DeFiat_Gov = _DeFiat_Gov;\n      voteStart = block.timestamp + (_delayStartHours * 3600);\n      voteEnd = voteStart + (_durationHours * 3600);\n      voteName = _voteName;\n      voteChoices = new uint256[](_voteChoices);\n      rewardToken = _rewardToken;\n      rewardAmount = _rewardAmount;\n      votingPowerToken = _votingPowerToken;\n      quorum = _quorum;\n      decisionActivated = false;\n\n      bytes32 _hash = sha256(abi.encodePacked(DeFiat_Gov, voteEnd));\n      emit voteStarting(DeFiat_Gov, voteStart, voteEnd,  _hash, voteName);\n  }\n\n  // 0 - define virtual proposal action function\n  //    all new votes will override this method with the intended function to be activated on vote passing\n  function proposalAction() public virtual returns (bool);\n\n  //1- define ACTIVATION function\n  function activateDecision() external { //anybody can activate this.\n        require(voteEnd < now, \"Voting still ongoing\");\n        require(!decisionActivated, \"Vote decision has already been activated\");\n\n        decisionActivated = true; // mark decision activated\n        proposalAction();\n  }\n\n  function vote(uint voteChoice, uint256 votePower) external VoteOpen CanVote TokenHolder {\n        require(voteChoice < voteChoices.length, \"Invalid vote choice\");\n        \n        IERC20(votingPowerToken).transferFrom(msg.sender, address(this), votePower); // transfer tokens to contract\n        votes[msg.sender] = voteChoice; // log of user vote \n        votingTokens[msg.sender] = votingTokens[msg.sender] + votePower; // increase locked token pointer\n        voteChoices[voteChoice] = voteChoices[voteChoice] + votePower; // increase vote count\n        totalVotes = totalVotes + votePower; // increase total votes\n\n        _sendReward(msg.sender);\n  }\n\n  //3- reward voters\n  function _sendReward(address _address) internal {\n      if(IERC20(rewardToken).balanceOf(address(this)) >= rewardAmount){\n        IERC20(rewardToken).transfer(_address, rewardAmount);\n      }\n  } //rewards if enough in the pool\n\n  //4- claim tokens when vote is over\n  function claimTokens() external VoteClosed {\n        require(votingTokens[msg.sender] > 0, \"No tokens to claim\");\n\n        uint256 votingPower = votingTokens[msg.sender];\n        IERC20(votingPowerToken).transfer(msg.sender, votingPower);\n        votingTokens[msg.sender] = votingTokens[msg.sender] - votingPower;\n\n  } \n    \n  //0- Misc functions\n  function forceVoteEnd() external OnlyOwner {\n      voteEnd = now;\n  }\n\n  function forceDecision(bool _decision) external OnlyOwner {\n      decisionActivated = _decision;\n  }\n  \n  function killContract() external OnlyOwner {\n      selfdestruct(msg.sender); //destroys the contract\n  } //only Mastermind can kill contract\n\n  function myVotingPower() internal view returns(uint256) {\n    // simple 1:1 token to vote\n      uint256 _power =  IERC20(votingPowerToken).balanceOf(msg.sender);\n      return _power;\n  }\n\n  function widthdrawAnyToken(address _ERC20address) external OnlyOwner returns (bool) {\n      uint256 _amount = IERC20(_ERC20address).balanceOf(address(this));\n      _widthdrawAnyToken(msg.sender, _ERC20address, _amount);\n      return true;\n  } //get tokens sent by error to contract\n\n  function _widthdrawAnyToken(address _recipient, address _ERC20address, uint256 _amount) internal returns (bool) {\n      IERC20(_ERC20address).transfer(_recipient, _amount); //use of the _ERC20 traditional transfer\n      return true;\n  } //get tokens sent by error to contract\n \n} //end contract\n\n\ninterface IDeFiat_Gov {\n  function setActorLevel(address _address, uint256 _newLevel) external;\n  function changeBurnRate(uint _burnRate) external;\n  function changeFeeRate(uint _feeRate) external;\n  function setFeeDestination(address _nextDest) external;\n\n  //== SET EXTERNAL VARIABLES on the DeFiat_Points contract ==  \n  function setTxTreshold(uint _amount) external;\n  function overrideDiscount(address _address, uint256 _newDiscount) external;\n  function overrideLoyaltyPoints(address _address, uint256 _newPoints) external;\n  function setDiscountTranches(uint256 _tranche, uint256 _pointsNeeded) external;\n}\n  \n\n//contract end\n",
   "sourcePath": "/Users/noahcoomer/source/defiat/contracts/_Vote.sol",
   "ast": {
@@ -22311,7 +22691,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-09-24T18:19:41.268Z",
+  "updatedAt": "2020-09-24T18:19:41.388Z",
   "devdoc": {
     "methods": {}
   },

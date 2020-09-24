@@ -45,13 +45,15 @@ export default {
           rewardSymbol: "DFT",
           isLiquidityToken: true
         },
-      ]
+      ],
+      extendedPools: []
     },
     4: {
       name: "rinkeby",
       token: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
       points: "0x70c7d7856e1558210cfbf27b7f17853655752453",
-      gov: "0x064fd7d9c228e8a4a2bf247b432a34d6e1cb9442",
+      //gov: "0x064fd7d9c228e8a4a2bf247b432a34d6e1cb9442",
+      gov: "0xfB39a0bBb63bA6e09F305ED97C256B6D75659506",
       price: "0xdbada9b7e7c6334b1a539e8e1a01c4eb3230d095",
       weth: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
       pools: [
@@ -67,18 +69,18 @@ export default {
           rewardSymbol: "DFT",
           isLiquidityToken: false
         },
-        {
-          poolLogo: require("assets/img/defiat-dungeon.png"),
-          poolTitle: "DeFiat Dungeon (Short)",
-          poolSubtitle: "Stake DFT, earn DFT",
-          poolAddress: "0x5911a3849Bd10e2c463240b07435A9A262fb115A",
-          basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
-          stakedAddress: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
-          rewardAddress: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
-          stakedSymbol: "DFT",
-          rewardSymbol: "DFT",
-          isLiquidityToken: false
-        },
+        // {
+        //   poolLogo: require("assets/img/defiat-dungeon.png"),
+        //   poolTitle: "DeFiat Dungeon (Short)",
+        //   poolSubtitle: "Stake DFT, earn DFT",
+        //   poolAddress: "0x5911a3849Bd10e2c463240b07435A9A262fb115A",
+        //   basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
+        //   stakedAddress: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
+        //   rewardAddress: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
+        //   stakedSymbol: "DFT",
+        //   rewardSymbol: "DFT",
+        //   isLiquidityToken: false
+        // },
         // {
         //   poolLogo: require("assets/img/points-palace.png"),
         //   poolTitle: "Points Palace",
@@ -91,23 +93,37 @@ export default {
         //   rewardSymbol: "DFTP",
         //   isLiquidityToken: false
         // },
+        // {
+        //   poolLogo: require("assets/img/liquidity-lab.png"),
+        //   poolTitle: "Liquidity Laboratory",
+        //   poolSubtitle: "Stake DFT-UNI-V2, earn DFT",
+        //   poolAddress: "0x9BCC9ef46eCe3688228648a19E5515f62020F83c",
+        //   basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
+        //   stakedAddress: "0xf7426eacb2b00398d4cefb3e24115c91821d6fb0",
+        //   rewardAddress: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
+        //   stakedSymbol: "DFT-UNI-V2",
+        //   rewardSymbol: "DFT",
+        //   isLiquidityToken: true
+        // },
+      ],
+      extendedPools: [
         {
-          poolLogo: require("assets/img/liquidity-lab.png"),
-          poolTitle: "Liquidity Laboratory",
-          poolSubtitle: "Stake DFT-UNI-V2, earn DFT",
-          poolAddress: "0x9BCC9ef46eCe3688228648a19E5515f62020F83c",
-          basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
-          stakedAddress: "0xf7426eacb2b00398d4cefb3e24115c91821d6fb0",
-          rewardAddress: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
-          stakedSymbol: "DFT-UNI-V2",
-          rewardSymbol: "DFT",
-          isLiquidityToken: true
-        },
+          poolLogo: require("assets/img/points-palace.png"),
+          poolTitle: "Points Palace - Extended",
+          poolSubtitle: "Stake DFTP, earn DFTP",
+          poolAddress: "0x04A58f3688Ced6C54e7c11Bd5716aa123E07a051",
+          basePool: "0x70c7d7856e1558210cfbf27b7f17853655752453",
+          stakedAddress: "0x70c7d7856e1558210cfbf27b7f17853655752453",
+          rewardAddress: "0x70c7d7856e1558210cfbf27b7f17853655752453",
+          stakedSymbol: "DFTP",
+          rewardSymbol: "DFTP",
+          isLiquidityToken: false
+        }
       ],
       proposals: [
         {
-          proposalTitle: "Proposal 1",
-          proposalAddress: "",
+          proposalName: "Fee & Burn Rate Vote",
+          proposalAddress: "0x01CE7B613D1bC512Ad38FED6c02D8A8df8AE6ECf",
           proposalOperator: "",
         },
       ]

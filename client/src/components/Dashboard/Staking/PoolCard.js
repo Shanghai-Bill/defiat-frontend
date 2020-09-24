@@ -27,7 +27,8 @@ export const PoolCard = ({
   stakedAddress,
   rewardSymbol,
   stakedSymbol,
-  isLiquidityToken
+  isLiquidityToken,
+  isExtendedPool
 }) => {
   const history = useHistory();
   const [poolApr, setPoolApr] = useState((0).toFixed(2));
@@ -89,17 +90,30 @@ export const PoolCard = ({
       rewardsInEth *= (tokenInfo[1].tokensPerETH / 1e18);
     }
 
+    
+
     // calculate time remaining (ms) and convert to hours
     const timeRemainingInHours = ((+poolMetrics.closingTime * 1000) - new Date().getTime()) / 3600000;
     // rewards remaining per hour
     const rewardsPerHour = rewardsInEth / timeRemainingInHours;
+    
     // rewards distributed per hour per 1 staked token
     const rewardsPerHourPerToken = rewardsPerHour / stakedInEth;
     // annual simple rate 
     const tokensPerYear = rewardsPerHourPerToken * 24 * 365;
     // convert to percentage
     const rate = tokensPerYear * 100;
+
+    //console.log(poolMetrics, rewardsPerHourPerToken * (rewardsInEth / 2160), rate)
     return rate.toFixed(2);
+  }
+
+  const handleLink = () => {
+    if (isExtendedPool) {
+      history.push(`/dashboard/staking/extended/${poolAddress}`);
+    } else {
+      history.push(`/dashboard/staking/${poolAddress}`);
+    }
   }
 
   return (
@@ -125,7 +139,7 @@ export const PoolCard = ({
             className="w-100"
             color="primary" 
             disabled={!isPoolOpen || poolMetrics.rewards == 0}
-            onClick={() => history.push(`/dashboard/staking/${poolAddress}`)}
+            onClick={() => handleLink()}
           >
             Go To Pool
           </Button>

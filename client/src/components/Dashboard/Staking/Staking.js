@@ -14,7 +14,8 @@ import { toast } from 'react-toastify'
 import { PoolCard } from './PoolCard';
 import { Route, Switch, useRouteMatch, useHistory } from 'react-router-dom'
 import { PoolInterface } from './PoolInterface';
-import DeFiat_Farming from 'contracts/DeFiat_Farming_v15.json'
+import DeFiat_Farming from 'contracts/DeFiat_Farming_v15.json';
+import DeFiat_FarmingExt from 'contracts/DeFiat_EXTFarming_V2.json'
 
 export const Staking = ({
   web3,
@@ -28,6 +29,7 @@ export const Staking = ({
   const [isLoading, setLoading] = useState(true);
   const [blockNumber, setBlockNumber] = useState(0);
   const [poolMetrics, setPoolMetrics] = useState([]);
+  const [extendedMetrics, setExtendedMetrics] = useState([]);
 
 
   useEffect(() => {
@@ -52,8 +54,14 @@ export const Staking = ({
       contracts.map((pool) => pool.methods.poolMetrics().call())
     );
 
-    //console.log(values)
+    const extended = network.extendedPools.map((pool) => new web3.eth.Contract(DeFiat_FarmingExt.abi, pool.poolAddress));
+    const valuesExt = await Promise.all(
+      extended.map((pool) => pool.methods.poolMetrics().call())
+    );
+
+    console.log(valuesExt)
     setPoolMetrics(values);
+    setExtendedMetrics(valuesExt);
     isLoading && setLoading(false);
   }
 
@@ -87,6 +95,30 @@ export const Staking = ({
                   </Col>
                 ))}
               </Row>
+              <Row className="justify-content-center mt-4">
+                {network && network.extendedPools.map((pool, i) => (
+                  <Col lg="5" key={i}>
+                    <PoolCard
+                      web3={web3}
+                      accounts={accounts}
+                      network={network}
+                      blockNumber={blockNumber}
+                      poolMetrics={extendedMetrics[i]}
+                      isExtendedPool
+                      {...pool}
+                    />
+                  </Col>
+                ))}
+              </Row>
+            </Route>
+            <Route path={`${path}/extended/:contractId`}>
+              <PoolInterface
+                accounts={accounts}
+                contracts={contracts}
+                web3={web3}
+                network={network}
+                isExtendedPool
+              />
             </Route>
             <Route path={`${path}/:contractId`}>
               <PoolInterface

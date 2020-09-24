@@ -2,7 +2,7 @@ pragma solidity ^0.6.0;
 
 import "../_Vote.sol";
 
-contract FeeBurnRateVote is Vote {
+contract FeeBurnRateVote is VoteBase {
   constructor (
     address _DeFiat_Gov,
     uint256 _delayStartHours,
@@ -14,7 +14,7 @@ contract FeeBurnRateVote is Vote {
     address _rewardToken, 
     uint256 _rewardAmount
   ) public 
-    Vote(
+    VoteBase(
       _DeFiat_Gov, 
       _delayStartHours,
       _durationHours, 

@@ -18,16 +18,20 @@ import { Link, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import IERC20 from 'contracts/_ERC20.json'
 import DeFiat_Farming from 'contracts/DeFiat_Farming_v15.json'
+import DeFiat_FarmingExt from 'contracts/DeFiat_EXTFarming_V2.json'
 import { MdInfoOutline } from 'react-icons/md'
 
 export const PoolInterface = ({
   contracts,
   accounts,
   web3,
-  network
+  network,
+  isExtendedPool
 }) => {
   const { contractId } = useParams();
-  const poolContent = network.pools.filter((x) => x.poolAddress === contractId)[0];
+  let contractAbi = isExtendedPool ? DeFiat_FarmingExt.abi : DeFiat_Farming.abi;
+  const networkPools = isExtendedPool ? network.extendedPools : network.pools;
+  const poolContent = networkPools.filter((x) => x.poolAddress === contractId)[0];
 
   const [isLoading, setLoading] = useState(true);
   const [blockNumber, setBlockNumber] = useState(0);
@@ -88,27 +92,27 @@ export const PoolInterface = ({
   }, [])
 
   const loadData = async () => {
-      const farmingContract = farmingContract || new web3.eth.Contract(DeFiat_Farming.abi, contractId);
-      const poolMetrics = await farmingContract.methods.poolMetrics().call();
-      const tokenContract = tokenContract || new web3.eth.Contract(IERC20.abi, poolMetrics.stakedToken);
-      const rewardContract = rewardContract || new web3.eth.Contract(IERC20.abi, poolMetrics.rewardToken);
-      isLoading && setFarmingContract(farmingContract);
-      isLoading && setTokenContract(tokenContract);
-      isLoading && setRewardContract(rewardContract);
+    const farmContract = new web3.eth.Contract(contractAbi, contractId);
+    const poolMetrics = await farmContract.methods.poolMetrics().call();
+    const tknContract = new web3.eth.Contract(IERC20.abi, poolMetrics.stakedToken);
+    const rwdContract = new web3.eth.Contract(IERC20.abi, poolMetrics.rewardToken);
+    isLoading && setFarmingContract(farmContract);
+    isLoading && setTokenContract(tknContract);
+    isLoading && setRewardContract(rwdContract);
 
     // Implement edge cases for decimal amounts that are different than 18
     // stakedContract.methods.decimals().call(),
     const values = await Promise.all([
-      tokenContract.methods.symbol().call(),
-      rewardContract.methods.symbol().call(),
+      tknContract.methods.symbol().call(),
+      rwdContract.methods.symbol().call(),
 
-      tokenContract.methods.balanceOf(accounts[0]).call(),
-      tokenContract.methods.allowance(accounts[0], contractId).call(),
+      tknContract.methods.balanceOf(accounts[0]).call(),
+      tknContract.methods.allowance(accounts[0], contractId).call(),
 
 
-      farmingContract.methods.userMetrics(accounts[0]).call(),
-      farmingContract.methods.myRewards(accounts[0]).call(),
-      farmingContract.methods.myStake(accounts[0]).call(),
+      farmContract.methods.userMetrics(accounts[0]).call(),
+      farmContract.methods.myRewards(accounts[0]).call(),
+      farmContract.methods.myStake(accounts[0]).call(),
       web3.eth.getBlockNumber()
     ])
 
@@ -312,9 +316,9 @@ export const PoolInterface = ({
             {poolContent.poolTitle}
           </h1>
           <p className="text-tertiary mb-2">{poolContent.poolSubtitle}</p>
-          <div className="d-flex justify-content-center mb-4">
+          {/* <div className="d-flex justify-content-center mb-4">
             <Input className="m-0 text-right" onChange={(e) =>{}} value={contractId} style={{width: "330px"}} />
-          </div>
+          </div> */}
           
 
           <Row className="justify-content-center">

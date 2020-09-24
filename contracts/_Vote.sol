@@ -194,7 +194,7 @@ library SafeMath{
 }
 
 
-abstract contract Vote {
+abstract contract VoteBase {
 
   address public owner; // contract deployer
   address public DeFiat_Gov; //governance contract

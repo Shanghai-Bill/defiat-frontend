@@ -127,7 +127,19 @@ const Dashboard = (props) => {
                           Staking
                         </NavLink>
                       </NavItem>
+                      {network && network.name === 'rinkeby' && (
+                        <NavItem>
+                          <NavLink
+                            className={history.location.pathname.includes(path + '/proposals') ? 'active' : '' }
+                            onClick={() => handleTab(`${path}/proposals`)}
+                            style={{cursor:"pointer"}}
+                          >
+                            Proposals
+                          </NavLink>
+                        </NavItem>
+                      )}
                     </Nav>
+                    
     
                     <Switch>
                       <Route path={path} exact>
@@ -146,6 +158,15 @@ const Dashboard = (props) => {
                           network={network} 
                         />
                       </Route>
+                      {network && network.name === 'rinkeby' && (
+                        <Route path={`${path}/proposals`}>
+                          <Proposals
+                            web3={web3}
+                            accounts={accounts}
+                            network={network} 
+                          />
+                        </Route>
+                      )}
                     </Switch>
                   </Container>
                 )}
