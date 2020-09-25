@@ -18,8 +18,9 @@ import { Wallet } from './Wallet';
 import { Staking } from './Staking';
 import { Proposals } from './Proposals';
 import { Operator } from './Operator';
+import { Partners } from './Partners';
 import { withRouter, useRouteMatch, useHistory, Route, Switch } from 'react-router-dom'
-import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Container, NavbarText } from 'reactstrap';
+import { Nav, NavItem, NavLink, Row, Col, Container } from 'reactstrap';
 
 
 const Dashboard = (props) => {
@@ -128,19 +129,29 @@ const Dashboard = (props) => {
                         </NavLink>
                       </NavItem>
                       {network && network.name === 'rinkeby' && (
-                        <NavItem>
-                          <NavLink
-                            className={history.location.pathname.includes(path + '/proposals') ? 'active' : '' }
-                            onClick={() => handleTab(`${path}/proposals`)}
-                            style={{cursor:"pointer"}}
-                          >
-                            Proposals
-                          </NavLink>
-                        </NavItem>
+                        <>
+                          <NavItem>
+                            <NavLink
+                              className={history.location.pathname.includes(path + '/proposals') ? 'active' : '' }
+                              onClick={() => handleTab(`${path}/proposals`)}
+                              style={{cursor:"pointer"}}
+                            >
+                              Proposals
+                            </NavLink>
+                          </NavItem>
+                          <NavItem>
+                            <NavLink
+                              className={history.location.pathname.includes(path + '/partners') ? 'active' : '' }
+                              onClick={() => handleTab(`${path}/partners`)}
+                              style={{cursor:"pointer"}}
+                            >
+                              Partners
+                            </NavLink>
+                          </NavItem>
+                        </>
                       )}
                     </Nav>
                     
-    
                     <Switch>
                       <Route path={path} exact>
                         <Wallet
@@ -149,23 +160,38 @@ const Dashboard = (props) => {
                           accounts={accounts}
                           network={network} 
                         />
-                        </Route>
+                      </Route>
+                      <Route path={`${path}/operator`}>
+                        <Operator
+                          web3={web3}
+                          accounts={accounts}
+                          network={network} 
+                        />
+                      </Route>
                       <Route path={`${path}/staking`}>
                         <Staking
                           web3={web3}
-                          contracts={contracts} 
                           accounts={accounts}
                           network={network} 
                         />
                       </Route>
                       {network && network.name === 'rinkeby' && (
-                        <Route path={`${path}/proposals`}>
-                          <Proposals
-                            web3={web3}
-                            accounts={accounts}
-                            network={network} 
-                          />
-                        </Route>
+                        <>
+                          <Route path={`${path}/proposals`}>
+                            <Proposals
+                              web3={web3}
+                              accounts={accounts}
+                              network={network} 
+                            />
+                          </Route>
+                          <Route path={`${path}/partners`}>
+                            <Partners
+                              web3={web3}
+                              accounts={accounts}
+                              network={network} 
+                            />
+                          </Route>
+                        </>
                       )}
                     </Switch>
                   </Container>

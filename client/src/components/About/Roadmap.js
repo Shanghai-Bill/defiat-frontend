@@ -109,7 +109,7 @@ export const Roadmap = () => {
               <ScrollAnimation animateIn="fadeInLeft">
                 <Card>
                   <CardBody>
-                    <CardTitle>UniStake/Staking</CardTitle>
+                    <CardTitle>Anystake/Staking</CardTitle>
                     <CardText>Native staking of DFT, as well as the ability to stake any ERC-20 token, will commence.</CardText>
                   </CardBody>
                 </Card>

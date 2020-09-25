@@ -4,12 +4,12 @@ import {
   Col,
   Container
 } from 'reactstrap'
-import { PoolCard } from './PoolCard';
-import { Route, Switch, useRouteMatch, useHistory } from 'react-router-dom'
-import { PoolInterface } from './PoolInterface';
-import DeFiat_Farming from 'contracts/DeFiat_Farming_v15.json';
+import { PoolCard } from '../Staking/PoolCard';
+import { Route, Switch, useRouteMatch } from 'react-router-dom'
+import { PoolInterface } from '../Staking/PoolInterface';
+import DeFiat_FarmingExt from 'contracts/DeFiat_EXTFarming_V2.json'
 
-export const Staking = ({
+export const Partners = ({
   web3,
   accounts,
   network
@@ -19,7 +19,6 @@ export const Staking = ({
   const [isLoading, setLoading] = useState(true);
   const [blockNumber, setBlockNumber] = useState(0);
   const [poolMetrics, setPoolMetrics] = useState([]);
-  const [extendedMetrics, setExtendedMetrics] = useState([]);
 
   useEffect(() => {
     loadPoolData();
@@ -35,12 +34,12 @@ export const Staking = ({
     })
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [])
   
   const loadPoolData = async () => {
-    const contracts = network.pools.map((pool) => new web3.eth.Contract(DeFiat_Farming.abi, pool.poolAddress));
+    const extended = network.extendedPools.map((pool) => new web3.eth.Contract(DeFiat_FarmingExt.abi, pool.poolAddress));
     const values = await Promise.all(
-      contracts.map((pool) => pool.methods.poolMetrics().call())
+      extended.map((pool) => pool.methods.poolMetrics().call())
     );
     setPoolMetrics(values);
     isLoading && setLoading(false);
@@ -62,7 +61,7 @@ export const Staking = ({
           <Switch>
             <Route exact path={path}>
               <Row className="justify-content-center mt-4">
-                {network && network.pools.map((pool, i) => (
+                {network && network.extendedPools.map((pool, i) => (
                   <Col lg="5" key={i}>
                     <PoolCard
                       web3={web3}
@@ -70,6 +69,7 @@ export const Staking = ({
                       network={network}
                       blockNumber={blockNumber}
                       poolMetrics={poolMetrics[i]}
+                      isExtendedPool
                       {...pool}
                     />
                   </Col>
@@ -81,6 +81,7 @@ export const Staking = ({
                 accounts={accounts}
                 web3={web3}
                 network={network}
+                isExtendedPool
               />
             </Route>
           </Switch>

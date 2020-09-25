@@ -46,7 +46,8 @@ export default {
           isLiquidityToken: true
         },
       ],
-      extendedPools: []
+      extendedPools: [],
+
     },
     4: {
       name: "rinkeby",
@@ -107,18 +108,31 @@ export default {
         // },
       ],
       extendedPools: [
+        // {
+        //   poolLogo: require("assets/img/points-palace.png"),
+        //   poolTitle: "Points Palace - Extended",
+        //   poolSubtitle: "Stake DFTP, earn DFTP",
+        //   poolAddress: "0x04A58f3688Ced6C54e7c11Bd5716aa123E07a051",
+        //   basePool: "0x70c7d7856e1558210cfbf27b7f17853655752453",
+        //   stakedAddress: "0x70c7d7856e1558210cfbf27b7f17853655752453",
+        //   rewardAddress: "0x70c7d7856e1558210cfbf27b7f17853655752453",
+        //   stakedSymbol: "DFTP",
+        //   rewardSymbol: "DFTP",
+        //   isLiquidityToken: false
+        // },
         {
-          poolLogo: require("assets/img/points-palace.png"),
-          poolTitle: "Points Palace - Extended",
-          poolSubtitle: "Stake DFTP, earn DFTP",
-          poolAddress: "0x04A58f3688Ced6C54e7c11Bd5716aa123E07a051",
-          basePool: "0x70c7d7856e1558210cfbf27b7f17853655752453",
-          stakedAddress: "0x70c7d7856e1558210cfbf27b7f17853655752453",
-          rewardAddress: "0x70c7d7856e1558210cfbf27b7f17853655752453",
-          stakedSymbol: "DFTP",
-          rewardSymbol: "DFTP",
-          isLiquidityToken: false
-        }
+          poolLogo: require("assets/img/xmm-momentum.png"),
+          poolTitle: "Momentum Museum",
+          poolSubtitle: "Stake XMM-UNI-V2, earn XMM",
+          poolAddress: "0xb50Ed58ACee8EA974b432914D2958EC05362C2f7",
+          basePool: "0x6be59eebaa63106d69f87390d6446938c5124416",
+          stakedAddress: "0x6b909268a513b838b8ab846e60a9297fbec13d95",
+          rewardAddress: "0x6be59eebaa63106d69f87390d6446938c5124416",
+          stakedSymbol: "XMM-UNI-V2",
+          rewardSymbol: "XMM",
+          denominator: 1e10,
+          isLiquidityToken: true
+        },
       ],
       proposals: [
         {

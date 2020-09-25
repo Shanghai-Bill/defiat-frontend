@@ -110,7 +110,7 @@ export const PoolCard = ({
 
   const handleLink = () => {
     if (isExtendedPool) {
-      history.push(`/dashboard/staking/extended/${poolAddress}`);
+      history.push(`/dashboard/partners/${poolAddress}`);
     } else {
       history.push(`/dashboard/staking/${poolAddress}`);
     }

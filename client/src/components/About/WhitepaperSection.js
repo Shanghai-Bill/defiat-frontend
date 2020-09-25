@@ -29,7 +29,7 @@ export const WhitepaperSection = () => {
               system. Every time DFT is transacted, an amount from the transaction is taken for fees and another
               amount is permanently burned; naturally reducing supply over time. Holders of DFT are granted
               proportional voting rights in network decisions, such as setting the burn and fee rates.
-              DeFiat's Unified-Staking (UniStake) platform allows users to stake any ERC-20 token in the governance-chosen
+              DeFiat's AnyStake platform allows users to stake any ERC-20 token in the governance-chosen
               liquidity pools, making your money work for you. Users also gain loyalty points, in the form of DFTP, as they 
               interact with the DeFiat ecosystem, resulting in lower fee and burn rates on DFT transactions.
             </p>

@@ -1,1 +1,3 @@
-export * from './Staking'
+export * from './Staking';
+export * from './PoolCard';
+export * from './PoolInterface';

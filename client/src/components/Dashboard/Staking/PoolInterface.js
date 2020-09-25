@@ -22,7 +22,6 @@ import DeFiat_FarmingExt from 'contracts/DeFiat_EXTFarming_V2.json'
 import { MdInfoOutline } from 'react-icons/md'
 
 export const PoolInterface = ({
-  contracts,
   accounts,
   web3,
   network,
@@ -130,14 +129,14 @@ export const PoolInterface = ({
       stakedSymbol: values[0],
       rewardSymbol: values[1],
       longTokenBalance: values[2],
-      tokenBalance: parseValue(values[2]),
+      tokenBalance: parseMinValue(values[2]),
       stakingAllowance,
-      stakedBalance: parseValue(values[6]),
-      availableRewards: parseMinValue(myRewards),
+      stakedBalance: parseMinValue(values[6]),
+      availableRewards: isExtendedPool ? (myRewards / 1e10).toFixed(4) : parseMinValue(myRewards), // make decimals call!
       // totalPoolRewards: parseValue(poolMetrics.rewards),
       totalPoolStaked: parseValue(poolMetrics.staked),
       // currentPoolFee: (poolMetrics.stakingFee / 10).toFixed(2)
-    })
+    });
 
     if (showApproveButton && stakingAllowance > 0) setShowApproveButton(false);
     isLoading && setLoading(false);
@@ -294,7 +293,7 @@ export const PoolInterface = ({
       ) : (
         <Container>
           <div className="d-flex justify-content-start">
-            <Link to="/dashboard/staking">
+            <Link to={isExtendedPool ? "/dashboard/partners/" : "/dashboard/staking"}>
               <Button
                 className="btn-link"
                 color="success"
