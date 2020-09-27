@@ -2,16 +2,13 @@
 
 pragma solidity ^0.6.0;
 
-import "IERC20.sol";
-import "Context.sol";
-import "SafeMath.sol";
-
+import "./_Interfaces.sol";
+import "./Context.sol";
+import "./SafeMath.sol";
 
 interface Dungeon {
     function myStake(address _address) external view returns(uint256);
 }
-
-
 
 contract DeFiat_Bonds is Context {
 
@@ -22,8 +19,6 @@ contract DeFiat_Bonds is Context {
         require(allowed[_msgSender()] == true, "onlyAllowed");
         _;
     }
-
-
 
     struct Bond {
         address token;
@@ -120,7 +115,7 @@ contract DeFiat_Bonds is Context {
     }
     
     function withdraw() external canParticpate(_msgSender()) {
-        require(canWidthdraw(_msgSender()) == true);
+        require(canWithdraw(_msgSender()) == true);
         _widthdraw(_msgSender());
     }
     
@@ -129,7 +124,7 @@ contract DeFiat_Bonds is Context {
     }
 
 //getters
-    function canWidthdraw(address _address) public view returns(bool) {
+    function canWithdraw(address _address) public view returns(bool) {
       bool _canWd = false;
       if(block.timestamp >= maturity(_address)){_canWd = true;}
       return _canWd;
@@ -138,8 +133,6 @@ contract DeFiat_Bonds is Context {
     function maturity(address _address) public view returns(uint256) {
         return clients[_address].depositDate.add(bond.duration);
     }
-
-    
 }
 
 

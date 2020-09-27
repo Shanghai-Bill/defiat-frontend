@@ -1,5 +1,6 @@
 pragma solidity ^0.6.0;
-import "_ERC20.sol";
+
+import "./_ERC20.sol";
 
 contract DeFiat_Points is _ERC20{
     
@@ -12,7 +13,7 @@ contract DeFiat_Points is _ERC20{
     mapping (address => uint256) private _discounts; //current discount (base100)
 
 
-//== modifiers ==
+    //== modifiers ==
     modifier onlyGovernors {
         require(deFiat_Gov[msg.sender] == true, "Only governing contract");
         _;
@@ -28,11 +29,12 @@ contract DeFiat_Points is _ERC20{
         //no minting. _totalSupply = 0
     }
 
-//== VIEW ==
+    //== VIEW ==
 
     function viewDiscountOf(address _address) public view returns (uint256) {
         return _discounts[_address];
     }
+
     function viewEligibilityOf(address _address) public view returns (uint256 tranche) {
         uint256 _tranche = 0;
         for(uint256 i=0; i<=9; i++){ //from top to bottom 
@@ -42,18 +44,19 @@ contract DeFiat_Points is _ERC20{
         }
         return _tranche;
     }
+
     function discountPointsNeeded(uint _tranche) public view returns (uint256 pointsNeeded) {
         return( _discountTranches[_tranche]); //check the nb of points needed to access discount tranche
     }
 
-//== SET ==
+    //== SET ==
     function updateMyDiscountOf() public returns (bool) {
         uint256 _tranche = viewEligibilityOf(msg.sender);
         _discounts[msg.sender] =  SafeMath.mul(10, _tranche); //update of discount base100
         return true;
     }  //users execute this function to upgrade a status level to the max tranche
 
-//== SET onlyGovernor ==
+    //== SET onlyGovernor ==
     function setDeFiatToken(address _token) external onlyGovernors returns(address){
         return deFiat_Token = _token;
     }
@@ -63,11 +66,12 @@ contract DeFiat_Points is _ERC20{
     }
     
     function setTxTreshold(uint _amount) external onlyGovernors {
-      txThreshold = _amount; 
+        txThreshold = _amount; 
     } //minimum amount of tokens to generate points per transaction
+
     function overrideDiscount(address _address, uint256 _newDiscount) external onlyGovernors {
-      require(_newDiscount <= 100); //100 = 100% discount
-      _discounts[_address]  = _newDiscount;
+        require(_newDiscount <= 100); //100 = 100% discount
+        _discounts[_address]  = _newDiscount;
     }
     function overrideLoyaltyPoints(address _address, uint256 _newPoints) external onlyGovernors {
         _burn(_address, balanceOf(_address)); //burn all points
@@ -95,9 +99,9 @@ contract DeFiat_Points is _ERC20{
         _discountTranches[9] = _pointsNeeded9; //90%
     }
     
-//== MINT points onlyToken ==  
+    //== MINT points onlyToken ==  
     function addPoints(address _address, uint256 _txSize, uint256 _points) external onlyToken {
-       if(_txSize >= txThreshold){ _mint(_address, _points);}
+        if(_txSize >= txThreshold){ _mint(_address, _points);}
     }
     
     function _transfer(address sender, address recipient, uint256 amount) internal override virtual {

@@ -2,21 +2,8 @@
 
 // File: @openzeppelin/contracts/token/ERC20/IERC20.sol
 pragma solidity ^0.6.0;
-/**
- * @dev Interface of the ERC20 standard as defined in the EIP. Does not include
- * the optional functions; to access them see {ERC20Detailed}.
- */
-interface IERC20 {
-    function totalSupply() external view returns (uint256);
-    function balanceOf(address account) external view returns (uint256);
-    function transfer(address recipient, uint256 amount) external returns (bool);
-    function allowance(address owner, address spender) external view returns (uint256);
-    function approve(address spender, uint256 amount) external returns (bool);
-    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
-    event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(address indexed owner, address indexed spender, uint256 value);
-}
 
+import "./_Interfaces.sol";
 
 /**
  * @dev A token holder contract that will allow a beneficiary to extract the
@@ -77,10 +64,4 @@ contract TokenTimelock {
 
         _token.transfer(_beneficiary, amount);
     }
-}
-
-interface I_Defiat_Points {
-    // 0x70c7d7856e1558210cfbf27b7f17853655752453
-    function overrideDiscount(address _address, uint256 _newDiscount) external;
-    //whitelist the Locking Contract at 100 (100%) discount
 }

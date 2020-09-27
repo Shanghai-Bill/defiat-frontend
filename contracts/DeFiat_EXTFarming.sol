@@ -1,254 +1,7 @@
-/*
-* Copyright (c) 2020 DeFiat.net
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-*/
-
-// File: @openzeppelin/contracts/math/Math.sol
-//
-
-// File: @openzeppelin/contracts/math/SafeMath.sol
 pragma solidity ^0.6.0;
-/**
- * @dev Wrappers over Solidity's arithmetic operations with added overflow
- * checks.
- *
- * Arithmetic operations in Solidity wrap on overflow. This can easily result
- * in bugs, because programmers usually assume that an overflow raises an
- * error, which is the standard behavior in high level programming languages.
- * `SafeMath` restores this intuition by reverting the transaction when an
- * operation overflows.
- *
- * Using this library instead of the unchecked operations eliminates an entire
- * class of bugs, so it's recommended to use it always.
- */
-library SafeMath{
-    /**
-     * @dev Returns the addition of two unsigned integers, reverting on
-     * overflow.
-     *
-     * Counterpart to Solidity's `+` operator.
-     *
-     * Requirements:
-     * - Addition cannot overflow.
-     */
-    function add(uint256 a, uint256 b) internal pure returns (uint256) {
-        uint256 c = a + b;
-        require(c >= a, "SafeMath: addition overflow");
 
-        return c;
-    }
-
-    /**
-     * @dev Returns the subtraction of two unsigned integers, reverting on
-     * overflow (when the result is negative).
-     *
-     * Counterpart to Solidity's `-` operator.
-     *
-     * Requirements:
-     * - Subtraction cannot overflow.
-     */
-    function sub(uint256 a, uint256 b) internal pure returns (uint256) {
-        return sub(a, b, "SafeMath: subtraction overflow");
-    }
-
-    /**
-     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on
-     * overflow (when the result is negative).
-     *
-     * Counterpart to Solidity's `-` operator.
-     *
-     * Requirements:
-     * - Subtraction cannot overflow.
-     *
-     * _Available since v2.4.0._
-     */
-    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
-        require(b <= a, errorMessage);
-        uint256 c = a - b;
-
-        return c;
-    }
-
-    /**
-     * @dev Returns the multiplication of two unsigned integers, reverting on
-     * overflow.
-     *
-     * Counterpart to Solidity's `*` operator.
-     *
-     * Requirements:
-     * - Multiplication cannot overflow.
-     */
-    function mul(uint256 a, uint256 b) internal pure returns (uint256) {
-        // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
-        // benefit is lost if 'b' is also tested.
-        // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522
-        if (a == 0) {
-            return 0;
-        }
-
-        uint256 c = a * b;
-        require(c / a == b, "SafeMath: multiplication overflow");
-
-        return c;
-    }
-
-    /**
-     * @dev Returns the integer division of two unsigned integers. Reverts on
-     * division by zero. The result is rounded towards zero.
-     *
-     * Counterpart to Solidity's `/` operator. Note: this function uses a
-     * `revert` opcode (which leaves remaining gas untouched) while Solidity
-     * uses an invalid opcode to revert (consuming all remaining gas).
-     *
-     * Requirements:
-     * - The divisor cannot be zero.
-     */
-    function div(uint256 a, uint256 b) internal pure returns (uint256) {
-        return div(a, b, "SafeMath: division by zero");
-    }
-
-    /**
-     * @dev Returns the integer division of two unsigned integers. Reverts with custom message on
-     * division by zero. The result is rounded towards zero.
-     *
-     * Counterpart to Solidity's `/` operator. Note: this function uses a
-     * `revert` opcode (which leaves remaining gas untouched) while Solidity
-     * uses an invalid opcode to revert (consuming all remaining gas).
-     *
-     * Requirements:
-     * - The divisor cannot be zero.
-     *
-     * _Available since v2.4.0._
-     */
-    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
-        // Solidity only automatically asserts when dividing by 0
-        require(b > 0, errorMessage);
-        uint256 c = a / b;
-        // assert(a == b * c + a % b); // There is no case in which this doesn't hold
-
-        return c;
-    }
-
-    /**
-     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
-     * Reverts when dividing by zero.
-     *
-     * Counterpart to Solidity's `%` operator. This function uses a `revert`
-     * opcode (which leaves remaining gas untouched) while Solidity uses an
-     * invalid opcode to revert (consuming all remaining gas).
-     *
-     * Requirements:
-     * - The divisor cannot be zero.
-     */
-    function mod(uint256 a, uint256 b) internal pure returns (uint256) {
-        return mod(a, b, "SafeMath: modulo by zero");
-    }
-
-    /**
-     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
-     * Reverts with custom message when dividing by zero.
-     *
-     * Counterpart to Solidity's `%` operator. This function uses a `revert`
-     * opcode (which leaves remaining gas untouched) while Solidity uses an
-     * invalid opcode to revert (consuming all remaining gas).
-     *
-     * Requirements:
-     * - The divisor cannot be zero.
-     *
-     * _Available since v2.4.0._
-     */
-    function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
-        require(b != 0, errorMessage);
-        return a % b;
-    }
-    
-        /**
-     * @dev Returns the largest of two numbers.
-     */
-    function max(uint256 a, uint256 b) internal pure returns (uint256) {
-        return a >= b ? a : b;
-    }
-
-    /**
-     * @dev Returns the smallest of two numbers.
-     */
-    function min(uint256 a, uint256 b) internal pure returns (uint256) {
-        return a < b ? a : b;
-    }
-
-    /**
-     * @dev Returns the average of two numbers. The result is rounded towards
-     * zero.
-     */
-    function average(uint256 a, uint256 b) internal pure returns (uint256) {
-        // (a + b) / 2 can overflow, so we distribute
-        return (a / 2) + (b / 2) + ((a % 2 + b % 2) / 2);
-    }
-}
-
-// File: @openzeppelin/contracts/GSN/Context.sol
-/*
- * @dev Provides information about the current execution context, including the
- * sender of the transaction and its data. While these are generally available
- * via msg.sender and msg.data, they should not be accessed in such a direct
- * manner, since when dealing with GSN meta-transactions the account sending and
- * paying for execution may not be the actual sender (as far as an application
- * is concerned).
- *
- * This contract is only required for intermediate, library-like contracts.
- */
-contract Context {
-    // Empty internal constructor, to prevent people from mistakenly deploying
-    // an instance of this contract, which should be used via inheritance.
-    constructor () internal { }
-    // solhint-disable-previous-line no-empty-blocks
-
-    function _msgSender() internal view returns (address payable) {
-        return msg.sender;
-    }
-
-    function _msgData() internal view returns (bytes memory) {
-        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
-        return msg.data;
-    }
-}
-
-// File: @openzeppelin/contracts/token/ERC20/IERC20.sol
-/**
- * @dev Interface of the ERC20 standard as defined in the EIP. Does not include
- * the optional functions; to access them see {ERC20Detailed}.
- */
-interface IERC20 {
-    function totalSupply() external view returns (uint256);
-    function balanceOf(address account) external view returns (uint256);
-    function transfer(address recipient, uint256 amount) external returns (bool);
-    function allowance(address owner, address spender) external view returns (uint256);
-    function approve(address spender, uint256 amount) external returns (bool);
-    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
-    event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(address indexed owner, address indexed spender, uint256 value);
-}
-
-interface Idungeon {
-    function myStake(address _address) external view returns(uint256);
-    }
-
+import "./SafeMath.sol";
+import "./_Interfaces.sol";
 
 // File: @defiat-crypto/defiat/blob/master/contracts/XXXXXX.sol
 /**
@@ -379,57 +132,59 @@ contract DeFiat_EXTFarming_V2 {
     * returned is a number between 50 and 100
     */
     function viewDftBoost(address _address) public view returns(uint256) {
-        uint256 _userStake = Idungeon(poolMetrics.DftDungeon).myStake(_address).div(1e18);
+        uint256 _userStake = IDungeon(poolMetrics.DftDungeon).myStake(_address).div(1e18);
         return SafeMath.min(200, _userStake.add(100));
     }
     
-   
 //==Points locking    
     function viewPoolPoints() public view returns(uint256) {
-            uint256 _previousPoints = poolMetrics.stakingPoints;    // previous points shapshot 
-            uint256 _previousStake = poolMetrics.staked;             // previous stake snapshot
-            
-            uint256 _timeHeld = currentTime().sub(
-                        SafeMath.max(poolMetrics.lastEvent, poolMetrics.startTime)
-                                                 );                 // time held with _previous Event
-                                                 
-            return  _previousPoints.add(_previousStake.mul(_timeHeld));    //generated points since event
+        uint256 _previousPoints = poolMetrics.stakingPoints;    // previous points shapshot 
+        uint256 _previousStake = poolMetrics.staked;             // previous stake snapshot
+        
+        uint256 _timeHeld = currentTime().sub(
+                    SafeMath.max(poolMetrics.lastEvent, poolMetrics.startTime)
+                                                );                 // time held with _previous Event
+                                                
+        return  _previousPoints.add(_previousStake.mul(_timeHeld));    //generated points since event
     }
+
     function lockPoolPoints() internal returns (uint256) { //ON STAKE/UNSTAKE EVENT
-            poolMetrics.stakingPoints = viewPoolPoints();
-            poolMetrics.lastEvent = currentTime();   // update lastStakingEvent
-            return poolMetrics.stakingPoints;
-        } 
+        poolMetrics.stakingPoints = viewPoolPoints();
+        poolMetrics.lastEvent = currentTime();   // update lastStakingEvent
+        return poolMetrics.stakingPoints;
+    } 
     
     function viewPointsOf(address _address) public view returns(uint256) {
-            uint256 _previousPoints = userMetrics[_address].stakingPoints;    
-            uint256 _previousStake = userMetrics[_address].stake; // boosted stake before event
+        uint256 _previousPoints = userMetrics[_address].stakingPoints;    
+        uint256 _previousStake = userMetrics[_address].stake; // boosted stake before event
+    
+        uint256 _timeHeld = currentTime().sub(
+                    SafeMath.max(userMetrics[_address].lastEvent, poolMetrics.startTime)
+                                                );                          // time held since lastEvent (take RWD, STK, unSTK)
         
-            uint256 _timeHeld = currentTime().sub(
-                        SafeMath.max(userMetrics[_address].lastEvent, poolMetrics.startTime)
-                                                 );                          // time held since lastEvent (take RWD, STK, unSTK)
-            
-            uint256 _result = _previousPoints.add(_previousStake.mul(_timeHeld));   
-            
-            if(_result > poolMetrics.stakingPoints){_result = poolMetrics.stakingPoints;}
-            
-            
-            return _result;
+        uint256 _result = _previousPoints.add(_previousStake.mul(_timeHeld));   
+        
+        if(_result > poolMetrics.stakingPoints){_result = poolMetrics.stakingPoints;}
+        
+        
+        return _result;
     }
-    function lockPointsOf(address _address) internal returns (uint256) {
-            userMetrics[_address].poolPoints = viewPoolPoints();  // snapshot of pool points at lockEvent
-            userMetrics[_address].stakingPoints = viewPointsOf(_address); 
-            userMetrics[_address].lastEvent = currentTime(); 
 
-            return userMetrics[_address].stakingPoints;
+    function lockPointsOf(address _address) internal returns (uint256) {
+        userMetrics[_address].poolPoints = viewPoolPoints();  // snapshot of pool points at lockEvent
+        userMetrics[_address].stakingPoints = viewPointsOf(_address); 
+        userMetrics[_address].lastEvent = currentTime(); 
+
+        return userMetrics[_address].stakingPoints;
     }
+
     function pointsSnapshot(address _address) public returns (bool) {
-        lockPointsOf(_address);lockPoolPoints();
+        lockPointsOf(_address);
+        lockPoolPoints();
         return true;
     }
-    
-    
-//==Rewards
+     
+    //==Rewards
     function viewTrancheReward(uint256 _period) internal view returns(uint256) {
         //uint256 _poolRewards = poolMetrics.rewards; //tokens in the pool. Note: This can be setup to a fixed amount (totalRewards)
         uint256 _poolRewards = poolMetrics.totalRewards; 
@@ -546,14 +301,17 @@ contract DeFiat_EXTFarming_V2 {
     function myStake(address _address) public view returns(uint256) {
         return userMetrics[_address].stake;
     }
+
     function myStakeShare(address _address) public view returns(uint256) {
         if(poolMetrics.staked == 0){return 0;}
         else {
         return (userMetrics[_address].stake).mul(100000).div(poolMetrics.staked);}
     } //base 100,000
+
     function myPointsShare(address _address) public view returns(uint256) {  //weighted average of your stake over time vs the pool
         return viewPointsOf(_address).mul(100000).div(viewPoolPoints());
     } //base 100,000. Drops when taking rewards.=> Refills after (favors strong hands)
+
     function myRewards(address _address) public view returns(uint256) {
         //delayed start obfuscation (avoids disturbances in the force...)
         if(block.timestamp <= poolMetrics.startTime || poolMetrics.rewards == 0){return 0;}
@@ -566,6 +324,7 @@ contract DeFiat_EXTFarming_V2 {
     function setBoostedRewards(bool _bool) public onlyPoolOperator {
         poolMetrics.boostedRewards = _bool;
     }
+
     function loadRewards(uint256 _amount, uint256 _preStake) public onlyPoolOperator { //load tokens in the rewards pool.
         
         uint256 _balanceNow = IERC20(address(poolMetrics.rewardToken)).balanceOf(address(this));
@@ -579,17 +338,19 @@ contract DeFiat_EXTFarming_V2 {
         poolMetrics.rewards = SafeMath.add(poolMetrics.rewards,amount);
         poolMetrics.totalRewards = poolMetrics.totalRewards.add(_amount);
     }    
+
     function setFee(uint256 _fee) public onlyPoolOperator {
         poolMetrics.stakingFee = _fee;
     }
     
     function flushPool(address _recipient, address _ERC20address) external onlyPoolOperator poolEnded { // poolEnded { // poolEnded returns(bool) {
-            uint256 _amount = IERC20(_ERC20address).balanceOf(address(this));
-            IERC20(_ERC20address).transfer(_recipient, _amount); //use of the _ERC20 traditional transfer
-            //return true;
-        } //get tokens sent by error to contract
+        uint256 _amount = IERC20(_ERC20address).balanceOf(address(this));
+        IERC20(_ERC20address).transfer(_recipient, _amount); //use of the _ERC20 traditional transfer
+        //return true;
+    } //get tokens sent by error to contract
+
     function killPool() public onlyOwner poolEnded returns(bool) {
-            selfdestruct(msg.sender);
-        } //frees space on the ETH chain
+        selfdestruct(msg.sender);
+    } //frees space on the ETH chain
 
 }

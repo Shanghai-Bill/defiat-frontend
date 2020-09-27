@@ -1,12 +1,11 @@
-//SPDX-License-Identifier: stupid
+pragma solidity ^0.6.0;
 
-pragma solidity >= 0.6;
-
-import "./SafeMath.sol";
 import "./_Interfaces.sol";
 import "./_ERC20.sol";
+import "./ERC20_Utils.sol";
+import "./SafeMath.sol";
 
-contract Uni_Price {
+contract Any_Price is ERC20_Utils {
     using SafeMath for uint112;
     using SafeMath for uint256;
     
@@ -14,26 +13,11 @@ contract Uni_Price {
     address public wETHaddress;
     address public owner;
  
-    modifier onlyOwner {
-        require(msg.sender == owner, "only owner");
-        _;
-    }
-    
-    constructor(address _UNIfactory, address _wETHaddress) public {
-        owner = msg.sender;
-        UNIfactory = _UNIfactory; 
-        //0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f; MAINNET ETH
-        //0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f; RINKEBY ETH
 
-        wETHaddress = _wETHaddress; 
-        //0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2; MAINNET ETH
-        //0xc778417E063141139Fce010982780140Aa0cD5Ab; RINKEBY ETH
-    }
-    
-    
     function getUNIpair(address _token) internal view returns(address) {
         return IUniswapV2Factory(UNIfactory).getPair(_token, wETHaddress);
     }
+
     function _getUint256Reserves(address _token) internal view returns(uint256 rToken, uint256 rWETH) {
         address _UNIpair = getUNIpair(_token);
                 
@@ -79,23 +63,6 @@ contract Uni_Price {
             _ERC20(_token).decimals(), 
             getUNIpair(_token), 
             getUNIprice(_token)
-            ); //normalized as if every token is 18 decimals
+        ); //normalized as if every token is 18 decimals
     }
-  
-//ERC20_utils  
-    function widthdrawAnyToken(address _token) external onlyOwner returns (bool) {
-        uint256 _amount = _ERC20(_token).balanceOf(address(this));
-        _widthdrawAnyToken(msg.sender, _token, _amount);
-        return true;
-    } //get tokens sent by error to contract
-
-    function _widthdrawAnyToken(address _recipient, address _ERC20address, uint256 _amount) internal returns (bool) {
-        _ERC20(_ERC20address).transfer(_recipient, _amount); //use of the _ERC20 traditional transfer
-        return true;
-    } //get tokens sent by error
-
-    function kill() public onlyOwner{
-        selfdestruct(msg.sender);
-    } //frees space on the ETH chain
 }
-
