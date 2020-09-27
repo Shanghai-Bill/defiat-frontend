@@ -28,7 +28,7 @@ export const PoolInterface = ({
   isExtendedPool
 }) => {
   const { contractId } = useParams();
-  let contractAbi = isExtendedPool ? DeFiat_FarmingExt.abi : DeFiat_Farming.abi;
+  const contractAbi = isExtendedPool ? DeFiat_FarmingExt.abi : DeFiat_Farming.abi;
   const networkPools = isExtendedPool ? network.extendedPools : network.pools;
   const poolContent = networkPools.filter((x) => x.poolAddress === contractId)[0];
 
@@ -56,7 +56,9 @@ export const PoolInterface = ({
   const [stakingState, setStakingState] = useState({
     isPoolClosed: false,
     rewardSymbol: "",
+    rewardDecimals: 18,
     stakedSymbol: "",
+    stakedDecimals: 18,
     longTokenBalance: 0,
     tokenBalance: 0,
     stakedBalance: 0,
@@ -103,51 +105,55 @@ export const PoolInterface = ({
     // stakedContract.methods.decimals().call(),
     const values = await Promise.all([
       tknContract.methods.symbol().call(),
+      tknContract.methods.decimals().call(),
       rwdContract.methods.symbol().call(),
-
+      rwdContract.methods.decimals().call(),
       tknContract.methods.balanceOf(accounts[0]).call(),
       tknContract.methods.allowance(accounts[0], contractId).call(),
-
-
       farmContract.methods.userMetrics(accounts[0]).call(),
       farmContract.methods.myRewards(accounts[0]).call(),
       farmContract.methods.myStake(accounts[0]).call(),
       web3.eth.getBlockNumber()
-    ])
-
+    ]);
     
-    const stakingAllowance = values[3];
-    const userMetrics = values[4];
-    const myRewards = values[5];
-    const currentBlock = values[7];
+    const stakedSymbol = values[0];
+    const stakedDecimals = values[1];
+    const rewardSymbol = values[2];
+    const rewardDecimals = values[3];
+    const longTokenBalance = values[4];
+    const stakingAllowance = values[5];
+    const userMetrics = values[6];
+    const myRewards = values[7];
+    const myStake = values[8];
+    const currentBlock = values[9];
 
     setBlockNumber(currentBlock);
     setUserMetrics(userMetrics);
     setStakingState({
       //...stakingState,
       isPoolClosed: new Date().getTime() > +poolMetrics.closingTime * 1000,
-      stakedSymbol: values[0],
-      rewardSymbol: values[1],
-      longTokenBalance: values[2],
-      tokenBalance: parseMinValue(values[2]),
+      stakedSymbol,
+      stakedDecimals,
+      rewardSymbol,
+      rewardDecimals,
       stakingAllowance,
-      stakedBalance: parseMinValue(values[6]),
-      availableRewards: isExtendedPool ? (myRewards / 1e10).toFixed(4) : parseMinValue(myRewards), // make decimals call!
-      // totalPoolRewards: parseValue(poolMetrics.rewards),
-      totalPoolStaked: parseValue(poolMetrics.staked),
-      // currentPoolFee: (poolMetrics.stakingFee / 10).toFixed(2)
+      longTokenBalance,
+      tokenBalance: parseValue(longTokenBalance, stakedDecimals),
+      stakedBalance: parseValue(myStake, stakedDecimals),
+      availableRewards: parseValue(myRewards, rewardDecimals),
+      totalPoolStaked: parseMinValue(poolMetrics.staked),
     });
 
     if (showApproveButton && stakingAllowance > 0) setShowApproveButton(false);
     isLoading && setLoading(false);
   }
 
-  const parseMinValue = (value) => {
-    const wei = web3.utils.fromWei(value);
+  const parseValue = (value, decimals) => {
+    const wei = value / (10**decimals);
     return ((+wei * 100) / 100).toFixed(4);
   }
 
-  const parseValue = (value) => {
+  const parseMinValue = (value) => {
     const wei = web3.utils.fromWei(value);
     return (Math.floor(+wei * 100) / 100).toFixed(4);
   }

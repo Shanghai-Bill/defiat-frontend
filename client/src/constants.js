@@ -1,5 +1,4 @@
 export default {
-  isLocalhost: window.location.href.indexOf("localhost") > -1, 
   networks: {
     1: {
       name: "main",
@@ -136,9 +135,42 @@ export default {
       ],
       proposals: [
         {
-          proposalName: "Fee & Burn Rate Vote",
+          tag: "DFTG-1",
+          proposalName: "Modify Fee & Burn Rate",
           proposalAddress: "0x01CE7B613D1bC512Ad38FED6c02D8A8df8AE6ECf",
-          proposalOperator: "",
+          choices: [
+            {
+              name: "Decrease to 0%",
+              value: 0
+            },
+            {
+              name: "Remain at 0.10%",
+              value: 1
+            },
+            {
+              name: "Increase to 0.50%",
+              value: 2
+            },
+          ]
+        },
+        {
+          tag: "DFTG-2",
+          proposalName: "Reduce DFTP Threshold",
+          proposalAddress: "0x01CE7B613D1bC512Ad38FED6c02D8A8df8AE6ECf",
+          choices: [
+            {
+              name: "Decrease to 10",
+              value: 0
+            },
+            {
+              name: "Decrease to 50",
+              value: 1
+            },
+            {
+              name: "Remain at 100",
+              value: 2
+            },
+          ]
         },
       ]
      }

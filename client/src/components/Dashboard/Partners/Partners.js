@@ -8,6 +8,7 @@ import { PoolCard } from '../Staking/PoolCard';
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import { PoolInterface } from '../Staking/PoolInterface';
 import DeFiat_FarmingExt from 'contracts/DeFiat_EXTFarming_V2.json'
+import { Operator } from '../Operator'
 
 export const Partners = ({
   web3,
@@ -75,6 +76,14 @@ export const Partners = ({
                   </Col>
                 ))}
               </Row>
+            </Route>
+            <Route path={`${path}/operator/:contractId`}>
+              <Operator
+                web3={web3}
+                accounts={accounts}
+                network={network}
+                isExtendedPool
+              />
             </Route>
             <Route path={`${path}/:contractId`}>
               <PoolInterface

@@ -8,6 +8,7 @@ import { PoolCard } from './PoolCard';
 import { Route, Switch, useRouteMatch, useHistory } from 'react-router-dom'
 import { PoolInterface } from './PoolInterface';
 import DeFiat_Farming from 'contracts/DeFiat_Farming_v15.json';
+import { Operator } from '../Operator';
 
 export const Staking = ({
   web3,
@@ -75,6 +76,13 @@ export const Staking = ({
                   </Col>
                 ))}
               </Row>
+            </Route>
+            <Route path={`${path}/operator/:contractId`}>
+              <Operator
+                web3={web3}
+                accounts={accounts}
+                network={network}
+              />
             </Route>
             <Route path={`${path}/:contractId`}>
               <PoolInterface

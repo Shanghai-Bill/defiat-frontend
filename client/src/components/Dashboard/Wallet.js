@@ -257,10 +257,10 @@ export const Wallet = ({
                         <Button 
                           className="w-100"
                           color="success"
-                          href={`https://app.uniswap.org/#/swap?inputCurrency=${network["token"]}`}
+                          href={`https://uniswap.info/token/${network["token"]}`}
                           target="_blank"
                         >
-                          Buy DFT on UniSwap
+                          View DFT on UniSwap
                         </Button>
                       </div>
                       <div>

@@ -21,6 +21,7 @@ import { Operator } from './Operator';
 import { Partners } from './Partners';
 import { withRouter, useRouteMatch, useHistory, Route, Switch } from 'react-router-dom'
 import { Nav, NavItem, NavLink, Row, Col, Container } from 'reactstrap';
+// import { useWeb3 } from '../../hooks/useWeb3'
 
 
 const Dashboard = (props) => {
@@ -40,6 +41,7 @@ const Dashboard = (props) => {
   const [isLoading, setLoading] = useState(true);
   const { path } = useRouteMatch();
   const history = useHistory();
+  // const w3 = useWeb3();
 
   useEffect(() => {
     async function loadWeb3() {

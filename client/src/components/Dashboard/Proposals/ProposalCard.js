@@ -58,45 +58,50 @@ export const ProposalCard = ({
     });
   }
 
+  const toShortAddress = (address) => {
+    return address.slice(0, 6) + "..." + address.slice(38);
+  }
+
   return (
     <>
-      <Card className="shadow">
+      <Card 
+        className="shadow" 
+        style={{cursor:"pointer"}} 
+        onClick={() => history.push(`/dashboard/proposals/${proposal.proposalAddress}`)}
+      >
         <CardBody>
           <Row className="justify-content-between align-items-center text-left mx-0">
             <div className="d-flex align-items-center">
-              <h2 className="mb-1">Proposal Name</h2>
               {proposalState.voteActive ?  (
-                <Badge className="ml-2" color="success">Active</Badge>
+                <Badge  color="success">Active</Badge>
               ) : (
-                <Badge className="ml-2" color="primary">Closed</Badge>
+                <Badge  color="primary">Closed</Badge>
               )}
-              
+              <h3 className="my-0 ml-2"><b>{proposal.tag}:</b> <a href="">{proposal.proposalName}</a></h3>
             </div>
-            <Button
-              className="mb-0" 
+            {/* <Button
+              className="my-0" 
               color="info"
               onClick={() => history.push(`/dashboard/proposals/${proposal.proposalAddress}`)}
             >
               View Proposal
-            </Button>
+            </Button> */}
           </Row>
 
-          <hr className="w-100 line-primary" />
-
-          <Row className="justify-content-between align-items-center mx-0">
-            <Col className="text-left px-0">
-              {/* <Row> */}
-                <p className="mx-0"><b>Total Votes:</b> {proposalState.totalVotes}</p>
-                <p className="mx-0"><b>Owner:</b> {proposalState.owner}</p>
-                
-              {/* </Row> */}
-            </Col>
-            <Col  className="text-right px-0">
-              <p className="ml-0"><b>Vote Opens:</b> {proposalState.voteStart.toLocaleString()}</p>
-              <p className="ml-0"><b>Vote Closes:</b> {proposalState.voteEnd.toLocaleString()}</p>
-            </Col>
-            
+          {/* <hr className="w-100 line-primary" /> */}
+          <Row className="justify-content-start mt-2 mx-1">
+            <p><b>Total Votes:</b> {proposalState.totalVotes}</p>
+            <p className="ml-2"><b>Owner:</b> {toShortAddress(proposalState.owner)}</p>
+            <p className="ml-2"><b>Vote Opens:</b> {proposalState.voteStart.toLocaleString().split(' ')[0].slice(0, -1)}</p>
+            <p className="ml-2"><b>Vote Closes:</b> {proposalState.voteEnd.toLocaleString().split(' ')[0].slice(0, -1)}</p>
           </Row>
+
+          {/* <Row className="justify-content-start mt-4">
+            <Col><p><b>Vote Opens:</b> {proposalState.voteStart.toLocaleString().split(' ')[0].slice(0, -1)}</p></Col>
+            <Col><p><b>Vote Closes:</b> {proposalState.voteEnd.toLocaleString().split(' ')[0].slice(0, -1)}</p></Col>
+            <Col><p><b>Owner:</b> {toShortAddress(proposalState.owner)}</p></Col>
+            <Col><p><b>Total Votes:</b> {proposalState.totalVotes}</p></Col>
+          </Row> */}
         </CardBody>
       </Card>
     </>
