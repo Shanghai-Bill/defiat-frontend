@@ -74,7 +74,7 @@ export const Wallet = ({
 
   const checkDiscount = async () => {
     const eligibleLevel = await contracts["points"].methods.viewEligibilityOf(accounts[0]).call();
-    const currentLevel = await contracts["points"].methods.viewDiscountOf(accounts[0]).call();
+    const currentLevel = await contracts["points"].methods.viewDiscountOf(accounts[0]).call() / 10; // discountOf in base100
 
     if (currentLevel < eligibleLevel) {
       toast.success(<TooltipMessage title="✅ Eligible" message="You are eligible for the next Discount Tier! Click Update Discount!" />)

@@ -2,8 +2,6 @@
 
 pragma solidity ^0.6.0;
 
-import "./_Structs.sol";
-
 interface myPoints {
     // launch code "AT ADDRESS"  0xBac9EF6a9eBF7e109c1011C68b0Dbac8C309fCc6
 
@@ -127,4 +125,8 @@ interface I_Defiat_Points {
     // 0x70c7d7856e1558210cfbf27b7f17853655752453
     function overrideDiscount(address _address, uint256 _newDiscount) external;
     //whitelist the Locking Contract at 100 (100%) discount
+}
+
+interface IDeFiat_Points {
+    function setTxTreshold(uint _amount) external;
 }

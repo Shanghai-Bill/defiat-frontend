@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import FeeBurnRateVote from 'contracts/FeeBurnRateVote.json';
 import IERC20 from 'contracts/_ERC20.json';
 import { Card, CardBody, Button, Row, Badge, Progress, Col } from 'reactstrap';
+import { ProposalOne } from './Components/ProposalOne';
 
 export const ProposalInterface = ({
   web3,
@@ -47,21 +48,32 @@ export const ProposalInterface = ({
   const loadProposal = () => {
     // set the proposal specific contract
     // set the description UI component
-    if (proposalId === "0x01CE7B613D1bC512Ad38FED6c02D8A8df8AE6ECf") {
+    const { tag } = proposalContent;
+    if (tag == "DFTG-1") {
       contractAbi = FeeBurnRateVote.abi;
     }
+    
+  }
+
+  const getProposal = () => {
+    const { tag } = proposalContent;
+    if (tag == "DFTG-1") {
+      return <ProposalOne />;
+    }
+    
   }
 
   const loadData = async () => {
     const contract = new web3.eth.Contract(contractAbi, proposalId);
+    console.log(contract)
     const values = await Promise.all([
       contract.methods.voteStart().call(),
       contract.methods.voteEnd().call(),
       contract.methods.totalVotes().call(),
       contract.methods.owner().call(),
       contract.methods.rewardToken().call(),
-      contract.methods.rewardAmount().call()
-      // contract.methods.myVotingPower(accounts[0]).call()
+      contract.methods.rewardAmount().call(),
+      contract.methods.myVotingPower(accounts[0]).call(),
     ]);
     const voteStart = new Date(values[0] * 1000);
     const voteEnd = new Date(values[1] * 1000);
@@ -69,7 +81,7 @@ export const ProposalInterface = ({
     const owner = values[3];
     const rewardToken = values[4];
     const rewardAmount = values[5];
-    // const votingPower = (values[4] / 1e18).toFixed(0);
+    const votingPower = (values[6] / 1e18).toFixed(0);
 
     const rewardContract = new web3.eth.Contract(IERC20.abi, rewardToken);
     const tokenResult = await Promise.all([
@@ -101,8 +113,8 @@ export const ProposalInterface = ({
       voteResults,
       rewardAmount,
       rewardSymbol,
-      rewardDecimals
-      // votingPower
+      rewardDecimals,
+      votingPower
     });
   }
 
@@ -146,26 +158,9 @@ export const ProposalInterface = ({
                 )}
                 <h3 className="my-0 ml-2"><b>{proposalContent.tag}:</b> {proposalContent.proposalName}</h3>
               </div>
-              
-              {/* <hr className="line-primary w-100" /> */}
-              <p className="mt-2">
-                The early days of DeFiat have been winding to a close with the 
-                release of staking and now a voting interface.
-                After seeing the performance of the token over the first month, 
-                the development team would like to propose a vote to change the 
-                network fee and burn rates.
-              </p>
-              <br />
-              <p>
-                This contract will change the DeFiat network transaction fee and burn rate
-                on every transaction to the option with the most votes when the decision is activated.
-                Anyone can activate the vote once the voting period has expired.
-              </p>
-              <br />
-              <p>
-                Voting Power for this contract is equal to the total DFT value of your staked holdings in the DeFiat
-                Dungeon, Liquidity Lab, and Points Palace.
-              </p>
+              {
+                getProposal()
+              }
               <hr className="line-info w-100" />
               <Row className="mx-0 my-2 justify-content-between">
                 <h3 className="mb-0">My Voting Power:</h3>
@@ -209,7 +204,7 @@ export const ProposalInterface = ({
               </Row>
               <Row className="justify-content-between mx-0">
                 <p><b>Vote Reward:</b></p> 
-                <p>{(proposalState.rewardAmount / proposalState.rewardDecimals).toFixed(0)} {proposalState.rewardSymbol}</p>
+                <p>{(proposalState.rewardAmount / (10**proposalState.rewardDecimals)).toFixed(0)} {proposalState.rewardSymbol}</p>
               </Row>
               <Row className="justify-content-between mx-0">
                 <p><b>Total Votes:</b></p>

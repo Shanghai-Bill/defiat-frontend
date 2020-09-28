@@ -186,6 +186,7 @@ export const PoolInterface = ({
     }
     const tokens = web3.utils.toWei(stakeAmountInput.toString(), 'ether');
     const stakeAmount = web3.utils.toBN(tokens);
+    console.log(tokens, stakeAmount)
     farmingContract.methods.stake(stakeAmount).send({from: accounts[0]})
       .then((data) => {
         toast.success(<TooltipMessage title="✅ Success" message={`Successfully staked ${stakeAmountInput} ${stakingState.stakedSymbol}.`} txn={data.transactionHash} />)

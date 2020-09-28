@@ -56,6 +56,7 @@ export default {
       gov: "0xfB39a0bBb63bA6e09F305ED97C256B6D75659506",
       price: "0xdbada9b7e7c6334b1a539e8e1a01c4eb3230d095",
       weth: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
+      uniFactory: "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
       pools: [
         {
           poolLogo: require("assets/img/defiat-dungeon.png"),
@@ -137,7 +138,7 @@ export default {
         {
           tag: "DFTG-1",
           proposalName: "Modify Fee & Burn Rate",
-          proposalAddress: "0x01CE7B613D1bC512Ad38FED6c02D8A8df8AE6ECf",
+          proposalAddress: "0x443dfc0bc2d7a664262e95f4ade44d5163243ebe",
           choices: [
             {
               name: "Decrease to 0%",
@@ -153,25 +154,25 @@ export default {
             },
           ]
         },
-        {
-          tag: "DFTG-2",
-          proposalName: "Reduce DFTP Threshold",
-          proposalAddress: "0x01CE7B613D1bC512Ad38FED6c02D8A8df8AE6ECf",
-          choices: [
-            {
-              name: "Decrease to 10",
-              value: 0
-            },
-            {
-              name: "Decrease to 50",
-              value: 1
-            },
-            {
-              name: "Remain at 100",
-              value: 2
-            },
-          ]
-        },
+        // {
+        //   tag: "DFTG-2",
+        //   proposalName: "Reduce DFTP Threshold",
+        //   proposalAddress: "",
+        //   choices: [
+        //     {
+        //       name: "Decrease to 10",
+        //       value: 0
+        //     },
+        //     {
+        //       name: "Decrease to 50",
+        //       value: 1
+        //     },
+        //     {
+        //       name: "Remain at 100",
+        //       value: 2
+        //     },
+        //   ]
+        // },
       ]
      }
   },

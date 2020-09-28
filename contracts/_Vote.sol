@@ -8,10 +8,11 @@ import "./ERC20_Utils.sol";
 import "./Uni_Price_v2.sol";
 
 abstract contract _Vote is ERC20_Utils, Uni_Price_v2 {
+    using SafeMath for uint256;
 
     address public DeFiat_Gov; //governance contract
 
-    bytes32 public voteName; // name to describe the vote
+    string public voteName; // name to describe the vote
     uint256 public voteStart; // UTC timestamp for voteStart
     uint256 public voteEnd; // UTC timestamp for voteEnd
     bool public decisionActivated; // track whether decision has been activated
@@ -29,11 +30,10 @@ abstract contract _Vote is ERC20_Utils, Uni_Price_v2 {
     }
     mapping (uint => PoolStruct) public stakingPools;
 
-    address public votingPowerToken;
     address public rewardToken;
     uint256 public rewardAmount;
 
-    event voteStarting(address _Defiat_Gov, uint256 _voteStart, uint256 _voteEnd, bytes32 _hash, bytes32 _voteName);
+    event voteStarting(address _Defiat_Gov, uint256 _voteStart, uint256 _voteEnd, bytes32 _hash, string _voteName);
     event voteSending(address indexed user, uint voteChoice, uint256 timestamp);
 
     modifier OnlyOwner() {
@@ -42,7 +42,7 @@ abstract contract _Vote is ERC20_Utils, Uni_Price_v2 {
     }
 
     modifier TokenHolder{
-        require(IERC20(votingPowerToken).balanceOf(msg.sender) > 0, "Only holders can vote");
+        require(myVotingPower(msg.sender) > 0, "Only holders can vote");
         _;
     }
 
@@ -63,19 +63,18 @@ abstract contract _Vote is ERC20_Utils, Uni_Price_v2 {
         _;
     }
 
-    modifier QuorumReached {
-        require(totalVotes > IERC20(votingPowerToken).totalSupply() * (quorum / 100), "Not enough votes have been cast");
-        _;
-    }
+    // modifier QuorumReached {
+    //     require(totalVotes > IERC20(votingPowerToken).totalSupply() * (quorum / 100), "Not enough votes have been cast");
+    //     _;
+    // }
 
     constructor(
         address _DeFiat_Gov,
         uint256 _delayStartHours,
         uint256 _durationHours, 
-        bytes32 _voteName,
+        string memory _voteName,
         uint256 _voteChoices,
         uint256 _quorum,
-        address _votingPowerToken, 
         address _rewardToken, 
         uint256 _rewardAmount,
         address _uniFactoryAddress,
@@ -90,7 +89,6 @@ abstract contract _Vote is ERC20_Utils, Uni_Price_v2 {
         voteChoices = new uint256[](_voteChoices);
         rewardToken = _rewardToken;
         rewardAmount = _rewardAmount;
-        votingPowerToken = _votingPowerToken;
         quorum = _quorum;
         decisionActivated = false;
 
@@ -114,16 +112,19 @@ abstract contract _Vote is ERC20_Utils, Uni_Price_v2 {
     //2- define power function
     function myVotingPower(address _address) public view returns(uint256) {
         // simple 1:1 token to vote
-        uint256 _power;
+        uint256 _power = 0;
         for (uint i = 0; i < stackPointer; i++) {
             PoolStruct memory pool = stakingPools[i];
-            uint tokensPerEth = getUniPrice(pool.stakedAddress);
-            uint stakedTokens = IDungeon(pool.poolAddress).myStake(_address);
-            _power = stakedTokens.mul(1/tokensPerEth);
-            //_power = _power + IDungeon(stakingPools[i]).balanceOf()
+            uint256 tokensPerEth = getUniPrice(pool.stakedAddress);
+            uint256 stakedTokens = getStake(_address, pool.poolAddress);
+            _power = _power + stakedTokens.mul(tokensPerEth).div(1e18);
         }
 
         return _power;
+    }
+
+    function getStake(address _address, address _poolAddress) public view returns(uint256) {
+        return IDungeon(_poolAddress).myStake(_address);
     }
 
     function vote(uint voteChoice) external VoteOpen CanVote TokenHolder {
@@ -131,7 +132,6 @@ abstract contract _Vote is ERC20_Utils, Uni_Price_v2 {
 
         uint256 votePower = myVotingPower(msg.sender);
         votes[msg.sender] = voteChoice; // log of user vote 
-        
         voteChoices[voteChoice] = voteChoices[voteChoice] + votePower; // increase vote count
         totalVotes = totalVotes + votePower; // increase total votes
 

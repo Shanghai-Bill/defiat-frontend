@@ -60,6 +60,7 @@ contract DeFiat_Points is _ERC20{
     function setDeFiatToken(address _token) external onlyGovernors returns(address){
         return deFiat_Token = _token;
     }
+    
     function setGovernor(address _address, bool _rights) external onlyGovernors {
         require(msg.sender != _address); //prevents self stripping of rights
         deFiat_Gov[_address] = _rights;
@@ -73,6 +74,7 @@ contract DeFiat_Points is _ERC20{
         require(_newDiscount <= 100); //100 = 100% discount
         _discounts[_address]  = _newDiscount;
     }
+
     function overrideLoyaltyPoints(address _address, uint256 _newPoints) external onlyGovernors {
         _burn(_address, balanceOf(_address)); //burn all points
         _mint(_address, _newPoints); //mint new points
