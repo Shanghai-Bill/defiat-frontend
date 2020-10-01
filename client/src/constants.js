@@ -52,8 +52,8 @@ export default {
       name: "rinkeby",
       token: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
       points: "0x70c7d7856e1558210cfbf27b7f17853655752453",
-      //gov: "0x064fd7d9c228e8a4a2bf247b432a34d6e1cb9442",
-      gov: "0xfB39a0bBb63bA6e09F305ED97C256B6D75659506",
+      gov: "0x064fd7d9c228e8a4a2bf247b432a34d6e1cb9442",
+      //gov: "0xfB39a0bBb63bA6e09F305ED97C256B6D75659506",
       price: "0xdbada9b7e7c6334b1a539e8e1a01c4eb3230d095",
       weth: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
       uniFactory: "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
@@ -70,56 +70,20 @@ export default {
           rewardSymbol: "DFT",
           isLiquidityToken: false
         },
-        // {
-        //   poolLogo: require("assets/img/defiat-dungeon.png"),
-        //   poolTitle: "DeFiat Dungeon (Short)",
-        //   poolSubtitle: "Stake DFT, earn DFT",
-        //   poolAddress: "0x5911a3849Bd10e2c463240b07435A9A262fb115A",
-        //   basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
-        //   stakedAddress: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
-        //   rewardAddress: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
-        //   stakedSymbol: "DFT",
-        //   rewardSymbol: "DFT",
-        //   isLiquidityToken: false
-        // },
-        // {
-        //   poolLogo: require("assets/img/points-palace.png"),
-        //   poolTitle: "Points Palace",
-        //   poolSubtitle: "Stake DFT, earn DFTP",
-        //   poolAddress: "0x995804C14d1AaF5bf3E52Cb18e3feaF1a24725e8",
-        //   basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
-        //   stakedAddress: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
-        //   rewardAddress: "0x70c7d7856e1558210cfbf27b7f17853655752453",
-        //   stakedSymbol: "DFT",
-        //   rewardSymbol: "DFTP",
-        //   isLiquidityToken: false
-        // },
-        // {
-        //   poolLogo: require("assets/img/liquidity-lab.png"),
-        //   poolTitle: "Liquidity Laboratory",
-        //   poolSubtitle: "Stake DFT-UNI-V2, earn DFT",
-        //   poolAddress: "0x9BCC9ef46eCe3688228648a19E5515f62020F83c",
-        //   basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
-        //   stakedAddress: "0xf7426eacb2b00398d4cefb3e24115c91821d6fb0",
-        //   rewardAddress: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
-        //   stakedSymbol: "DFT-UNI-V2",
-        //   rewardSymbol: "DFT",
-        //   isLiquidityToken: true
-        // },
+        {
+          poolLogo: require("assets/img/liquidity-lab.png"),
+          poolTitle: "Liquidity Laboratory",
+          poolSubtitle: "Stake DFT-UNI-V2, earn DFT",
+          poolAddress: "0x98a5750db215633bbff8924b9b569c6fb1215a5a",
+          basePool: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
+          stakedAddress: "0xf7426eacb2b00398d4cefb3e24115c91821d6fb0",
+          rewardAddress: "0xb571d40e4a7087c1b73ce6a3f29eadfca022c5b2",
+          stakedSymbol: "DFT-UNI-V2",
+          rewardSymbol: "DFT",
+          isLiquidityToken: true
+        },
       ],
       extendedPools: [
-        // {
-        //   poolLogo: require("assets/img/points-palace.png"),
-        //   poolTitle: "Points Palace - Extended",
-        //   poolSubtitle: "Stake DFTP, earn DFTP",
-        //   poolAddress: "0x04A58f3688Ced6C54e7c11Bd5716aa123E07a051",
-        //   basePool: "0x70c7d7856e1558210cfbf27b7f17853655752453",
-        //   stakedAddress: "0x70c7d7856e1558210cfbf27b7f17853655752453",
-        //   rewardAddress: "0x70c7d7856e1558210cfbf27b7f17853655752453",
-        //   stakedSymbol: "DFTP",
-        //   rewardSymbol: "DFTP",
-        //   isLiquidityToken: false
-        // },
         {
           poolLogo: require("assets/img/xmm-momentum.png"),
           poolTitle: "Momentum Museum",
@@ -138,7 +102,7 @@ export default {
         {
           tag: "DFTG-1",
           proposalName: "Modify Fee & Burn Rate",
-          proposalAddress: "0x443dfc0bc2d7a664262e95f4ade44d5163243ebe",
+          proposalAddress: "",
           choices: [
             {
               name: "Decrease to 0%",
@@ -154,25 +118,25 @@ export default {
             },
           ]
         },
-        // {
-        //   tag: "DFTG-2",
-        //   proposalName: "Reduce DFTP Threshold",
-        //   proposalAddress: "",
-        //   choices: [
-        //     {
-        //       name: "Decrease to 10",
-        //       value: 0
-        //     },
-        //     {
-        //       name: "Decrease to 50",
-        //       value: 1
-        //     },
-        //     {
-        //       name: "Remain at 100",
-        //       value: 2
-        //     },
-        //   ]
-        // },
+        {
+          tag: "DFTG-2",
+          proposalName: "Change DFTP Generation Threshold",
+          proposalAddress: "",
+          choices: [
+            {
+              name: "Decrease to 10 DFT",
+              value: 0
+            },
+            {
+              name: "Decrease to 50 DFT",
+              value: 1
+            },
+            {
+              name: "Remain at 100 DFT",
+              value: 2
+            },
+          ]
+        },
       ]
      }
   },

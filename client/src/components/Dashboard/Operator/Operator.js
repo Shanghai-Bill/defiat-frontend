@@ -6,6 +6,7 @@ import IERC20 from 'contracts/_ERC20.json'
 import { Row, Col, Card, CardBody, FormGroup, FormText, Button, Label, Input } from 'reactstrap'
 import { TooltipMessage } from 'components/TooltipMessage'
 import { toast } from 'react-toastify';
+import BigNumber from 'bignumber.js'
 
 export const Operator = ({
   web3,
@@ -21,7 +22,8 @@ export const Operator = ({
     poolMetrics: {},
     stakedDecimals: 18,
     rewardDecimals: 18,
-    showApproveButton: true,
+    showRewardsApprove: true,
+    showStakedApprove: true,
     stakedSymbol: '',
     rewardSymbol: ''
   });
@@ -54,6 +56,7 @@ export const Operator = ({
     ])
     const poolOperator = values[0];
     const poolMetrics = values[1];
+    console.log(poolMetrics)
 
     const { rewardToken, stakedToken } = poolMetrics;
     const rewardContract = new web3.eth.Contract(IERC20.abi, rewardToken);
@@ -68,16 +71,18 @@ export const Operator = ({
     ]);
     const rewardDecimals = tokenValues[0];
     const stakedDecimals = tokenValues[1];
-    const showApproveButton = tokenValues[2] <= 0 && tokenValues[3] <= 0;
-    const stakedSymbol = tokenValues[4];
-    const rewardSymbol = tokenValues[5];
+    const showRewardsApprove = tokenValues[2] <= 0;
+    const showStakedApprove = tokenValues[3] <= 0;
+    const rewardSymbol = tokenValues[4];
+    const stakedSymbol = tokenValues[5];
 
     setOperatorState({
       poolOperator,
       poolMetrics,
       rewardDecimals,
       stakedDecimals,
-      showApproveButton,
+      showRewardsApprove,
+      showStakedApprove,
       stakedSymbol,
       rewardSymbol,
     })
@@ -100,26 +105,54 @@ export const Operator = ({
     const maxApproval = await contract.methods.totalSupply().call();
     contract.methods.approve(contractId, maxApproval).send({from: accounts[0]})
     .then((data) => {
-      toast.success(<TooltipMessage title='✅ Success' message={`Successfully approved ${operatorState.stakedSymbol} spending.`} txn={data.transactionHash} />);
+      toast.success(
+        <TooltipMessage
+          title='✅ Success'
+          message={`Successfully approved ${operatorState.stakedSymbol} spending.`}
+          txn={data.transactionHash}
+        />
+      );
       //setOperatorState({...operatorState, showApproveButton: true});
     })
   }
 
   const loadRewards = async () => {
-    const rewardAmount = inputState.rewardInput 
+    const rewardAmount = BigNumber(inputState.rewardInput).multipliedBy(10 ** operatorState.rewardDecimals);
+    const preStakeAmount = BigNumber(inputState.preStakeInput).multipliedBy(10**operatorState.stakedDecimals);
 
     const contract = new web3.eth.Contract(contractAbi, contractId);
-    contract.methods.loadRewards().send({from: accounts[0]})
-    .then(() => {
-
+    contract.methods.loadRewards(rewardAmount, preStakeAmount).send({from: accounts[0]})
+    .then((data) => {
+      toast.success(
+        <TooltipMessage 
+          title='✅ Success'
+          message={`Successfully loaded rewards.`}
+          txn={data.transactionHash} 
+        />
+      )
+    })
+    .finally(() => {
+      setInputState({...inputState, rewardInput: '', preStakeInput: ''})
     })
   }
 
   const setFee = async () => {
-    const contract = new web3.eth.Contract(contractAbi, contractId);
-    contract.methods.setFee().send({from: accounts[0]})
-    .then(() => {
+    if (+inputState.feeInput < 0 || +inputState.feeInput > 20) {
+      throw Error;
+    }
+    const fee = inputState.feeInput * 10;
 
+    const contract = new web3.eth.Contract(contractAbi, contractId);
+    contract.methods.setFee(fee).send({from: accounts[0]})
+    .then((data) => {
+      toast.success(
+        <TooltipMessage 
+          title='✅ Success'
+          message={`Successfully set fee %.`}
+          txn={data.transactionHash} 
+        />
+      );
+      setInputState({...inputState, feeInput: ''})
     })
   }
 
@@ -141,13 +174,13 @@ export const Operator = ({
             <h4 className="mb-1">Pool Metrics</h4>
             <Row>
               <Col>
-                <DisplayRow
+                {/* <DisplayRow
                   title="Staked Symbol:"
                   value={operatorState.stakedSymbol}
-                />
+                /> */}
                 <DisplayRow
                   title="Total Staked:"
-                  value={(operatorState.poolMetrics.staked / 10**operatorState.stakedDecimals).toFixed(4)}
+                  value={`${(operatorState.poolMetrics.staked / 10**operatorState.stakedDecimals).toFixed(4)} ${operatorState.stakedSymbol}`}
                 />
                 <DisplayRow
                   title="Pool Closes:"
@@ -159,13 +192,13 @@ export const Operator = ({
                 />
               </Col>
               <Col>
-                <DisplayRow
+                {/* <DisplayRow
                   title="Reward Symbol:"
                   value={operatorState.rewardSymbol}
-                />
+                /> */}
                 <DisplayRow
                   title="Total Rewards:"
-                  value={(operatorState.poolMetrics.rewards / 10**operatorState.rewardDecimals).toFixed(4)}
+                  value={`${(operatorState.poolMetrics.rewards / 10**operatorState.rewardDecimals).toFixed(4)} ${operatorState.rewardSymbol}`}
                 />
                 <DisplayRow
                   title="Pool Opens:"
@@ -185,18 +218,20 @@ export const Operator = ({
                 value={inputState.rewardInput}
                 onChange={(e) => setInputState({...inputState, rewardInput: e.target.value})}
               />
-              <Input
-                type="number"
-                name="preStake"
-                id="preStake"
-                placeholder="Enter Pre-Stake Amount"
-                className="mt-1"
-                value={inputState.preStakeInput}
-                onChange={(e) => setInputState({...inputState, preStakeInput: e.target.value})}
-              />
+              {operatorState.poolMetrics.rewards === 0 && (
+                <Input
+                  type="number"
+                  name="preStake"
+                  id="preStake"
+                  placeholder="Enter Pre-Stake Amount"
+                  className="mt-1"
+                  value={inputState.preStakeInput}
+                  onChange={(e) => setInputState({...inputState, preStakeInput: e.target.value})}
+                />
+              )}
               <Row>
                 <Col>
-                  {operatorState.showApproveButton ? (
+                  {operatorState.showRewardsApprove && operatorState.showRewardsApprove ? (
                     <>
                       {operatorState.poolMetrics.stakedToken === operatorState.poolMetrics.rewardToken ? (
                         <Button 
@@ -204,28 +239,32 @@ export const Operator = ({
                           color="info"
                           onClick={approveRewards}  
                         >
-                          Approve Spend
+                          Approve Spend {operatorState.rewardSymbol}
                         </Button>
                       ) : (
                         <Row>
-                          <Col>
-                            <Button 
-                              className="w-100" 
-                              color="info"
-                              onClick={approveRewards}  
-                            >
-                              Approve Spend {}
-                            </Button>
-                          </Col>
-                          <Col>
-                            <Button 
-                              className="w-100" 
-                              color="info"
-                              onClick={approveStaked}  
-                            >
-                              Approve Spend {}
-                            </Button>
-                          </Col>
+                          {operatorState.showRewardsApprove && (
+                            <Col>
+                              <Button 
+                                className="w-100" 
+                                color="info"
+                                onClick={approveRewards}  
+                              >
+                                Approve Spend {operatorState.rewardSymbol}
+                              </Button>
+                            </Col>
+                          )}
+                          {operatorState.showStakedApprove && (
+                            <Col>
+                              <Button 
+                                className="w-100" 
+                                color="info"
+                                onClick={approveStaked}  
+                              >
+                                Approve Spend {operatorState.stakedSymbol}
+                              </Button>
+                            </Col>
+                          )}
                         </Row>
                       )}
                     </>
@@ -257,13 +296,17 @@ export const Operator = ({
               </Row>
               <Row>
                 <Col>
-                  <Button className="w-100" color="info">
+                  <Button 
+                    className="w-100" 
+                    color="info"
+                    onClick={setFee}  
+                  >
                     Set Fee
                   </Button>
                 </Col>
               </Row>
             </FormGroup>
-            <FormGroup>
+            {/* <FormGroup>
               <Label for="setOperator">Set Operator Address</Label>
               <Row>
                 <Col>
@@ -288,7 +331,7 @@ export const Operator = ({
               <FormText color="muted">
                 This option transfers pool ownership to another address. You will not be able to access this page after performing this operation
               </FormText>
-            </FormGroup>
+            </FormGroup> */}
           </CardBody>
         </Card>
       ) : (

@@ -66,8 +66,10 @@ export const ProposalCard = ({
     <>
       <Card 
         className="shadow" 
-        style={{cursor:"pointer"}} 
-        onClick={() => history.push(`/dashboard/proposals/${proposal.proposalAddress}`)}
+        style={new Date() > proposalState.voteStart && {cursor:"pointer"}} 
+        onClick={() => {
+          if (new Date() > proposalState.voteStart) history.push(`/dashboard/proposals/${proposal.proposalAddress}`);
+        }}
       >
         <CardBody>
           <Row className="justify-content-between align-items-center text-left mx-0">
@@ -90,7 +92,7 @@ export const ProposalCard = ({
 
           {/* <hr className="w-100 line-primary" /> */}
           <Row className="justify-content-start mt-2 mx-1">
-            <p><b>Total Votes:</b> {proposalState.totalVotes}</p>
+            <p><b>Total Votes:</b> {(proposalState.totalVotes / 1e18).toFixed(0)}</p>
             <p className="ml-2"><b>Owner:</b> {toShortAddress(proposalState.owner)}</p>
             <p className="ml-2"><b>Vote Opens:</b> {proposalState.voteStart.toLocaleString().split(' ')[0].slice(0, -1)}</p>
             <p className="ml-2"><b>Vote Closes:</b> {proposalState.voteEnd.toLocaleString().split(' ')[0].slice(0, -1)}</p>

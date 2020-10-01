@@ -14,7 +14,7 @@ export const ProposalOne = () => {
       <p>
         This contract will change the DeFiat network transaction fee and burn rate
         on every transaction to the option with the most votes when the decision is activated.
-        Anyone can activate the vote once the voting period has expired.
+        Anyone can activate the vote on this page once the voting period has expired.
       </p>
       <br />
       <p>

@@ -34,10 +34,16 @@ contract Uni_Price_v2 is ERC20_Utils {
         //0xc778417E063141139Fce010982780140Aa0cD5Ab; RINKEBY ETH
         uniSymbol = "UNI-V2";
     }
-    
+
+    function isUniLiquidityToken(address _token) internal view returns (bool) {
+        if (keccak256(bytes(_ERC20(_token).symbol())) == keccak256(bytes(uniSymbol))) {
+            return true;
+        }
+        return false;
+    }
     
     function getUniPair(address _token) internal view returns(address) {
-        if (keccak256(bytes(_ERC20(_token).symbol())) == keccak256(bytes(uniSymbol))) {
+        if (isUniLiquidityToken(_token)) {
             return _token;
         }
         return IUniswapV2Factory(UNIfactory).getPair(_token, wETHaddress);
@@ -48,7 +54,7 @@ contract Uni_Price_v2 is ERC20_Utils {
         uint112 _rTKN;
         uint112 _rWETH;
 
-        if (keccak256(bytes(_ERC20(_token).symbol())) == keccak256(bytes(uniSymbol))) {
+        if (isUniLiquidityToken(_token)) {
             _token0 = IUniswapV2Pair(_token).token0();
 
             if(_token0 == wETHaddress) {
