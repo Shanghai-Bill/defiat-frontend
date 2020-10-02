@@ -26,7 +26,7 @@ contract FeeBurnRateVote is _Vote {
   {
   }
 
-  function proposalAction() public override returns (bool) {
+  function proposalAction() internal override returns (bool) {
     uint256 newRate;
 
     uint winningChoice = getWinningChoice();

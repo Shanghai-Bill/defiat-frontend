@@ -27,6 +27,7 @@ abstract contract _Vote is ERC20_Utils, Uni_Price_v2 {
 
     struct VoteStruct {
         uint256 voteChoice;
+        uint256 votePower;
         uint256 timestamp;
     }
     mapping (address => VoteStruct) public votes; // address => user vote choice
@@ -102,7 +103,7 @@ abstract contract _Vote is ERC20_Utils, Uni_Price_v2 {
 
     // 0 - define virtual proposal action function
     //    all new votes will override this method with the intended function to be activated on vote passing
-    function proposalAction() public virtual returns (bool);
+    function proposalAction() internal virtual returns (bool);
 
     //1- define ACTIVATION function
     function activateDecision() external { //anybody can activate this.
@@ -163,7 +164,7 @@ abstract contract _Vote is ERC20_Utils, Uni_Price_v2 {
         require(voteChoice < voteChoices.length && voteChoice >= 0, "Invalid vote choice");
 
         uint256 votePower = myVotingPower(msg.sender);
-        votes[msg.sender] = VoteStruct(voteChoice, block.timestamp); // log of user vote 
+        votes[msg.sender] = VoteStruct(voteChoice, votePower, block.timestamp); // log of user vote 
         voteChoices[voteChoice] = voteChoices[voteChoice] + votePower; // increase vote count
         totalVotes = totalVotes + votePower; // increase total votes
 

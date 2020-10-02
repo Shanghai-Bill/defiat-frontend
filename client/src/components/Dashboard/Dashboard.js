@@ -132,7 +132,7 @@ const Dashboard = (props) => {
                       </NavItem>
                       {network && network.name === 'rinkeby' && (
                         <>
-                          {/* <NavItem>
+                          <NavItem>
                             <NavLink
                               className={history.location.pathname.includes(path + '/proposals') ? 'active' : '' }
                               onClick={() => handleTab(`${path}/proposals`)}
@@ -140,7 +140,7 @@ const Dashboard = (props) => {
                             >
                               Proposals
                             </NavLink>
-                          </NavItem> */}
+                          </NavItem>
                           <NavItem>
                             <NavLink
                               className={history.location.pathname.includes(path + '/partners') ? 'active' : '' }

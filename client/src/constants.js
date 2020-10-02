@@ -102,7 +102,7 @@ export default {
         {
           tag: "DFTG-1",
           proposalName: "Modify Fee & Burn Rate",
-          proposalAddress: "",
+          proposalAddress: "0x9f32f8e0943a69f284a9052ef6160826d4299d88",
           choices: [
             {
               name: "Decrease to 0%",
@@ -118,25 +118,25 @@ export default {
             },
           ]
         },
-        {
-          tag: "DFTG-2",
-          proposalName: "Change DFTP Generation Threshold",
-          proposalAddress: "",
-          choices: [
-            {
-              name: "Decrease to 10 DFT",
-              value: 0
-            },
-            {
-              name: "Decrease to 50 DFT",
-              value: 1
-            },
-            {
-              name: "Remain at 100 DFT",
-              value: 2
-            },
-          ]
-        },
+        // {
+        //   tag: "DFTG-2",
+        //   proposalName: "Change DFTP Generation Threshold",
+        //   proposalAddress: "0x00337f25049e6a1351359a30b10103afe2426b54",
+        //   choices: [
+        //     {
+        //       name: "Decrease to 10 DFT",
+        //       value: 0
+        //     },
+        //     {
+        //       name: "Decrease to 50 DFT",
+        //       value: 1
+        //     },
+        //     {
+        //       name: "Remain at 100 DFT",
+        //       value: 2
+        //     },
+        //   ]
+        // },
       ]
      }
   },

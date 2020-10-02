@@ -26,10 +26,11 @@ contract PointsThresholdVote is _Vote {
             _uniFactoryAddress,
             _wethAddress
         )
-    {
+    {               
+        DeFiat_Points = _DeFiat_Points;
     }
 
-    function proposalAction() public override returns (bool) {
+    function proposalAction() internal override returns (bool) {
         uint256 newRate;
         
         uint winningChoice = getWinningChoice();
