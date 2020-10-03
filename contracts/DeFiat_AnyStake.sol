@@ -21,8 +21,7 @@ contract DeFiat_AnyStake{
     //Structs
     struct PoolMetrics {
         mapping(address => uint256) tokenStake;             // stakes per token 
-        mapping(address => uint256) tokenStakingPoints;     // points per token
-        
+        mapping(address => uint256) wETHtokenStake;         // wETH equivalent
         uint256 wETHStake;      // total stake in wETH Gwei (aggregated)
         uint256 stakingFee;     // entry fee
         
@@ -122,6 +121,8 @@ contract DeFiat_AnyStake{
     // Simplistic implementation as if we calculate "futureStake" value very 1st stakers will not be able to deposit.
     
     modifier tokenListed(address _token) {
+        (,,,,bool _activated,) = getTokenFromLibrary(_token);
+        require(_activated == true, "token not Listed");
         _;
     }
     
@@ -154,16 +155,7 @@ contract DeFiat_AnyStake{
     */
     
     
-//==Library     
-    function getTokenFromLibrary(address _token) public view returns(
-        string memory name, string memory symbol, uint8 decimals, uint256 spotPrice, bool activated, uint8 boost) {
-        return IAnyStake_Library(AnyStake_Library).tokenInfoLibrary(_token);
-    }
-    function getTokensPerETH(address _token) public returns(uint256){
-        return IAnyStake_Library(AnyStake_Library).tokenPriceUpdate(_token);
-    }
 
-   
 //==Points locking    
     function viewPoolPoints() public view returns(uint256) {
         uint256 _previousPoints = poolMetrics.stakingPoints;    // previous points shapshot 
@@ -278,7 +270,7 @@ contract DeFiat_AnyStake{
 //==staking & unstaking
 
     //add condition on TOKEN IN AnyStake_Library
-    function stake(address _token, uint256 _amount) public poolLive antiSpam(1) antiWhale(_token, msg.sender){
+    function stake(address _token, uint256 _amount) public poolLive antiSpam(1) antiWhale(_token, msg.sender) tokenListed(_token){
         require(_amount > 0, "Cannot stake 0");
         
         //initialize
@@ -291,11 +283,10 @@ contract DeFiat_AnyStake{
         uint256 amount = IERC20(_token).balanceOf(address(this)).sub(_balanceNow); //actually received
 
         //fee stays in contract until period ends
-        uint256 _fee = amount.mul(poolMetrics.stakingFee).div(1000);
-        amount = amount.sub(_fee);
+        amount = amount.sub(amount.mul(poolMetrics.stakingFee).div(1000));
         
         //Manage stakes
-           
+
             //per token (mb of tokens)
                 poolMetrics.tokenStake[_token] = poolMetrics.tokenStake[_token].add(amount);
                 userMetrics[msg.sender].tokenStake[_token] = userMetrics[msg.sender].tokenStake[_token].add(amount);
@@ -303,11 +294,13 @@ contract DeFiat_AnyStake{
             //update wETHStake
                 uint256 _tokenPerEth = getTokensPerETH(_token);
                 uint256 _wETHstake = amount.mul(1e18).div(_tokenPerEth);
+                _wETHstake = _wETHstake.mul(getTokenBoost(_token)).div(100); //add token BOOST
                 poolMetrics.wETHStake = poolMetrics.wETHStake.add(_wETHstake);
                 userMetrics[msg.sender].wETHStake = userMetrics[msg.sender].wETHStake.add(_wETHstake); //wETH stake updated
                 
             
             //granular update (wETH stake per token, for users to measure stake impact and calculate avg price)
+                poolMetrics.wETHtokenStake[_token] = poolMetrics.wETHtokenStake[_token].add(amount);
                 userMetrics[msg.sender].wETHtokenStake[_token] = userMetrics[msg.sender].wETHtokenStake[_token].add(_wETHstake);
 
 
@@ -328,6 +321,9 @@ contract DeFiat_AnyStake{
         uint256 amount = _amount;
         //Manage stakes
            
+            /* @dev wETH average price is calculated from previous stakes
+            *
+            */
             //update wETHStake
                 uint256 _avgPriceUser = userMetrics[msg.sender].tokenStake[_token].mul(1e18).div(userMetrics[msg.sender].wETHtokenStake[_token]);
                 uint256 _wETHstake = amount.mul(1e18).div(_avgPriceUser);
@@ -339,10 +335,10 @@ contract DeFiat_AnyStake{
                 userMetrics[msg.sender].tokenStake[_token] = userMetrics[msg.sender].tokenStake[_token].sub(amount);
             
 
-            
             //granular update (wETH stake per token, for users to measure stake impact)
+                poolMetrics.wETHtokenStake[_token] = poolMetrics.wETHtokenStake[_token].sub(amount);
                 userMetrics[msg.sender].wETHtokenStake[_token] = userMetrics[msg.sender].wETHtokenStake[_token].sub(_wETHstake);
-
+        
 
 
         // transfer _amount. Put at the end of the function to avoid reentrancy.
@@ -361,9 +357,9 @@ contract DeFiat_AnyStake{
     function myStakeShare(address _token, address _address) public view returns(uint256) {
         if(poolMetrics.wETHStake == 0){return 0;}
         else {
-        return (userMetrics[_address].tokenStake[_token]).mul(100000).div(poolMetrics.tokenStake[_token]);}
-    } //base 100,000, used for anti-whaling
-    
+        return (userMetrics[_address].wETHtokenStake[_token]).mul(100000).div(poolMetrics.wETHtokenStake[_token]);
+        }
+    } 
 
     function myPointsShare(address _address) public view returns(uint256) {  //weighted average of your stake over time vs the pool
         return viewPointsOf(_address).mul(100000).div(viewPoolPoints());
@@ -374,6 +370,50 @@ contract DeFiat_AnyStake{
         else { return userMetrics[_address].rewardAccrued.add(viewAdditionalRewardOf(_address));} //previousLock + time based extra
     }
  
+ 
+//== USER TOKEN MANAGEMENT FUNCTIONS
+
+    //== Library     
+    function getTokenFromLibrary(address _token) public view returns(
+        string memory name, string memory symbol, uint8 decimals, uint256 spotPrice, bool activated, uint8 boost) {
+        return IAnyStake_Library(AnyStake_Library).tokenInfoLibrary(_token);
+    }
+    
+    function getTokensPerETH(address _token) public returns(uint256){
+        return IAnyStake_Library(AnyStake_Library).tokenPriceUpdate(_token);
+    }
+    function getTokenBoost(address _token) public view returns(uint256){
+        (,,,,,uint256 _boost) = getTokenFromLibrary(_token);
+        return _boost;
+    }
+    
+    //== userArray
+    mapping(address => address[]) tokenList;  //array of tokens per user
+    
+    
+    /* @dev: users manage they tokens staked array (list)
+    * can only replace a token if stake is == 0 for the replaced token
+    * max nb of tokens is 16 
+    * token 0 is always DFT 
+    *
+    * Users need to add the token before they can Stake
+    */
+
+    function chgTokenIntoList(address _token, uint256 _rank) public {
+        require(_rank > 0, "cannot change 1st token, DFT only");
+        require(_rank <16, "maximum 16 tokens inclusing the token 0");
+        require(myStake(viewMyToken(msg.sender, _rank), msg.sender) == 0, "cannot remove a token with existing stake");
+        tokenList[msg.sender][_rank] = _token;
+        tokenList[msg.sender][0] = address(0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1);
+    }
+    
+    function viewMyToken(address _address, uint256 _rank) public view returns(address) {
+        return tokenList[_address][_rank];
+    }
+    function viewMyTokenCount(address _address) public view returns(uint256) {
+        return(tokenList[_address].length);
+    }
+    
 
 //== OPERATOR FUNCTIONS ==
 
