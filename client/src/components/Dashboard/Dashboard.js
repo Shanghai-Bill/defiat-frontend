@@ -130,17 +130,17 @@ const Dashboard = (props) => {
                           Staking
                         </NavLink>
                       </NavItem>
+                      <NavItem>
+                        <NavLink
+                          className={history.location.pathname.includes(path + '/proposals') ? 'active' : '' }
+                          onClick={() => handleTab(`${path}/proposals`)}
+                          style={{cursor:"pointer"}}
+                        >
+                          Proposals
+                        </NavLink>
+                      </NavItem>
                       {network && network.name === 'rinkeby' && (
                         <>
-                          <NavItem>
-                            <NavLink
-                              className={history.location.pathname.includes(path + '/proposals') ? 'active' : '' }
-                              onClick={() => handleTab(`${path}/proposals`)}
-                              style={{cursor:"pointer"}}
-                            >
-                              Proposals
-                            </NavLink>
-                          </NavItem>
                           <NavItem>
                             <NavLink
                               className={history.location.pathname.includes(path + '/partners') ? 'active' : '' }
@@ -177,15 +177,15 @@ const Dashboard = (props) => {
                           network={network} 
                         />
                       </Route>
+                      <Route path={`${path}/proposals`}>
+                        <Proposals
+                          web3={web3}
+                          accounts={accounts}
+                          network={network} 
+                        />
+                      </Route>
                       {network && network.name === 'rinkeby' && (
                         <>
-                          <Route path={`${path}/proposals`}>
-                            <Proposals
-                              web3={web3}
-                              accounts={accounts}
-                              network={network} 
-                            />
-                          </Route>
                           <Route path={`${path}/partners`}>
                             <Partners
                               web3={web3}

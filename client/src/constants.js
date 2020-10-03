@@ -7,6 +7,7 @@ export default {
       gov: "0x3Aa3303877A0D1c360a9FE2693AE9f31087A1381",
       price: "0x86d1d85bb861e13ecb49a396cce1b936307e0fb7",
       weth: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      uniFactory: "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
       pools: [
         {
           poolLogo: require("assets/img/defiat-dungeon.png"),
@@ -46,7 +47,46 @@ export default {
         },
       ],
       extendedPools: [],
-
+      proposals: [
+        {
+          tag: "DFTG-1",
+          proposalName: "Modify Fee & Burn Rate",
+          proposalAddress: "0x00337f25049e6a1351359a30b10103afe2426b54",
+          choices: [
+            {
+              name: "Decrease to 0%",
+              value: 0
+            },
+            {
+              name: "Remain at 0.10%",
+              value: 1
+            },
+            {
+              name: "Increase to 0.50%",
+              value: 2
+            },
+          ]
+        },
+        {
+          tag: "DFTG-2",
+          proposalName: "Change DFTP Generation Threshold",
+          proposalAddress: "0xe5eed59bf521b913713e0c9f3779a198591f70f8",
+          choices: [
+            {
+              name: "Decrease to 10 DFT",
+              value: 0
+            },
+            {
+              name: "Decrease to 50 DFT",
+              value: 1
+            },
+            {
+              name: "Remain at 100 DFT",
+              value: 2
+            },
+          ]
+        },
+      ]
     },
     4: {
       name: "rinkeby",

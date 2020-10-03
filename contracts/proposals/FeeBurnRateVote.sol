@@ -13,8 +13,8 @@ contract FeeBurnRateVote is _Vote {
   ) public 
     _Vote(
         _DeFiat_Gov,
-        0, // no delay
-        96, // 4 days
+        12, // 12 hr delay
+        168, // 7 day duration
         "Fee Burn Rate Vote",
         3, // 3 choices
         0,
@@ -26,10 +26,8 @@ contract FeeBurnRateVote is _Vote {
   {
   }
 
-  function proposalAction() internal override returns (bool) {
+  function proposalAction(uint winningChoice) internal override returns (bool) {
     uint256 newRate;
-
-    uint winningChoice = getWinningChoice();
     if (winningChoice == 0) {
       newRate = 0;
     } else if (winningChoice == 1) {

@@ -10,6 +10,7 @@ export const ProposalCard = ({
   accounts,
   ...proposal
 }) => {
+  const now = new Date();
   const history = useHistory();
   const [proposalState, setProposalState] = useState({
     voteStart: 0,
@@ -36,7 +37,6 @@ export const ProposalCard = ({
 
   const loadData = async () => {
     const proposalContract = new web3.eth.Contract(Vote.abi, proposal.proposalAddress);
-    console.log(proposalContract)
 
     const values = await Promise.all([
       proposalContract.methods.voteStart().call(),
@@ -66,10 +66,8 @@ export const ProposalCard = ({
     <>
       <Card 
         className="shadow" 
-        style={new Date() > proposalState.voteStart && {cursor:"pointer"}} 
-        onClick={() => {
-          if (new Date() > proposalState.voteStart) history.push(`/dashboard/proposals/${proposal.proposalAddress}`);
-        }}
+        style={{cursor:"pointer"}} 
+        onClick={() => history.push(`/dashboard/proposals/${proposal.proposalAddress}`)}
       >
         <CardBody>
           <Row className="justify-content-between align-items-center text-left mx-0">

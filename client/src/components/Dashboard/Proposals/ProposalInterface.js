@@ -15,6 +15,7 @@ export const ProposalInterface = ({
   accounts
 }) => {
   const { proposalId } = useParams();
+  const now = new Date();
   const proposalContent = network.proposals.filter((x) => x.proposalAddress === proposalId)[0];
   const [isLoading, setLoading] = useState(true);
   const [proposalState, setProposalState] = useState({
@@ -240,14 +241,16 @@ export const ProposalInterface = ({
                     </Row> */}
                     <Col className="px-0">
                       {proposalState.hasVoted && <p className="text-success">Thanks for Voting!</p>}
-                      {+proposalState.votingPower === 0 && <p className="text-danger">You must have Voting Power to participate!</p>}
+                      {+proposalState.votingPower === 0 && proposalState.voteActive && <p className="text-danger">You must have Voting Power to participate!</p>}
+                      {now > proposalState.voteEnd && !proposalState.hasVoted && <p className="text-warning">Voting has concluded.</p>}
+                      {now < proposalState.voteStart && <p className="text-warning">Voting has not started yet.</p>}
                       {proposalContent.choices.map((choice, i) => (
                         <Button
                           key={i}
                           className="w-100 mx-0" 
                           color="info"
                           onClick={() => submitVote(choice)}
-                          disabled={proposalState.hasVoted || +proposalState.votingPower === 0}
+                          disabled={proposalState.hasVoted || +proposalState.votingPower === 0 || !proposalState.voteActive}
                         >
                           {proposalState.hasVoted && proposalState.myVote == i && (
                             <>
@@ -290,7 +293,7 @@ export const ProposalInterface = ({
                       <p><b>Total Votes:</b></p>
                       <p>{proposalState.totalVotesDisplay}</p>
                     </Row>
-                    {proposalState.voteActive && !proposalState.hasVoted && (
+                    {now < proposalState.voteEnd && !proposalState.hasVoted && (
                       <Row className="justify-content-between mx-0">
                         <p><b>My Voting Power:</b></p>
                         <p>{proposalState.votingPower}</p>
@@ -313,7 +316,7 @@ export const ProposalInterface = ({
                         <Progress max="100" value={((+proposalState.voteResults[choice.value] / proposalState.totalVotes) * 100 || 0).toFixed(0)} barClassName={proposalState.maxVote === choice.value ? "progress-bar-success" : "progress-bar-primary"} />
                       </div>
                     ))}
-                    {new Date() > proposalState.voteEnd && (
+                    {now > proposalState.voteEnd && (
                       <>
                         {!proposalState.decisionActivated ? (
                           <Button

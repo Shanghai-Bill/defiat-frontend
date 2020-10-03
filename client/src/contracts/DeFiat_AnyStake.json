@@ -46260,7 +46260,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-10-03T19:27:06.645Z",
+  "updatedAt": "2020-10-04T01:32:25.571Z",
   "devdoc": {
     "details": "Delegated Farming Contract. Implements a conditoin on the DFT-DFT farming pool for users to generate more rewards",
     "methods": {

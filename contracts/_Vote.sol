@@ -40,6 +40,7 @@ abstract contract _Vote is ERC20_Utils, Uni_Price_v2 {
 
     event voteStarting(address _Defiat_Gov, uint256 _voteStart, uint256 _voteEnd, bytes32 _hash, string _voteName);
     event voteSending(address indexed user, uint voteChoice, uint256 timestamp);
+    event voteEnding(address indexed user, uint winningChoice, uint256 timestamp);
 
     modifier OnlyOwner() {
         require(msg.sender == owner);
@@ -103,7 +104,7 @@ abstract contract _Vote is ERC20_Utils, Uni_Price_v2 {
 
     // 0 - define virtual proposal action function
     //    all new votes will override this method with the intended function to be activated on vote passing
-    function proposalAction() internal virtual returns (bool);
+    function proposalAction(uint winningChoice) internal virtual returns (bool);
 
     //1- define ACTIVATION function
     function activateDecision() external { //anybody can activate this.
@@ -111,7 +112,11 @@ abstract contract _Vote is ERC20_Utils, Uni_Price_v2 {
         require(!decisionActivated, "Vote decision has already been activated");
 
         decisionActivated = true; // mark decision activated
-        proposalAction();
+        uint winningChoice = getWinningChoice();
+        proposalAction(winningChoice);
+        _sendReward(msg.sender);
+
+        emit voteEnding(msg.sender, winningChoice, block.timestamp);
     }
     
     //2- define power function

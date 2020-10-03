@@ -16,8 +16,8 @@ contract PointsThresholdVote is _Vote {
     ) public 
         _Vote(
             _DeFiat_Gov, 
-            0, // no delay
-            96, // 4 days
+            168, // no delay
+            168, // 4 days
             "Points Threshold Vote",
             3, // 3 choices
             0,
@@ -30,10 +30,8 @@ contract PointsThresholdVote is _Vote {
         DeFiat_Points = _DeFiat_Points;
     }
 
-    function proposalAction() internal override returns (bool) {
+    function proposalAction(uint winningChoice) internal override returns (bool) {
         uint256 newRate;
-        
-        uint winningChoice = getWinningChoice();
         if (winningChoice == 0) {
             newRate = 10 * 1e18;
         } else if (winningChoice == 1) {
