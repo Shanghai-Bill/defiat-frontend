@@ -117,8 +117,8 @@ export const Operator = ({
   }
 
   const loadRewards = async () => {
-    const rewardAmount = BigNumber(inputState.rewardInput).multipliedBy(10 ** operatorState.rewardDecimals);
-    const preStakeAmount = BigNumber(inputState.preStakeInput).multipliedBy(10**operatorState.stakedDecimals);
+    const rewardAmount = BigNumber(inputState.rewardInput || 0).multipliedBy(10 ** operatorState.rewardDecimals);
+    const preStakeAmount = BigNumber(inputState.preStakeInput || 0).multipliedBy(10**operatorState.stakedDecimals);
 
     const contract = new web3.eth.Contract(contractAbi, contractId);
     contract.methods.loadRewards(rewardAmount, preStakeAmount).send({from: accounts[0]})

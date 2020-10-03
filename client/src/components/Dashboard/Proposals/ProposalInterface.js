@@ -112,8 +112,8 @@ export const ProposalInterface = ({
     );
     let maxVote = 0, maxVoteAmt = 0;
     voteResults.forEach((result, i) => {
-      if (result > maxVoteAmt) {
-        maxVoteAmt = result;
+      if (+result > maxVoteAmt) {
+        maxVoteAmt = +result;
         maxVote = i;
       }
     });
@@ -239,13 +239,15 @@ export const ProposalInterface = ({
                       <h3 className="my-0">{proposalState.votingPower}</h3>
                     </Row> */}
                     <Col className="px-0">
+                      {proposalState.hasVoted && <p className="text-success">Thanks for Voting!</p>}
+                      {+proposalState.votingPower === 0 && <p className="text-danger">You must have Voting Power to participate!</p>}
                       {proposalContent.choices.map((choice, i) => (
                         <Button
                           key={i}
                           className="w-100 mx-0" 
                           color="info"
                           onClick={() => submitVote(choice)}
-                          disabled={proposalState.hasVoted}
+                          disabled={proposalState.hasVoted || +proposalState.votingPower === 0}
                         >
                           {proposalState.hasVoted && proposalState.myVote == i && (
                             <>
