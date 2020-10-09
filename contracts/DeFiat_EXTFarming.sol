@@ -1,7 +1,7 @@
 pragma solidity ^0.6.0;
 
 import "./SafeMath.sol";
-import "./_Interfaces.sol";
+import {IERC20, IDungeon} from "./_Interfaces.sol";
 
 // File: @defiat-crypto/defiat/blob/master/contracts/XXXXXX.sol
 /**
@@ -52,7 +52,7 @@ contract DeFiat_EXTFarming_V2 {
         
 
 //== constructor 
-    constructor(address _stakedToken, address _rewardToken, uint256 _feeBase1000, uint256 _durationHours, uint256 _delayStartHours) public {
+    constructor(address _stakedToken, address _rewardToken, uint256 _feeBase1000, uint256 _durationHours) public {
         owner = msg.sender;
         poolOperator = msg.sender;
         
@@ -61,7 +61,7 @@ contract DeFiat_EXTFarming_V2 {
         poolMetrics.stakingFee = _feeBase1000; //10 = 1%
         
         poolMetrics.duration = _durationHours.mul(3600); //
-        poolMetrics.startTime = block.timestamp + _delayStartHours.mul(3600);
+        poolMetrics.startTime = block.timestamp;
         poolMetrics.closingTime = block.timestamp + poolMetrics.duration;
         
         poolMetrics.stakingPoints = 1; //avoirds div by 0 at start
@@ -114,10 +114,6 @@ contract DeFiat_EXTFarming_V2 {
     function currentTime() public view returns (uint256) {
         return SafeMath.min(block.timestamp, poolMetrics.closingTime); //allows expiration
     } // SafeMath.min(now, endTime)
-    function setPoolOperator(address _address) public onlyPoolOperator {
-        poolOperator = _address;
-    }
-    
     
 //==DeFiat Boost
     function setDungeon(address _dungeon) public onlyOwner {
@@ -338,17 +334,21 @@ contract DeFiat_EXTFarming_V2 {
         poolMetrics.rewards = SafeMath.add(poolMetrics.rewards,amount);
         poolMetrics.totalRewards = poolMetrics.totalRewards.add(_amount);
     }    
-
-    function setFee(uint256 _fee) public onlyPoolOperator {
-        poolMetrics.stakingFee = _fee;
-    }
     
-    function flushPool(address _recipient, address _ERC20address) external onlyPoolOperator poolEnded { // poolEnded { // poolEnded returns(bool) {
+    function flushPool(address _recipient, address _ERC20address) external onlyPoolOperator poolEnded {
         uint256 _amount = IERC20(_ERC20address).balanceOf(address(this));
         IERC20(_ERC20address).transfer(_recipient, _amount); //use of the _ERC20 traditional transfer
         //return true;
     } //get tokens sent by error to contract
 
+    function setPoolOperator(address _address) public onlyPoolOperator {
+        poolOperator = _address;
+    }
+    
+    function setFee(uint256 _fee) public onlyOwner {
+        poolMetrics.stakingFee = _fee;
+    }
+    
     function killPool() public onlyOwner poolEnded returns(bool) {
         selfdestruct(msg.sender);
     } //frees space on the ETH chain
