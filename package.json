@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "lerna": "^3.4.3",
-    "solc": "^0.6.2",
+    "solc": "^0.6.0",
     "truffle": "^5.1.37"
   }
 }

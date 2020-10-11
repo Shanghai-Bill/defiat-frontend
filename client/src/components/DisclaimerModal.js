@@ -7,8 +7,8 @@ export const DisclaimerModal = ({
   setCookie
 }) => {
   const onAccept = () => {
-    setCookie()
-    setOpen(!isOpen)
+    setCookie();
+    setOpen(!isOpen);
   }
 
   return (

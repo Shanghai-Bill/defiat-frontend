@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 
 // trigger scroll to top of page when a link is clicked
-const Scroll = ({location}) => {
+export const Scroll = withRouter(({location}) => {
   const [prevLocation, setLocation] = useState('');
 
   useEffect(() => {
@@ -13,6 +13,4 @@ const Scroll = ({location}) => {
   }, [location])
 
   return <React.Fragment />
-}
-
-export default withRouter(Scroll);
+});

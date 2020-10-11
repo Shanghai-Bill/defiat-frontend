@@ -17,7 +17,7 @@ const path = require('path');
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
   // to customize your Truffle configuration!
-  contracts_build_directory: path.join(__dirname, 'client/src/contracts'),
+  contracts_build_directory: path.join(__dirname, 'client/src/defiat/abi'),
   networks: {
     development: {
       host: 'localhost',
@@ -27,7 +27,7 @@ module.exports = {
   },
   compilers: {
     solc: {
-      version: "0.6.6", // DeFiat v1 smart contract uses this solc version
+      version: "0.6.0", // DeFiat v1 smart contract uses this solc version
     },
   },
 };
