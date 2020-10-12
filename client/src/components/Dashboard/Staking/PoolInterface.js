@@ -66,7 +66,8 @@ export const PoolInterface = ({
     availableRewards: 0,
     totalPoolRewards: 0,
     totalPoolStaked: 0,
-    currentPoolFee: 0
+    currentPoolFee: 0,
+    myBoost: 0,
   })
 
   // tooltip
@@ -103,7 +104,7 @@ export const PoolInterface = ({
 
     // Implement edge cases for decimal amounts that are different than 18
     // stakedContract.methods.decimals().call(),
-    const values = await Promise.all([
+    const requests = [
       tknContract.methods.symbol().call(),
       tknContract.methods.decimals().call(),
       rwdContract.methods.symbol().call(),
@@ -114,7 +115,12 @@ export const PoolInterface = ({
       farmContract.methods.myRewards(accounts[0]).call(),
       farmContract.methods.myStake(accounts[0]).call(),
       web3.eth.getBlockNumber()
-    ]);
+    ];
+
+    if (isExtendedPool) {
+      requests.push(farmContract.methods.viewDftBoost(accounts[0]).call())
+    }
+    const values = await Promise.all(requests);
     
     const stakedSymbol = values[0];
     const stakedDecimals = values[1];
@@ -130,7 +136,7 @@ export const PoolInterface = ({
     setBlockNumber(currentBlock);
     setUserMetrics(userMetrics);
     setStakingState({
-      //...stakingState,
+      ...stakingState,
       isPoolClosed: new Date().getTime() > +poolMetrics.closingTime * 1000,
       stakedSymbol,
       stakedDecimals,
@@ -142,10 +148,19 @@ export const PoolInterface = ({
       stakedBalance: parseValue(myStake, stakedDecimals),
       availableRewards: parseValue(myRewards, rewardDecimals),
       totalPoolStaked: parseMinValue(poolMetrics.staked),
+      myBoost: !isExtendedPool ? 0 : values[10]
     });
 
     if (showApproveButton && stakingAllowance > 0) setShowApproveButton(false);
     isLoading && setLoading(false);
+  }
+
+  const getBoost = async () => {
+    if (farmingContract) {
+      const boost = await farmingContract.methods.myBoost(accounts[0]).call()
+      return boost;
+    }
+    return 0
   }
 
   const parseValue = (value, decimals) => {
@@ -298,7 +313,9 @@ export const PoolInterface = ({
           </Row>
         </div>
       ) : (
-        <Container>
+        <Container
+          className={isExtendedPool ? "xmm-border-box" : undefined}
+        >
           <div className="d-flex justify-content-start">
             <Link to={isExtendedPool ? "/dashboard/partners/" : "/dashboard/staking"}>
               <Button
@@ -315,13 +332,31 @@ export const PoolInterface = ({
           </div>
 
           <div className="p-2 mb-4">
+            {isExtendedPool && <img 
+                src={require('assets/img/boost-logo.png')}
+                className="floating"
+                style={{
+                  height: "40px",
+                  position: "absolute",
+                  width: "auto"
+                }}
+              />
+            }
             <img src={poolContent.poolLogo} width="100" height="auto" alt="defiat" />
           </div>
           
           <h1 className="text-primary mb-2">
             {poolContent.poolTitle}
           </h1>
-          <p className="text-tertiary mb-2">{poolContent.poolSubtitle}</p>
+          <p className="text-tertiary mb-2">
+            {poolContent.poolSubtitle}
+            
+          </p>
+          {isExtendedPool && (
+            <p className="text-secondary mb-2">
+              <b>Farming Boost: {stakingState.myBoost}%</b>
+            </p>
+          )}  
           {/* <div className="d-flex justify-content-center mb-4">
             <Input className="m-0 text-right" onChange={(e) =>{}} value={contractId} style={{width: "330px"}} />
           </div> */}
@@ -417,6 +452,15 @@ export const PoolInterface = ({
               Get {stakingState.stakedSymbol} on Uniswap
             </Button>
           </div>
+          {isExtendedPool && (
+            <p className="text-tertiary my-2">
+              <b>* Farming Boost is a staking multiplier earned by staking in the DFT Dungeon
+                 <br/>
+                 You can earn up to 200% Boost by staking 100 DFT.
+              </b>
+            </p>
+          )}
+          
 
 
           <Modal 

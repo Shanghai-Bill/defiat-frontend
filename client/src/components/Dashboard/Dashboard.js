@@ -139,19 +139,15 @@ const Dashboard = (props) => {
                           Proposals
                         </NavLink>
                       </NavItem>
-                      {network && network.name === 'rinkeby' && (
-                        <>
-                          <NavItem>
-                            <NavLink
-                              className={history.location.pathname.includes(path + '/partners') ? 'active' : '' }
-                              onClick={() => handleTab(`${path}/partners`)}
-                              style={{cursor:"pointer"}}
-                            >
-                              Partners
-                            </NavLink>
-                          </NavItem>
-                        </>
-                      )}
+                      <NavItem>
+                        <NavLink
+                          className={history.location.pathname.includes(path + '/partners') ? 'active' : '' }
+                          onClick={() => handleTab(`${path}/partners`)}
+                          style={{cursor:"pointer"}}
+                        >
+                          Partners
+                        </NavLink>
+                      </NavItem>
                     </Nav>
                     
                     <Switch>
@@ -184,17 +180,13 @@ const Dashboard = (props) => {
                           network={network} 
                         />
                       </Route>
-                      {network && network.name === 'rinkeby' && (
-                        <>
-                          <Route path={`${path}/partners`}>
-                            <Partners
-                              web3={web3}
-                              accounts={accounts}
-                              network={network} 
-                            />
-                          </Route>
-                        </>
-                      )}
+                      <Route path={`${path}/partners`}>
+                        <Partners
+                          web3={web3}
+                          accounts={accounts}
+                          network={network} 
+                        />
+                      </Route>
                     </Switch>
                   </Container>
                 )}
