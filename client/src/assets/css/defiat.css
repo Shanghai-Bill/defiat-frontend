@@ -15720,3 +15720,46 @@ td.rdtYear:hover {
   top: 30%;
   left: 7%;
   max-width: 75px; }
+
+.secondChanceLine
+{
+    width: 100% !important;
+}
+
+#secondChanceSelect option {
+  color: #8355ff !important;
+}
+
+.secondChanceUniButtons {
+    width: 100% !important;
+}
+
+/*#secondChanceSubmit {
+  background: #8355ff !important;
+}*/
+
+.secondChanceCard
+{
+    height: 100px !important;
+    width: auto !important;
+}
+
+.secondChanceSpecialMargin
+{
+    margin: 4px 1px 4px 4px !important;
+}
+
+.secondChancePoolMarginFix
+{
+    margin-top: 0px !important;
+}
+.secondChanceAddMargin
+{
+    margin-bottom: 38px !important;
+}
+
+.secondChanceUniswapLinksMargin
+{
+    margin-top: 3px !important;
+    margin-bottom: 3px !important;
+}
