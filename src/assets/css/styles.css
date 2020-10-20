@@ -1,0 +1,57 @@
+html {
+  font-size: 1.1rem
+}
+
+.text-tertiary {
+  color: #a99cff;
+}
+
+.xmm-border-box {
+  border: 1px solid rgb(96,206,207);
+  padding: 8px;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.secondChanceLine
+{
+    width: 100% !important;
+}
+
+#secondChanceSelect option {
+  color: #8355ff !important;
+}
+
+.secondChanceUniButtons {
+    width: 100% !important;
+}
+
+/*#secondChanceSubmit {
+  background: #8355ff !important;
+}*/
+
+.secondChanceCard
+{
+    height: 100px !important;
+    width: auto !important;
+}
+
+.secondChanceSpecialMargin
+{
+    margin: 4px 1px 4px 4px !important;
+}
+
+.secondChancePoolMarginFix
+{
+    margin-top: 0px !important;
+}
+.secondChanceAddMargin
+{
+    margin-bottom: 38px !important;
+}
+
+.secondChanceUniswapLinksMargin
+{
+    margin-top: 3px !important;
+    margin-bottom: 3px !important;
+}
