@@ -1,0 +1,85 @@
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { IntlProvider } from 'react-intl';
+import { getLocale } from './locales';
+import NoMatch from './components/NoMatch/NoMatch';
+import { Landing } from './views/Landing';
+import Dashboard from './views/Dashboard/Dashboard';
+import Scroll from './components/Scroll/Scroll';
+import { NavBar } from './components/NavBar';
+import { Footer } from './components/Footer';
+import { News } from './views/News'
+import { About } from './views/About';
+import { Legal } from './views/Legal';
+import { ToastContainer } from 'react-toastify';
+import { DisclaimerModal } from './components/DisclaimerModal/DisclaimerModal';
+import Cookies from 'universal-cookie';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'assets/css/defiat.css';
+import 'assets/css/nucleo-icons.css';
+import 'assets/css/demo.css';
+import 'react-toastify/dist/ReactToastify.css';
+import 'assets/css/styles.css';
+
+const App = () => {
+  const locale = getLocale();
+  const cookies = new Cookies();
+  const [isOpen, setOpen] = useState(false);
+
+  const sleep = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  const setCookie = () => {
+    cookies.set('defiat-cookie', ':)', { path: '/' });
+  }
+
+  useEffect(() => {
+    async function checkCookie() {
+      if (!cookies.get("defiat-cookie")) {
+        await sleep(2000);
+        setOpen(true);
+      }
+    }
+    checkCookie();
+  });
+
+
+  return (
+    <IntlProvider locale={locale.locale} messages={locale.messages}>
+      <Router basename="/">
+        <div className="App">
+          
+
+          <NavBar />
+          <Scroll />
+          <ToastContainer position="bottom-right" />
+          <DisclaimerModal
+            isOpen={isOpen}
+            setCookie={setCookie}
+            setOpen={setOpen}
+          />
+
+          <div className="main">
+            <Switch>
+              <Route exact path="/" component={Landing} />
+              {/* <Route exact path="/dashboard">
+                <Dashboard {...this.props} />
+              </Route> */}
+              <Route path="/dashboard" component={Dashboard} />
+              {/* <Route path="/about" component={About} /> */}
+              <Route path="/news" component={News} />
+              <Route path="/legal" component={Legal} />
+              <Route component={NoMatch} />
+            </Switch>
+          </div>
+
+          <Footer />
+        </div>
+      </Router>
+    </IntlProvider>
+  )
+}
+
+export default App

@@ -1,19 +1,57 @@
 {
-  "name": "defiat",
-  "version": "0.2.0",
-  "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "chain": "cd contracts && npm run chain",
-    "compile": "cd contracts && truffle compile",
-    "migrate": "cd contracts && npm run deploy",
-    "start": "cd client && npm start",
-    "publish": "lerna publish",
-    "server": "cd server && node server.js",
-    "build": "cd client && npm run build && mv build ../server"
+  "name": "defiat-frontend",
+  "version": "1.0.0",
+  "description": "A defi application",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.11",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "bignumber.js": "^9.0.0",
+    "bootstrap": "^4.5.0",
+    "chart.js": "^2.9.3",
+    "human-readable-numbers": "^0.9.5",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "prettier": "^2.0.5",
+    "prop-types": "^15.6.1",
+    "react": "^16.6.1",
+    "react-animate-on-scroll": "^2.1.5",
+    "react-bootstrap": "^1.3.0",
+    "react-chartjs-2": "^2.10.0",
+    "react-dom": "^16.6.1",
+    "react-icons": "^3.10.0",
+    "react-intl": "^2.7.2",
+    "react-redux": "^5.1.1",
+    "react-router-dom": "^5.2.0",
+    "react-toastify": "^6.0.8",
+    "reactstrap": "^8.5.1",
+    "redux": "^4.0.1",
+    "universal-cookie": "^4.0.3",
+    "web3": "^1.2.11"
   },
   "devDependencies": {
-    "lerna": "^3.4.3",
-    "solc": "^0.6.2",
-    "truffle": "^5.1.37"
-  }
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.11.1",
+    "react-scripts": "^2.1.1",
+    "react-test-renderer": "^16.6.1",
+    "redux-logger": "^3.0.6"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "lint": "eslint src --ignore-path .gitignore",
+    "lint-fix": "eslint src --fix --ignore-path .gitignore"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
