@@ -19,6 +19,7 @@ import { Staking } from './Staking';
 import { Proposals } from './Proposals';
 import { Operator } from './Operator';
 import { Partners } from './Partners';
+import { SecondChance } from './SecondChance';
 import { withRouter, useRouteMatch, useHistory, Route, Switch } from 'react-router-dom'
 import { Nav, NavItem, NavLink, Row, Col, Container } from 'reactstrap';
 // import { useWeb3 } from '../../hooks/useWeb3'
@@ -139,15 +140,26 @@ const Dashboard = (props) => {
                           Proposals
                         </NavLink>
                       </NavItem>
-                      <NavItem>
+
+                          <NavItem>
                         <NavLink
                           className={history.location.pathname.includes(path + '/partners') ? 'active' : '' }
                           onClick={() => handleTab(`${path}/partners`)}
                           style={{cursor:"pointer"}}
                         >
-                          Partners
+                              Partners
                         </NavLink>
-                      </NavItem>
+                          </NavItem>
+
+                            <NavItem>
+                              <NavLink
+                                className={history.location.pathname.includes(path + '/secondchance') ? 'active' : ''}
+                                onClick={() => handleTab(`${path}/secondchance`)}
+                                style={{ cursor: "pointer" }}
+                              >
+                                Second Chance
+                        </NavLink>
+                            </NavItem>
                     </Nav>
                     
                     <Switch>
@@ -186,7 +198,14 @@ const Dashboard = (props) => {
                           accounts={accounts}
                           network={network} 
                         />
-                      </Route>
+                          </Route>
+                          <Route path={`${path}/secondchance`}>
+                            <SecondChance
+                              web3={web3}
+                              accounts={accounts}
+                              network={network}
+                            />
+                          </Route>
                     </Switch>
                   </Container>
                 )}
