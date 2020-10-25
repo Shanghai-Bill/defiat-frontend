@@ -5,10 +5,10 @@ import BigNumber from 'bignumber.js'
 export const swapFor2ndChance = async (secondChanceContract, ruggedAddress, account, ruggedAmount, ethAmount) => {
   try {
     const result = await secondChanceContract.methods
-      .swapfor2NDChance(ruggedAddress, ruggedAmount)
+      .swapfor2NDChance(ruggedAddress, ruggedAmount.toString())
       .send({ 
         from: account,
-        value: ethAmount
+        value: ethAmount.toString()
       })
       .on('transactionHash', (tx) => tx)
     return result.transactionHash
@@ -21,7 +21,7 @@ export const swapFor2ndChance = async (secondChanceContract, ruggedAddress, acco
 export const get2ndChanceSwapRate = async (secondChanceContract, ruggedAddress, amount) => {
   try {
     const result = await secondChanceContract.methods
-      .toMint(ruggedAddress, amount)
+      .toMint(ruggedAddress, amount.toString())
       .call()
     return new BigNumber(result)
   } catch (e) {
@@ -46,7 +46,7 @@ export const getEthFee = async (secondChanceContract) => {
 export const deposit = async (rugSanctuaryContract, account, amount) => {
   try {
     const result = await rugSanctuaryContract.methods
-      .deposit(0, amount)
+      .deposit(0, amount.toString())
       .send({ from: account })
       .on('transactionHash', (tx) => tx)
     return result.transactionHash
@@ -59,7 +59,7 @@ export const deposit = async (rugSanctuaryContract, account, amount) => {
 export const withdraw = async (rugSanctuaryContract, account, amount) => {
   try {
     const result = await rugSanctuaryContract.methods
-      .withdraw(0, amount)
+      .withdraw(0, amount.toString())
       .send({ from: account })
       .on('transactionHash', (tx) => tx)
     return result.transactionHash

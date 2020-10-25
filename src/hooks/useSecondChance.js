@@ -41,7 +41,6 @@ export const useSecondChance = (web3, account, ruggedAddress, secondAddress) => 
     console.log('swap')
     if (!ruggedBalance.eq(0)) {
       const newRate = await get2ndChanceSwapRate(secondChanceContract, ruggedAddress, ruggedBalance)
-      console.log(newRate.toString(), ruggedBalance.toString())
       setSwapRate(newRate)
     } else {
       setSwapRate(new BigNumber(0))
