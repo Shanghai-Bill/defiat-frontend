@@ -4,7 +4,7 @@ import {
   Button
 } from 'reactstrap'
 import ScrollAnimation from 'react-animate-on-scroll';
-import pdf from 'assets/files/DFT-DeFiat-Whitepaper-V1-August28th2020.pdf'
+import pdf from 'assets/files/DFT-DeFiat-Whitepaper.pdf'
 
 export const WhitepaperSection = () => {
   return (

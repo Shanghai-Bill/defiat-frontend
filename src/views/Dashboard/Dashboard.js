@@ -17,17 +17,18 @@ import { NoWallet } from './components/NoWallet'
 import { Wallet } from './components/Wallet'
 import { Staking } from '../Staking'
 import { Proposals } from '../Proposals'
+import { ProposalInterface } from '../Proposals/ProposalInterface'
 import { Operator } from '../Operator'
 import { Partners } from '../Partners'
 import { SecondChance } from '../SecondChance'
 import { withRouter, useRouteMatch, useHistory, Route, Switch } from 'react-router-dom'
-import { Nav, NavItem, NavLink, Row, Col, Container } from 'reactstrap'
+import { Nav, NavItem, NavLink, Container } from 'reactstrap'
 import { PageWrapper } from 'components/PageWrapper'
+import { Loading } from 'components/Loading'
 
 
 const Dashboard = (props) => {
   const {
-    location,
     web3,
     setWeb3,
     accounts,
@@ -93,124 +94,117 @@ const Dashboard = (props) => {
 
   return (
     <PageWrapper>
-          {isLoading ? (
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          {!showDashboard ? (
             <div className="content-center">
-              <Row className="justify-content-center">
-                <Col lg="3">
-                  <img alt="loading" src={require("assets/img/Farm-Loading.gif")} />
-                </Col>
-              </Row>
+              <NoWallet />
             </div>
           ) : (
-            <>
-              {!showDashboard ? (
-                <div className="content-center">
-                  <NoWallet />
-                </div>
-              ) : (
-                <Container>
-                  <Nav tabs>
-                    <NavItem>
-                      <NavLink
-                        className={history.location.pathname === path ? 'active' : '' }
-                        onClick={() => handleTab(`${path}`)}
-                        style={{cursor:"pointer"}}
-                      >
-                        Wallet
-                      </NavLink>
-                    </NavItem>
-                    <NavItem>
-                      <NavLink
-                        className={history.location.pathname.includes(path + '/staking') ? 'active' : '' }
-                        onClick={() => handleTab(`${path}/staking`)}
-                        style={{cursor:"pointer"}}
-                      >
-                        Staking
-                      </NavLink>
-                    </NavItem>
-                    <NavItem>
-                      <NavLink
-                        className={history.location.pathname.includes(path + '/proposals') ? 'active' : '' }
-                        onClick={() => handleTab(`${path}/proposals`)}
-                        style={{cursor:"pointer"}}
-                      >
-                        Proposals
-                      </NavLink>
-                    </NavItem>
-                    <NavItem>
-                      <NavLink
-                        className={history.location.pathname.includes(path + '/partners') ? 'active' : '' }
-                        onClick={() => handleTab(`${path}/partners`)}
-                        style={{cursor:"pointer"}}
-                      >
-                        Partners
-                      </NavLink>
-                    </NavItem>
-                    {network && network.name === 'rinkeby' && (
-                      <NavItem>
-                        <NavLink
-                          className={history.location.pathname.includes(path + '/secondchance') ? 'active' : ''}
-                          onClick={() => handleTab(`${path}/secondchance`)}
-                          style={{ cursor: "pointer" }}
-                        >
-                          Second Chance
-                        </NavLink>
-                      </NavItem>
-                    )}
-                  </Nav>
-                  
-                  <Switch>
-                    <Route path={path} exact>
-                      <Wallet
-                        web3={web3}
-                        contracts={contracts} 
-                        accounts={accounts}
-                        network={network} 
-                      />
-                    </Route>
-                    <Route path={`${path}/operator`}>
-                      <Operator
-                        web3={web3}
-                        accounts={accounts}
-                        network={network} 
-                      />
-                    </Route>
-                    <Route path={`${path}/staking`}>
-                      <Staking
-                        web3={web3}
-                        accounts={accounts}
-                        network={network} 
-                      />
-                    </Route>
-                    <Route path={`${path}/proposals`}>
-                      <Proposals
-                        web3={web3}
-                        accounts={accounts}
-                        network={network} 
-                      />
-                    </Route>
-                    <Route path={`${path}/partners`}>
-                      <Partners
-                        web3={web3}
-                        accounts={accounts}
-                        network={network} 
-                      />
-                    </Route>
-                    {network && network.name === 'rinkeby' && (
-                      <Route path={`${path}/secondchance`}>
-                        <SecondChance
-                          web3={web3}
-                          accounts={accounts}
-                          network={network}
-                        />
-                      </Route>
-                    )}
-                    
-                  </Switch>
-                </Container>
-              )}
-            </>
+            <Container>
+              <Nav tabs>
+                <NavItem>
+                  <NavLink
+                    className={history.location.pathname === path ? 'active' : '' }
+                    onClick={() => handleTab(`${path}`)}
+                    style={{cursor:"pointer"}}
+                  >
+                    Wallet
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    className={history.location.pathname.includes(path + '/staking') ? 'active' : '' }
+                    onClick={() => handleTab(`${path}/staking`)}
+                    style={{cursor:"pointer"}}
+                  >
+                    Staking
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    className={history.location.pathname.includes(path + '/proposals') ? 'active' : '' }
+                    onClick={() => handleTab(`${path}/proposals`)}
+                    style={{cursor:"pointer"}}
+                  >
+                    Proposals
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    className={history.location.pathname.includes(path + '/partners') ? 'active' : '' }
+                    onClick={() => handleTab(`${path}/partners`)}
+                    style={{cursor:"pointer"}}
+                  >
+                    Partners
+                  </NavLink>
+                </NavItem>
+                {network && network.name === 'rinkeby' && (
+                  <NavItem>
+                    <NavLink
+                      className={history.location.pathname.includes(path + '/secondchance') ? 'active' : ''}
+                      onClick={() => handleTab(`${path}/secondchance`)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      Second Chance
+                    </NavLink>
+                  </NavItem>
+                )}
+              </Nav>
+              
+              <Switch>
+                <Route path={path} exact>
+                  <Wallet
+                    web3={web3}
+                    contracts={contracts} 
+                    accounts={accounts}
+                    network={network} 
+                  />
+                </Route>
+                <Route path={`${path}/operator`}>
+                  <Operator
+                    web3={web3}
+                    accounts={accounts}
+                    network={network} 
+                  />
+                </Route>
+                <Route path={`${path}/staking`}>
+                  <Staking
+                    web3={web3}
+                    accounts={accounts}
+                    network={network} 
+                  />
+                </Route>
+                <Route path={`${path}/proposals`}>
+                  <Proposals
+                    web3={web3}
+                    accounts={accounts}
+                    network={network} 
+                  />
+                </Route>
+                <Route path={`${path}/partners`}>
+                  <Partners
+                    web3={web3}
+                    accounts={accounts}
+                    network={network} 
+                  />
+                </Route>
+                {network && network.name === 'rinkeby' && (
+                  <Route path={`${path}/secondchance`}>
+                    <SecondChance
+                      web3={web3}
+                      accounts={accounts}
+                      network={network}
+                    />
+                  </Route>
+                )}
+              </Switch>
+            </Container>
           )}
+        </>
+      )}
     </PageWrapper>
   )
 }

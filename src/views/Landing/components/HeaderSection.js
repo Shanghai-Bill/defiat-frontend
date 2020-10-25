@@ -38,15 +38,6 @@ export const HeaderSection = () => {
                 are higher than ever before. Join the revolution and start your own
                 financial liberation today.
               </p>
-              <div className="btn-wrapper mb-3">
-                <Link
-                  className="font-weight-bold text-info mt-5"
-                  to="/about"
-                >
-                  Learn More{" "}
-                  <i className="tim-icons icon-minimal-right text-info" />
-                </Link>
-              </div>
               <SocialButtons />
             </ScrollAnimation>
           </Col>

@@ -3,7 +3,8 @@ import { useParams, Link } from 'react-router-dom'
 import FeeBurnRateVote from 'contracts/FeeBurnRateVote.json';
 import PointsThresholdVote from 'contracts/PointsThresholdVote.json'
 import IERC20 from 'contracts/_ERC20.json';
-import { Card, CardBody, Button, Row, Badge, Progress, Col } from 'reactstrap';
+import { Card, CardBody, Button, Row, Badge, Progress, Col } from 'reactstrap'
+import { Loading } from 'components/Loading'
 import { ProposalOne } from './components/ProposalOne';
 import { ProposalTwo } from './components/ProposalTwo';
 import { TooltipMessage } from 'components/TooltipMessage'
@@ -192,13 +193,7 @@ export const ProposalInterface = ({
   return (
     <>
       {isLoading ? (
-          <div className="content-center">
-            <Row className="justify-content-center">
-              <Col lg="3">
-                <img alt="loading" src={require("assets/img/Farm-Loading.gif")} />
-              </Col>
-            </Row>
-          </div>
+          <Loading />
         ) : (
           <>
             <div className="d-flex justify-content-start mb-2">

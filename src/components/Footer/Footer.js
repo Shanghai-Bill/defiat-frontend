@@ -10,7 +10,8 @@ import {
 } from "reactstrap";
 import { SocialButtons } from '../SocialButtons/SocialButtons';
 import logo from 'assets/img/defiat.png'
-import pdf from 'assets/files/DFT-DeFiat-Whitepaper-V1-August28th2020.pdf'
+import pdf from 'assets/files/DFT-DeFiat-Whitepaper.pdf'
+import oldPDF from 'assets/files/DFT-DeFiat-Whitepaper-V1-August28th2020.pdf'
 
 export const Footer = () => {
   return (
@@ -36,19 +37,14 @@ export const Footer = () => {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/about">
-                  About
+                <NavLink to="/dashboard" tag={Link}>
+                  Dashboard
                 </NavLink>
               </NavItem>
             </Nav>
           </Col>
           <Col md="3">
             <Nav>
-              <NavItem>
-                <NavLink to="/dashboard" tag={Link}>
-                  Dashboard
-                </NavLink>
-              </NavItem>
               <NavItem>
                 <NavLink href={pdf}>
                   Whitepaper
@@ -67,6 +63,10 @@ export const Footer = () => {
           </Col>
         </Row>
       </Container>
+
+      <div className="hidden">
+        <a href={oldPDF}></a>
+      </div>
     </footer>
   )
 }

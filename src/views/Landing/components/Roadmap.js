@@ -1,21 +1,13 @@
 import React from 'react'
-// import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
-// import 'react-vertical-timeline-component/style.min.css';
-import Timeline from '@material-ui/lab/Timeline';
-import TimelineItem from '@material-ui/lab/TimelineItem';
-import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
-import TimelineConnector from '@material-ui/lab/TimelineConnector';
-import TimelineContent from '@material-ui/lab/TimelineContent';
-import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
-import TimelineDot from '@material-ui/lab/TimelineDot';
-import { 
-  Card,
-  CardBody,
-  CardTitle,
-  CardText,
-  Container
-} from 'reactstrap'
-import ScrollAnimation from 'react-animate-on-scroll';
+import Timeline from '@material-ui/lab/Timeline'
+import TimelineItem from '@material-ui/lab/TimelineItem'
+import TimelineSeparator from '@material-ui/lab/TimelineSeparator'
+import TimelineContent from '@material-ui/lab/TimelineContent'
+import TimelineDot from '@material-ui/lab/TimelineDot'
+import { Container } from 'reactstrap'
+import ScrollAnimation from 'react-animate-on-scroll'
+import { RoadmapItemRight } from './RoadmapItemRight'
+import { RoadmapItemLeft } from './RoadmapItemLeft'
  
 export const Roadmap = () => {
   return (
@@ -36,105 +28,55 @@ export const Roadmap = () => {
           <h2 className="display-2 text-center text-tertiary">Roadmap</h2>
         </ScrollAnimation>
         <Timeline align="alternate">
-          <TimelineItem>
-            <TimelineOppositeContent>
-              <h3 className="text-primary">Aug 2020</h3>
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineDot color="primary">
-                {/* <Icon /> We can put Icons here, but they must be in SVG format */}
-              </TimelineDot>
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent>
-              <ScrollAnimation animateIn="fadeInRight" animateOnce>
-                <Card>
-                  <CardBody>
-                    <CardTitle>Token & dApp Release</CardTitle>
-                    <CardText>Launch Token, Points, and Governance Contracts on Ethereum Mainnet alongside dApp</CardText>
-                  </CardBody>
-                </Card>
-              </ScrollAnimation>
-            </TimelineContent>
-          </TimelineItem>
-          <TimelineItem>
-            <TimelineOppositeContent>
-              <h3 className="text-primary">Sept 2020</h3>
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineDot color="primary" />
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent>
-              <ScrollAnimation animateIn="fadeInLeft" animateOnce>
-                <Card>
-                  <CardBody>
-                    <CardTitle>Voting Contracts</CardTitle>
-                    <CardText>All DFT holders will be able to begin voting on proposed changes to the DeFiat Ecosystem.</CardText>
-                  </CardBody>
-                </Card>
-              </ScrollAnimation>
-            </TimelineContent>
-          </TimelineItem>
-          <TimelineItem>
-            <TimelineOppositeContent>
-              <h3 className="text-primary">Oct 2020</h3>
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineDot color="primary" />
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent>
-              <ScrollAnimation animateIn="fadeInRight" animateOnce>
-                <Card>
-                  <CardBody>
-                    <CardTitle>Decentralize Mastermind Rights</CardTitle>
-                    <CardText>The removal of centralized power from the DeFiat Team necessary for achieving complete decentralization.</CardText>
-                  </CardBody>
-                </Card>
-              </ScrollAnimation>
-            </TimelineContent>
-          </TimelineItem>
-          <TimelineItem>
-            <TimelineOppositeContent>
-              <h3 className="text-primary">Oct 2020</h3>
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineDot color="primary">
-                {/* <HotelIcon /> */}
-              </TimelineDot>
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent>
-              <ScrollAnimation animateIn="fadeInLeft" animateOnce>
-                <Card>
-                  <CardBody>
-                    <CardTitle>Anystake/Staking</CardTitle>
-                    <CardText>Native staking of DFT, as well as the ability to stake any ERC-20 token, will commence.</CardText>
-                  </CardBody>
-                </Card>
-              </ScrollAnimation>
-            </TimelineContent>
-          </TimelineItem>
-          <TimelineItem>
-            <TimelineOppositeContent>
-              <h3 className="text-primary">Dec 2020</h3>
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineDot color="primary" />
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent>
-              <ScrollAnimation animateIn="fadeInRight" animateOnce>
-                <Card>
-                  <CardBody>
-                    <CardTitle>DeFiX Burn Events</CardTitle>
-                    <CardText>Periodically, burn events will be taking place in which various amounts of DFT will be burned.</CardText>
-                  </CardBody>
-                </Card>
-              </ScrollAnimation>
-            </TimelineContent>
-          </TimelineItem>
+          <RoadmapItemRight
+            date="Aug 2020"
+            title="Token & dApp Release"
+            text="Launch Token, Points, and Governance Contracts on Ethereum Mainnet alongside dApp"
+            releaseDate="08.28.2020"
+          />
+          <RoadmapItemLeft
+            date="Sept 2020"
+            title="Native DFT Staking Pools"
+            text="Release time-based native staking pools for DFT, DFTP, and DFT-UNI-V2 tokens"
+            releaseDate="09.14.2020"
+          />
+          <RoadmapItemRight
+            date="Oct 2020"
+            title="DFT Voting Contracts"
+            text="Begin decentralized governance protocol by launching voting contracts that work on the DFT network"
+            releaseDate="10.04.2020"
+          />
+          <RoadmapItemLeft
+            date="Oct 2020"
+            title="Partner Staking Pools"
+            text="Release time-based staking pools for other partner ERC20 tokens, starting with XMM"
+            releaseDate="10.14.2020"
+          />
+          <RoadmapItemRight
+            date="Oct/Nov 2020"
+            title="2ND Chance"
+            text="Clean up the DeFi ecosystem by introducing 2ND Chance, the token designed to give your rugged tokens new life"
+          />
+          <RoadmapItemLeft
+            date="Nov 2020"
+            title="Upgrade & Decentralize Governance Protocol"
+            text="Launch the first governance protocol upgrade for DFT, aimed at reducing the mastermind's central control mechanisms"
+          />
+          <RoadmapItemRight
+            date="Nov/Dec 2020"
+            title="AnyStake"
+            text="DeFiat's main DeFi offering, AnyStake allows users to stake any ERC20 token and earn yield"
+          />
+          <RoadmapItemLeft
+            date="Dec 2020"
+            title="DeFiX Burn Events"
+            text="Periodically, community burn events will take place to increase deflationary pressure on DFT"
+          />
+          <RoadmapItemRight
+            date="Dec 2020 and On..."
+            title="More Roadmap Items Coming Soon!"
+            text="Additional staking pools, DFTP upgrades, website updates, rebranding, & more!"
+          />
           <TimelineItem>
             <TimelineSeparator>
               <TimelineDot color="primary" variant="outlined" />

@@ -30,7 +30,7 @@ export const PoolCard = ({
   isLiquidityToken,
   isExtendedPool
 }) => {
-  console.log(poolMetrics)
+  //console.log(poolMetrics)
   const history = useHistory();
   const [poolApr, setPoolApr] = useState((0).toFixed(2));
   const isPoolOpen = new Date().getTime() > +poolMetrics.startTime * 1000;

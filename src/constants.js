@@ -111,6 +111,8 @@ export default {
       price: "0xdbada9b7e7c6334b1a539e8e1a01c4eb3230d095",
       weth: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
       uniFactory: "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+      second: "0x58A69718A181059E0259158F915818981B4C2928",
+      secondLp: "0xc4992DFca666EfC79fC24D1ed032f58c7f624124",
       pools: [
         {
           poolLogo: require("assets/img/defiat-dungeon.png"),
@@ -150,7 +152,7 @@ export default {
           rewardSymbol: "XMM",
           denominator: 1e10,
           isLiquidityToken: true
-        },
+        }
       ],
       proposals: [
         {
@@ -172,25 +174,26 @@ export default {
             },
           ]
         },
-        // {
-        //   tag: "DFTG-2",
-        //   proposalName: "Change DFTP Generation Threshold",
-        //   proposalAddress: "0x00337f25049e6a1351359a30b10103afe2426b54",
-        //   choices: [
-        //     {
-        //       name: "Decrease to 10 DFT",
-        //       value: 0
-        //     },
-        //     {
-        //       name: "Decrease to 50 DFT",
-        //       value: 1
-        //     },
-        //     {
-        //       name: "Remain at 100 DFT",
-        //       value: 2
-        //     },
-        //   ]
-        // },
+      ],
+      secondPool: {
+        poolLogo: require("assets/img/sanctuary.png"),
+        poolTitle: "Rug Sanctuary",
+        poolSubtitle: "Stake 2ND-UNI-V2, Earn 2ND",
+        poolAddress: "0x4BB51efaEAd5B893883e5666C658F683949F2EfD",
+        basePool: "0x58A69718A181059E0259158F915818981B4C2928",
+        stakedAddress: "0xc4992DFca666EfC79fC24D1ed032f58c7f624124",
+        rewardAddress: "0x58A69718A181059E0259158F915818981B4C2928",
+        stakedSymbol: "2ND-UNI-V2",
+        rewardSymbol: "2ND",
+        isLiquidityToken: true
+      },
+      ruggedCoins: [
+        { id: 0, name: 'R_UGGED', address: '0xe0c7B3Ec3a986Ee518518294DB4193837bF481C2', decimals: '18' },
+        { id: 1, name: 'SHIIIT', address: '0x4670dC4167f4D80d9597CAecAFED0F529d585589', decimals: '18' },
+        { id: 2, name: 'R_FTSHIT', address: '0x83e03c7ece5065ac288bb092be626efb975c882c', decimals: '18' },
+        { id: 3, name: '2nD_Fail', address: '0x6db144c881a03df52ee696d7695e0d050190dbf7', decimals: '18'},
+        { id: 4, name: 'r_DFTP', address: '0x70C7d7856E1558210CFbf27b7F17853655752453', decimals: '18'}
+        
       ]
      }
   },

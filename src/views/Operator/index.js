@@ -1,1 +1,1 @@
-export * from './Operator'
+export { Operator } from './Operator'

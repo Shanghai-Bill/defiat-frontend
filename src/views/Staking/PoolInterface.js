@@ -13,7 +13,8 @@ import {
   ModalFooter,
   Tooltip
 } from 'reactstrap'
-import { TooltipMessage } from 'components/TooltipMessage';
+import { Loading } from 'components/Loading'
+import { TooltipMessage } from 'components/TooltipMessage'
 import { Link, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import IERC20 from 'contracts/_ERC20.json'
@@ -305,13 +306,7 @@ export const PoolInterface = ({
   return (
     <>
       {isLoading ? (
-        <div className="content-center">
-          <Row className="justify-content-center">
-            <Col lg="3">
-              <img alt="loading" src={require("assets/img/Farm-Loading.gif")} />
-            </Col>
-          </Row>
-        </div>
+        <Loading />
       ) : (
         <Container
           className={isExtendedPool ? "xmm-border-box" : undefined}
