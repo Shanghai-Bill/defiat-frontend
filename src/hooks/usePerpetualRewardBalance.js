@@ -17,7 +17,7 @@ export const usePerpetualRewardBalance = (web3, account, poolAddress) => {
     if (!balance.eq(newBalance)) {
       setBalance(newBalance)
     }
-  }, [account, farmContract, setBalance])
+  }, [account, farmContract, setBalance, balance])
 
   useEffect(() => {
     if (web3 && account) {

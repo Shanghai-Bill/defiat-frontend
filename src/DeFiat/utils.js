@@ -91,3 +91,16 @@ export const pending = async (rugSanctuaryContract, account) => {
     return new BigNumber(0)
   }
 }
+
+export const faucet = async (shitCoinContract, account) => {
+  try {
+    const result = await shitCoinContract.methods
+      .faucet()
+      .send({ from: account })
+      .on('transactionHash', (tx) => tx)
+    return result.transactionHash
+  } catch (e) {
+    console.log(e)
+    return false
+  }
+}

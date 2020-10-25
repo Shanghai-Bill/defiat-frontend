@@ -7,7 +7,8 @@ import {
   Button,
   Row,
   Col,
-  Container
+  Container,
+  CardText
 } from 'reactstrap'
 import { useHistory } from 'react-router-dom'
 import Rug_Sanctuary from 'contracts/secondchance/Rug_Sanctuary.json'
@@ -40,6 +41,7 @@ export const ChancePoolCard = ({
         <img className="mb-2 img-fluid" src={poolLogo} alt="" style={{height: 100, width: "auto"}} />
         <CardTitle className="text-primary"><b>{poolTitle}</b></CardTitle>
         <CardSubtitle className="text-tertiary">{poolSubtitle}</CardSubtitle>
+        <CardText>Repurposing your rugs to create sustainable yield farming opportunities!</CardText>
         <div className="mt-2 mb-2">
           {/* {!isPoolClosed && <DisplayRow title="Total Staked:" value={totalStaked} /> } */}
           {/* <DisplayRow title="Pool Rewards:" value={totalRewards} /> */}

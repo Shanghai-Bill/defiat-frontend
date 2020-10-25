@@ -111,8 +111,10 @@ export default {
       price: "0xdbada9b7e7c6334b1a539e8e1a01c4eb3230d095",
       weth: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
       uniFactory: "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
-      second: "0x58A69718A181059E0259158F915818981B4C2928",
-      secondLp: "0xc4992DFca666EfC79fC24D1ed032f58c7f624124",
+      second: "0x1C4A73569052C01239C41073800fB6B6881Ed8bf",
+      secondLp: "0xff7C6Fb26d6a2113D8464387C4008c6025d9631F",
+      shitcoin: "0x4670dC4167f4D80d9597CAecAFED0F529d585589",
+      rugged: "0xe0c7B3Ec3a986Ee518518294DB4193837bF481C2",
       pools: [
         {
           poolLogo: require("assets/img/defiat-dungeon.png"),
@@ -179,10 +181,10 @@ export default {
         poolLogo: require("assets/img/sanctuary.png"),
         poolTitle: "Rug Sanctuary",
         poolSubtitle: "Stake 2ND-UNI-V2, Earn 2ND",
-        poolAddress: "0x646081a3A5aaEe2717592F3960F17F2Aec71c4F7",
-        basePool: "0x58A69718A181059E0259158F915818981B4C2928",
-        stakedAddress: "0xc4992DFca666EfC79fC24D1ed032f58c7f624124",
-        rewardAddress: "0x58A69718A181059E0259158F915818981B4C2928",
+        poolAddress: "0x97D3A657Ac0D30F2268b7566dBFfc84A676EC867",
+        basePool: "0x1C4A73569052C01239C41073800fB6B6881Ed8bf",
+        stakedAddress: "0xff7C6Fb26d6a2113D8464387C4008c6025d9631F",
+        rewardAddress: "0x1C4A73569052C01239C41073800fB6B6881Ed8bf",
         stakedSymbol: "2ND-UNI-V2",
         rewardSymbol: "2ND",
         isLiquidityToken: true
@@ -190,9 +192,6 @@ export default {
       ruggedCoins: [
         { id: 0, name: 'R_UGGED', address: '0xe0c7B3Ec3a986Ee518518294DB4193837bF481C2', decimals: '18' },
         { id: 1, name: 'SHIIIT', address: '0x4670dC4167f4D80d9597CAecAFED0F529d585589', decimals: '18' },
-        { id: 2, name: 'R_FTSHIT', address: '0x83e03c7ece5065ac288bb092be626efb975c882c', decimals: '18' },
-        { id: 3, name: '2nD_Fail', address: '0x6db144c881a03df52ee696d7695e0d050190dbf7', decimals: '18'},
-        { id: 4, name: 'r_DFTP', address: '0x70C7d7856E1558210CFbf27b7F17853655752453', decimals: '18'}
         
       ]
      }

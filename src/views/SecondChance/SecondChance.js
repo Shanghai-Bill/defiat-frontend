@@ -18,6 +18,7 @@ import { useTotalSupply } from '../../hooks/useTotalSupply'
 import { useAllowance } from '../../hooks/useAllowance'
 import { useApprove } from '../../hooks/useApprove'
 import { useSecondChance } from '../../hooks/useSecondChance'
+import { FaucetButton } from './components/FaucetButton';
 
 export const SecondChance = ({
   web3,
@@ -71,7 +72,22 @@ export const SecondChance = ({
       <Route exact path={path}>
         <Container>
           <ChanceHeader />
-          <Row className="d-flex">
+          <Row className="d-flex my-2">
+            <FaucetButton
+              web3={web3}
+              accounts={accounts}
+              tokenAddress={network.rugged}
+              symbol={"R_UGGED"}
+            />
+            <FaucetButton
+              web3={web3}
+              accounts={accounts}
+              tokenAddress={network.shitcoin}
+              symbol={"SHIIIT"}
+            />
+            
+          </Row>
+          <Row className="d-flex w-100 h-100">
             <ChanceStep
               stepNumber="1."
               stepMessage="Select Coin to Recycle"
@@ -94,12 +110,18 @@ export const SecondChance = ({
                   </option>
                 ))}
               </Input>
-              <Card>
+              <Card className="d-flex flex-column h-100">
                 <CardBody>
                   <img 
-                    className="mb-3 img-fluid secondChanceCard" 
-                    src={require('assets/img/2nd-logo.png')}
+                    className="mb-2 img-fluid secondChanceCard" 
+                    src={require('assets/img/recycle-solid-purple.png')}
                   />
+                  <CardTitle className="text-primary card-title">
+                    Recycle Rugged Tokens
+                  </CardTitle>
+                  <CardSubtitle className="text-tertiary card-subtitle">
+                    Receive 2ND for helping save the DeFi Planet!
+                  </CardSubtitle>
                   <ChanceDisplayRow
                     name="Token:"
                     value={selectedToken.name || '...'}
@@ -142,18 +164,19 @@ export const SecondChance = ({
               stepNumber="2."
               stepMessage="Add your Coins and get 2ND"
             >
-              <Card>
+              <Card className="d-flex flex-column h-100">
                 <CardBody className="secondChanceAddMargin">
                   <img 
-                    className="mb-2 img-fluid secondChanceCard" 
-                    src={require('assets/img/recycle-solid-purple.png')}
+                    className="mb-3 img-fluid secondChanceCard" 
+                    src={require('assets/img/2nd-logo.png')}
                   />
                   <CardTitle className="text-primary card-title">
-                    DeFiat Second Chance
+                    2ND Chance Token
                   </CardTitle>
                   <CardSubtitle className="text-tertiary card-subtitle">
-                    Receive 2ND for helping save the DeFi Planet!
+                    Deflationary farming token powered by DeFiat.
                   </CardSubtitle>
+                  
                   <ChanceValueDisplay
                     id="percentage"
                     value={shareOfSupply + "%"}
