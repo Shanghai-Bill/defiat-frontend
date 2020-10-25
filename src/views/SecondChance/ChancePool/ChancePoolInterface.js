@@ -69,14 +69,13 @@ export const ChancePoolInterface = ({
 
   const handleStake = useCallback(async (amount) => {
     setStaking(true)
-    console.log(amount, stakeAction)
     if (stakeAction === 'Stake') {
       await onDeposit(amount)
     } else {
       await onWithdraw(amount)
     }
     setStaking(false)
-  }, [])
+  }, [stakeAction, onDeposit, onWithdraw, setStaking])
 
   const handleToggle = () => {
     setOpen(!isOpen);
@@ -100,7 +99,7 @@ export const ChancePoolInterface = ({
       </div>
 
       <div className="p-2 mb-4">
-        <img 
+        {/* <img 
           src={require('assets/img/boost-logo.png')}
           className="floating"
           style={{
@@ -108,7 +107,7 @@ export const ChancePoolInterface = ({
             position: "absolute",
             width: "auto"
           }}
-        />
+        /> */}
         <img src={poolLogo} width="100" height="auto" alt="defiat" />
       </div>
       
@@ -149,13 +148,13 @@ export const ChancePoolInterface = ({
           Get {stakedSymbol} on Uniswap
         </Button>
       </div>
-      <p className="text-tertiary my-2">
+      {/* <p className="text-tertiary my-2">
         <b>
           * Farming Boost is a staking multiplier earned by staking in the DFT Dungeon
           <br/>
           You can earn up to 200% Boost by staking 100 DFT.
         </b>
-      </p>
+      </p> */}
       
         
       <ChancePoolModal

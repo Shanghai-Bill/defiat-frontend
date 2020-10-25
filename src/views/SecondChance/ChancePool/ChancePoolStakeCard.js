@@ -29,7 +29,7 @@ export const ChancePoolStakeCard = ({
 
   const handleApprove = useCallback(async () => {
     setApproving(true)
-    await onApprove()
+    await onApprove("2ND-UNI-V2 staking")
     setApproving(false)
   }, [onApprove])
 

@@ -16,7 +16,7 @@ export const useTotalSupply = (web3, tokenAddress) => {
     if (!totalSupply.eq(newSupply)) {
       setTotalSupply(newSupply)
     }
-  }, [tokenContract, setTotalSupply])
+  }, [tokenContract, setTotalSupply, totalSupply])
 
   useEffect(() => {
     if (web3 && tokenAddress) {

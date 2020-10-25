@@ -61,7 +61,7 @@ export const SecondChance = ({
 
   const handleRecycle = useCallback(async () => {
     setWaiting(true)
-    await onRecycle(ruggedBalance)
+    await onRecycle()
     setWaiting(false)
   }, [onRecycle, setWaiting, ruggedBalance])
 
@@ -163,7 +163,7 @@ export const SecondChance = ({
                   />
                   <ChanceValueDisplay
                     id="received"
-                    value={getDisplayBalance(swapRate.times(ruggedBalance))}
+                    value={getDisplayBalance(swapRate)}
                     title={"Amount of 2ND TOKENS you will receive"}
                     color="info"
                     tooltip={"% of " + selectedToken.name + " you own * 1000 = 2ND RECEIVED"}

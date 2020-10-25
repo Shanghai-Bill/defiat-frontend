@@ -43,8 +43,8 @@ export const ChancePoolModal = ({
 
   const onStake = useCallback(async () => {
     const amount = getInputNumber(stakeAmountInput)
-    console.log(amount)
-    await handleStake(amount.toString())
+    await handleStake(amount)
+    onToggle()
   }, [getInputNumber, handleStake, stakeAmountInput])
 
   // determine if the initial amount is within bounds

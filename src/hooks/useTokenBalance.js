@@ -17,7 +17,7 @@ export const useTokenBalance = (web3, account, tokenAddress) => {
     if (!balance.eq(newBalance)) {
       setBalance(newBalance)
     }
-  }, [account, tokenContract, setBalance])
+  }, [account, tokenContract, balance, setBalance])
 
   useEffect(() => {
     if (web3 && account) {

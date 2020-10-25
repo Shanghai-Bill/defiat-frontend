@@ -5,44 +5,46 @@ import { TooltipMessage } from 'components/TooltipMessage'
 import { swapFor2ndChance, getEthFee, get2ndChanceSwapRate } from 'DeFiat/utils'
 import Second_Chance from 'contracts/secondchance/Second_Chance.json'
 import BigNumber from 'bignumber.js'
+import { useTokenBalance } from './useTokenBalance'
 
 export const useSecondChance = (web3, account, ruggedAddress, secondAddress) => {
   const [ethFee, setEthFee] = useState(new BigNumber(0))
   const [swapRate, setSwapRate] = useState(new BigNumber(0))
 
-  const rugContract = useMemo(() => {
-    return getTokenContract(web3, ruggedAddress)
-  }, [web3, ruggedAddress])
+  const ruggedBalance = useTokenBalance(web3, account, ruggedAddress)
 
   const secondChanceContract = useMemo(() => {
     return new web3.eth.Contract(Second_Chance.abi, secondAddress)
   }, [web3, secondAddress])
 
-  const handleRecycle = useCallback(async (amount) => {
-    console.log(amount, ethFee, account)
-    const txHash = await swapFor2ndChance(secondChanceContract, ruggedAddress, account, amount, ethFee)
+  const handleRecycle = useCallback(async () => {
+    const txHash = await swapFor2ndChance(secondChanceContract, ruggedAddress, account, ruggedBalance, ethFee)
     if (!txHash) {
-        toast.error(
-          <TooltipMessage 
-            title="⛔️ Error" 
-            message="Encountered an error, could not recycle shitcoins." 
-          />
-        )
-      } else {
-        toast.success(
-          <TooltipMessage 
-            title="✅ Success" 
-            message={`Successfully recycled shitcoins for 2ND Chance!`} 
-            txn={txHash} 
-          />
-        )
-      }
-  }, [secondChanceContract, rugContract, account, ethFee])
+      toast.error(
+        <TooltipMessage 
+          title="⛔️ Error" 
+          message="Encountered an error, could not recycle shitcoins." 
+        />
+      )
+    } else {
+      toast.success(
+        <TooltipMessage 
+          title="✅ Success" 
+          message={`Successfully recycled shitcoins for 2ND Chance!`} 
+          txn={txHash} 
+        />
+      )
+    }
+  }, [secondChanceContract, ruggedAddress, account, ethFee, ruggedBalance])
 
   const fetchSwapRate = useCallback(async () => {
-    const newRate = await get2ndChanceSwapRate(secondChanceContract, ruggedAddress, new BigNumber(1))
-    setSwapRate(newRate)
-  }, [secondChanceContract, ruggedAddress, setSwapRate])
+    if (!ruggedBalance.eq(0)) {
+      const newRate = await get2ndChanceSwapRate(secondChanceContract, ruggedAddress, ruggedBalance)
+      setSwapRate(newRate)
+    } else {
+      setSwapRate(new BigNumber(0))
+    }
+  }, [secondChanceContract, ruggedAddress, setSwapRate, ruggedBalance])
 
   const fetchEthFee = useCallback(async () => {
     const fee = await getEthFee(secondChanceContract)

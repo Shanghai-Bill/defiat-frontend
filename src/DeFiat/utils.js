@@ -61,7 +61,7 @@ export const withdraw = async (rugSanctuaryContract, account, amount) => {
     const result = await rugSanctuaryContract.methods
       .withdraw(0, amount)
       .send({ from: account })
-      .on('transactionHash', (tx) => tx)
+      .on('receipt', (tx) => tx)
     return result.transactionHash
   } catch (e) {
     console.log(e)
