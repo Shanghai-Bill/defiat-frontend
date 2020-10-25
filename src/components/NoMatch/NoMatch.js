@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export function NoMatch() {
+export const NoMatch = () => {
   return (
     <>
       <div className="wrapper">
@@ -21,7 +21,5 @@ export function NoMatch() {
         </div>
       </div>
     </>
-  );
+  )
 }
-
-export default NoMatch;

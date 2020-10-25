@@ -311,7 +311,7 @@ export const PoolInterface = ({
         <Container
           className={isExtendedPool ? "xmm-border-box" : undefined}
         >
-          <div className="d-flex justify-content-start">
+          <div className="d-flex justify-content-start" style={{overflow:'hidden'}}>
             <Link to={isExtendedPool ? "/dashboard/partners/" : "/dashboard/staking"}>
               <Button
                 className="btn-link"
@@ -455,8 +455,6 @@ export const PoolInterface = ({
               </b>
             </p>
           )}
-          
-
 
           <Modal 
             modalClassName="modal-black"
