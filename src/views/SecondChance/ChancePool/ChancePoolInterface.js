@@ -129,9 +129,10 @@ export const ChancePoolInterface = ({
         {poolSubtitle}
         
       </p>
-      {/* <p className="text-secondary mb-2">
-        <b>Farming Boost: {stakingState.myBoost}%</b>
-      </p> */}
+      <p className="text-secondary mb-2">
+        Testing 25% Withdrawal Fee
+        {/* <b>Farming Boost: {stakingState.myBoost}%</b> */}
+      </p>
       
 
       <Row className="justify-content-center">
