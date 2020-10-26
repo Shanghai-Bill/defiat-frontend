@@ -7,14 +7,14 @@ import { TooltipMessage } from 'components/TooltipMessage'
 
 export const useAntiSpam = (web3) => {
   const block = useBlock(web3)
-  const [lastTransaction, setLastTransaction] = useState(-1)
+  const [lastTransaction, setLastTransaction] = useState(false)
 
   const handleTransaction = useCallback((txHash) => {
-    setLastTransaction(block.number)
-  }, [setLastTransaction, block])
+    setLastTransaction(true)
+  }, [setLastTransaction])
 
-  const checkAntiSpam = () => {
-    if (block.number === lastTransaction) {
+  const checkAntiSpam = useCallback(() => {
+    if (lastTransaction) {
       toast.warn(
         <TooltipMessage
           title="🤖 AntiSpam Alert!"
@@ -24,7 +24,13 @@ export const useAntiSpam = (web3) => {
       return true
     }
     return false
-  }
+  }, [lastTransaction])
+
+  useEffect(() => {
+    if (web3) {
+      setLastTransaction(false)
+    }
+  }, [block, web3, setLastTransaction])
 
   return {
     onTransaction: handleTransaction,

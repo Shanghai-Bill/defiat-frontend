@@ -181,7 +181,7 @@ export default {
         poolLogo: require("assets/img/sanctuary.png"),
         poolTitle: "Rug Sanctuary",
         poolSubtitle: "Stake 2ND-UNI-V2, Earn 2ND",
-        poolAddress: "0x86ae273Ef0c0B0b4E009224052ef1836966CDBeA",
+        poolAddress: "0x47642cf59577BAf8a53c64B42BF2cCa6c35D319e",
         basePool: "0x497BC455ef8862D7961fF2ACc1BffEC3078D4b9a",
         stakedAddress: "0x7B1614Ba2f3879539F9c88AC609C09bAafFA719E",
         rewardAddress: "0x497BC455ef8862D7961fF2ACc1BffEC3078D4b9a",

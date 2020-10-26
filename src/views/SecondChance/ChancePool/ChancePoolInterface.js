@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import Rug_Sanctuary from 'contracts/secondchance/Rug_Sanctuary.json'
 import { usePerpetualDeposit } from 'hooks/usePerpetualDeposit'
 import { usePerpetualWithdraw } from '../../../hooks/usePerpetualWithdraw'
+import { useAntiSpam } from 'hooks/useAntiSpam'
 import { ChancePoolClaimCard } from './ChancePoolClaimCard'
 import BigNumber from 'bignumber.js'
 import { ChancePoolStakeCard } from './ChancePoolStakeCard'
@@ -36,6 +37,7 @@ export const ChancePoolInterface = ({
   
   const { onWithdraw } = usePerpetualWithdraw(web3, accounts[0], poolAddress)
   const { onDeposit } = usePerpetualDeposit(web3, accounts[0], poolAddress)
+  const { onTransaction, checkAntiSpam } = useAntiSpam(web3)
 
   // Inputs
   const [isStaking, setStaking] = useState(false);
@@ -56,10 +58,14 @@ export const ChancePoolInterface = ({
 
   // take reward
   const handleClaim = useCallback(async () => {
+    if (checkAntiSpam()) return
     setClaiming(true);
-    await onWithdraw(new BigNumber(0))
+    const txHash = await onWithdraw(new BigNumber(0))
+    if (txHash) {
+      onTransaction(txHash)
+    }
     setClaiming(false)
-  }, [onWithdraw, setClaiming])
+  }, [onWithdraw, setClaiming, checkAntiSpam, onTransaction])
 
   const handleAction = (action) => {
     console.log(action)
@@ -68,14 +74,19 @@ export const ChancePoolInterface = ({
   }
 
   const handleStake = useCallback(async (amount) => {
+    if (checkAntiSpam()) return
     setStaking(true)
+    let txHash
     if (stakeAction === 'Stake') {
-      await onDeposit(amount)
+      txHash = await onDeposit(amount)
     } else {
-      await onWithdraw(amount)
+      txHash = await onWithdraw(amount)
+    }
+    if (txHash) {
+      onTransaction(txHash)
     }
     setStaking(false)
-  }, [stakeAction, onDeposit, onWithdraw, setStaking])
+  }, [stakeAction, onDeposit, onWithdraw, setStaking, checkAntiSpam, onTransaction])
 
   const handleToggle = () => {
     setOpen(!isOpen);
