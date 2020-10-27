@@ -110,7 +110,7 @@ export const ChancePoolInterface = ({
       </div>
 
       <div className="p-2 mb-4">
-        {/* <img 
+        <img 
           src={require('assets/img/boost-logo.png')}
           className="floating"
           style={{
@@ -118,7 +118,7 @@ export const ChancePoolInterface = ({
             position: "absolute",
             width: "auto"
           }}
-        /> */}
+        />
         <img src={poolLogo} width="100" height="auto" alt="defiat" />
       </div>
       
@@ -129,9 +129,12 @@ export const ChancePoolInterface = ({
         {poolSubtitle}
         
       </p>
+      {/* <p className="text-secondary mb-2">
+        <b>Farming Boost: {stakingState.myBoost}%</b>
+      </p> */}
       <p className="text-secondary mb-2">
-        Testing 25% Withdrawal Fee
-        {/* <b>Farming Boost: {stakingState.myBoost}%</b> */}
+        Testing 25% Withdrawal Fee<br/>
+        <b>2ND-DFT Farming Boost Active</b>
       </p>
       
 
@@ -160,13 +163,13 @@ export const ChancePoolInterface = ({
           Get {stakedSymbol} on Uniswap
         </Button>
       </div>
-      {/* <p className="text-tertiary my-2">
+      <p className="text-tertiary my-2">
         <b>
-          * Farming Boost is a staking multiplier earned by staking in the DFT Dungeon
+          * Farming Boost for 2ND is a staking multiplier earned by holding DFT
           <br/>
-          You can earn up to 200% Boost by staking 100 DFT.
+          You can earn up to 300% Boost by holding 300 DFT.
         </b>
-      </p> */}
+      </p>
       
         
       <ChancePoolModal

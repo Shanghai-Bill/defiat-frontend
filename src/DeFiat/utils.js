@@ -18,10 +18,10 @@ export const swapFor2ndChance = async (secondChanceContract, ruggedAddress, acco
   }
 }
 
-export const get2ndChanceSwapRate = async (secondChanceContract, ruggedAddress, amount) => {
+export const get2ndChanceSwapRate = async (secondChanceContract, account, ruggedAddress, amount) => {
   try {
     const result = await secondChanceContract.methods
-      .toMint(ruggedAddress, amount.toString())
+      .toMint(account, ruggedAddress, amount.toString())
       .call()
     return new BigNumber(result)
   } catch (e) {
@@ -32,7 +32,7 @@ export const get2ndChanceSwapRate = async (secondChanceContract, ruggedAddress, 
 export const getEthFee = async (secondChanceContract) => {
   try {
     const result = await secondChanceContract.methods
-      .ETHfee()
+      .viewETHfee()
       .call()
     return new BigNumber(result)
   } catch (e) {
@@ -40,6 +40,15 @@ export const getEthFee = async (secondChanceContract) => {
     return new BigNumber(0)
   }
 }
+
+// export const getMaxBoost = async (secondChanceContract) => {
+//   try {
+//     const result = await secondChanceContract.methods
+//       .maxDFTBoost()
+//       .call()
+//     return new BigNumber(result)
+//   }
+// }
 
 // Rug sanctuary
 

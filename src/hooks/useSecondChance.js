@@ -40,12 +40,12 @@ export const useSecondChance = (web3, account, ruggedAddress, secondAddress) => 
   const fetchSwapRate = useCallback(async () => {
     console.log('swap')
     if (!ruggedBalance.eq(0)) {
-      const newRate = await get2ndChanceSwapRate(secondChanceContract, ruggedAddress, ruggedBalance)
+      const newRate = await get2ndChanceSwapRate(secondChanceContract, account, ruggedAddress, ruggedBalance)
       setSwapRate(newRate)
     } else {
       setSwapRate(new BigNumber(0))
     }
-  }, [secondChanceContract, ruggedAddress, setSwapRate, ruggedBalance])
+  }, [secondChanceContract, ruggedAddress, setSwapRate, ruggedBalance, account])
 
   const fetchEthFee = useCallback(async () => {
     const fee = await getEthFee(secondChanceContract)
