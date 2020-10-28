@@ -5,7 +5,6 @@ import {
   Button,
 } from 'reactstrap'
 import { Link } from 'react-router-dom'
-import Rug_Sanctuary from 'contracts/secondchance/Rug_Sanctuary.json'
 import { usePerpetualDeposit } from 'hooks/usePerpetualDeposit'
 import { usePerpetualWithdraw } from '../../../hooks/usePerpetualWithdraw'
 import { useAntiSpam } from 'hooks/useAntiSpam'
@@ -30,10 +29,6 @@ export const ChancePoolInterface = ({
     rewardAddress,
     stakedSymbol,
   } = secondPool
-
-  const farmingContract = useMemo(() => {
-    return new web3.eth.Contract(Rug_Sanctuary.abi, poolAddress)
-  }, [web3, accounts])
   
   const { onWithdraw } = usePerpetualWithdraw(web3, accounts[0], poolAddress)
   const { onDeposit } = usePerpetualDeposit(web3, accounts[0], poolAddress)
@@ -48,45 +43,27 @@ export const ChancePoolInterface = ({
   const [stakeAction, setStakeAction] = useState('');
 
 
-  const getBoost = async () => {
-    if (farmingContract) {
-      const boost = await farmingContract.methods.myBoost(accounts[0]).call()
-      return boost;
-    }
-    return 0
-  }
-
   // take reward
   const handleClaim = useCallback(async () => {
-    if (checkAntiSpam()) return
     setClaiming(true);
-    const txHash = await onWithdraw(new BigNumber(0))
-    if (txHash) {
-      onTransaction(txHash)
-    }
+    await onWithdraw(new BigNumber(0))
     setClaiming(false)
   }, [onWithdraw, setClaiming, checkAntiSpam, onTransaction])
 
   const handleAction = (action) => {
-    console.log(action)
     setStakeAction(action);
     setOpen(true);
   }
 
   const handleStake = useCallback(async (amount) => {
-    if (checkAntiSpam()) return
     setStaking(true)
-    let txHash
     if (stakeAction === 'Stake') {
-      txHash = await onDeposit(amount)
+      await onDeposit(amount)
     } else {
-      txHash = await onWithdraw(amount)
-    }
-    if (txHash) {
-      onTransaction(txHash)
+      await onWithdraw(amount)
     }
     setStaking(false)
-  }, [stakeAction, onDeposit, onWithdraw, setStaking, checkAntiSpam, onTransaction])
+  }, [stakeAction, onDeposit, onWithdraw, setStaking])
 
   const handleToggle = () => {
     setOpen(!isOpen);
@@ -111,7 +88,7 @@ export const ChancePoolInterface = ({
 
       <div className="p-2 mb-4">
         <img 
-          src={require('assets/img/boost-logo.png')}
+          src={require('assets/img/2nd-logo.png')}
           className="floating"
           style={{
             height: "40px",
@@ -134,7 +111,7 @@ export const ChancePoolInterface = ({
       </p> */}
       <p className="text-secondary mb-2">
         Testing 25% Withdrawal Fee<br/>
-        {/* <b>2ND-DFT Farming Boost Active</b> */}
+        <b>Fees are permanately locked in pool to serve as 2ND-UNI-V2 Liquidity</b>
       </p>
       
 
