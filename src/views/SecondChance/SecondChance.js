@@ -209,7 +209,7 @@ export const SecondChance = ({
                     value={getDisplayBalance(swapRate)}
                     title={"Amount of 2ND TOKENS you will receive"}
                     color="info"
-                    tooltip={"% of " + selectedToken.name + " you own * Boost * 1000 = 2ND RECEIVED"}
+                    tooltip={"% of " + selectedToken.name + " you own * 1000 * (Boost/100) = 2ND RECEIVED"}
                   />
                   {ruggedAllowance.eq(0) ? (
                     <Button

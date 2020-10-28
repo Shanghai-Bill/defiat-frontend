@@ -6,8 +6,7 @@ import {
 } from 'reactstrap'
 import { Link } from 'react-router-dom'
 import { usePerpetualDeposit } from 'hooks/usePerpetualDeposit'
-import { usePerpetualWithdraw } from '../../../hooks/usePerpetualWithdraw'
-import { useAntiSpam } from 'hooks/useAntiSpam'
+import { usePerpetualWithdraw } from 'hooks/usePerpetualWithdraw'
 import { ChancePoolClaimCard } from './ChancePoolClaimCard'
 import BigNumber from 'bignumber.js'
 import { ChancePoolStakeCard } from './ChancePoolStakeCard'
@@ -32,7 +31,6 @@ export const ChancePoolInterface = ({
   
   const { onWithdraw } = usePerpetualWithdraw(web3, accounts[0], poolAddress)
   const { onDeposit } = usePerpetualDeposit(web3, accounts[0], poolAddress)
-  const { onTransaction, checkAntiSpam } = useAntiSpam(web3)
 
   // Inputs
   const [isStaking, setStaking] = useState(false);
@@ -48,7 +46,7 @@ export const ChancePoolInterface = ({
     setClaiming(true);
     await onWithdraw(new BigNumber(0))
     setClaiming(false)
-  }, [onWithdraw, setClaiming, checkAntiSpam, onTransaction])
+  }, [onWithdraw, setClaiming])
 
   const handleAction = (action) => {
     setStakeAction(action);

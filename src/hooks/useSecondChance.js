@@ -38,14 +38,9 @@ export const useSecondChance = (web3, account, ruggedAddress, secondAddress) => 
   }, [secondChanceContract, ruggedAddress, account, ethFee, ruggedBalance])
 
   const fetchSwapRate = useCallback(async () => {
-    console.log('swap')
-    if (!ruggedBalance.eq(0)) {
       const newRate = await get2ndChanceSwapRate(secondChanceContract, account, ruggedAddress, ruggedBalance)
       setSwapRate(newRate)
-    } else {
-      setSwapRate(new BigNumber(0))
-    }
-  }, [secondChanceContract, ruggedAddress, setSwapRate, ruggedBalance, account])
+  }, [secondChanceContract, setSwapRate, account, ruggedAddress, ruggedBalance])
 
   const fetchEthFee = useCallback(async () => {
     const fee = await getEthFee(secondChanceContract)
@@ -54,9 +49,9 @@ export const useSecondChance = (web3, account, ruggedAddress, secondAddress) => 
 
   useEffect(() => {
     if (web3) {
-      fetchSwapRate()
+      fetchSwapRate(ruggedBalance)
     }
-  }, [web3, fetchSwapRate, ruggedAddress, ruggedBalance])
+  }, [web3, ruggedBalance])
 
   useEffect(() => {
     if (web3) {

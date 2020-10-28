@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import ERC20 from 'contracts/_ERC20.json'
 import { useBlock } from './useBlock'
 import { getTokenBalance, getTokenContract } from '../utils/erc20'
 import BigNumber from 'bignumber.js'
