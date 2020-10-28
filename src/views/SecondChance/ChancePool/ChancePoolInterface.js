@@ -134,7 +134,7 @@ export const ChancePoolInterface = ({
       </p> */}
       <p className="text-secondary mb-2">
         Testing 25% Withdrawal Fee<br/>
-        <b>2ND-DFT Farming Boost Active</b>
+        {/* <b>2ND-DFT Farming Boost Active</b> */}
       </p>
       
 
@@ -163,13 +163,13 @@ export const ChancePoolInterface = ({
           Get {stakedSymbol} on Uniswap
         </Button>
       </div>
-      <p className="text-tertiary my-2">
+      {/* <p className="text-tertiary my-2">
         <b>
           * Farming Boost for 2ND is a staking multiplier earned by holding DFT
           <br/>
           You can earn up to 300% Boost by holding 300 DFT.
         </b>
-      </p>
+      </p> */}
       
         
       <ChancePoolModal

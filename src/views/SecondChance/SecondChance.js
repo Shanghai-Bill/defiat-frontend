@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { useRouteMatch } from 'react-router-dom'
 import { Row, Container, Button, Input, Card, CardBody, CardTitle, CardSubtitle } from 'reactstrap'
 import BigNumber from 'bignumber.js'
-import { getDisplayBalance } from '../../utils/formatBalance';
+import { getBalanceNumber, getDisplayBalance } from '../../utils/formatBalance';
 import { formatAddress } from 'utils/formatAddress'
 import { ChanceHeader } from './components/ChanceHeader'
 import { ChanceStep } from './components/ChanceStep'
@@ -36,6 +36,7 @@ export const SecondChance = ({
     decimals: ''
   })
 
+  const defiatBalance = useTokenBalance(web3, accounts[0], network.token)
   const ruggedBalance = useTokenBalance(web3, accounts[0], selectedToken.address)
   const ruggedSupply = useTotalSupply(web3, selectedToken.address)
   const ruggedAllowance = useAllowance(web3, accounts[0], selectedToken.address, second)
@@ -49,6 +50,17 @@ export const SecondChance = ({
       return getDisplayBalance(new BigNumber(0))
     }
   }, [ruggedBalance, ruggedSupply])
+
+  const getBoostDisplay = useMemo(() => {
+    const number = new BigNumber(getBalanceNumber(defiatBalance))
+    if (number.eq(0)) {
+      return "100.00"
+    } else if (number.gt(200)) {
+      return "300.00"
+    } else {
+      return getDisplayBalance(number.plus(100), 0)
+    }
+  }, [defiatBalance])
   
   const handleTokenChange = (e) => {
     setSelectedToken(ruggedCoins[e.target.value])
@@ -149,6 +161,7 @@ export const SecondChance = ({
                     color="info"
                     tooltip={"The total amount of " + selectedToken.name + " in your connected ERC20 wallet."}
                   />
+                  
                   <ChanceValueDisplay
                     id="supply"
                     value={getDisplayBalance(ruggedSupply)}
@@ -185,11 +198,18 @@ export const SecondChance = ({
                     tooltip={"Percentage of " + selectedToken.name + " you own"}
                   />
                   <ChanceValueDisplay
+                    id="multiplier"
+                    value={getBoostDisplay + "%"}
+                    title="2ND-DFT Boost Multiplier"
+                    color="info"
+                    tooltip="Earn extra 2ND for holding DFT. Each DFT you own adds 1% boost, up to 200% extra"
+                  />
+                  <ChanceValueDisplay
                     id="received"
                     value={getDisplayBalance(swapRate)}
                     title={"Amount of 2ND TOKENS you will receive"}
                     color="info"
-                    tooltip={"% of " + selectedToken.name + " you own * 1000 = 2ND RECEIVED"}
+                    tooltip={"% of " + selectedToken.name + " you own * Boost * 1000 = 2ND RECEIVED"}
                   />
                   {ruggedAllowance.eq(0) ? (
                     <Button
