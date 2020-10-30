@@ -225,7 +225,7 @@ export const SecondChance = ({
                       <Button
                         color="primary"
                         className="secondChanceUniButtons"
-                        disabled={ruggedBalance.eq(0)  || waiting}
+                        disabled={ruggedBalance.eq(0) || swapRate.eq(0) || waiting}
                         onClick={handleRecycle}
                       >
                         Recycle
