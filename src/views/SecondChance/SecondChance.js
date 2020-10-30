@@ -27,7 +27,7 @@ export const SecondChance = ({
   network,
 }) => {
   const { path } = useRouteMatch()
-  const { ruggedCoins, second } = network
+  const { ruggedCoins, second, token } = network
   const [waiting, setWaiting] = useState(false)
   const [selectedToken, setSelectedToken] = useState({
     id: -1,
@@ -195,14 +195,14 @@ export const SecondChance = ({
                     value={shareOfSupply + "%"}
                     title={"Percentage of " + selectedToken.name + " you own"}
                     color="info"
-                    tooltip={"Percentage of " + selectedToken.name + " you own"}
+                    tooltip={"Percentage of " + selectedToken.name + " you own. If you own more than 2% of the supply, you must make multiple swaps to prevent token abuse."}
                   />
                   <ChanceValueDisplay
                     id="multiplier"
                     value={getBoostDisplay + "%"}
                     title="2ND-DFT Boost Multiplier"
                     color="info"
-                    tooltip="Earn extra 2ND for holding DFT. Each DFT you own adds 1% boost, up to 200% extra"
+                    tooltip="Earn extra 2ND for holding DFT. Each DFT you own adds 1% boost, up to a total 300% multiplier"
                   />
                   <ChanceValueDisplay
                     id="received"
@@ -243,7 +243,10 @@ export const SecondChance = ({
                 network={network}
               />
               <hr className="line-primary secondChanceLine" />
-              <ChanceButtonCard secondAddress={second} />
+              <ChanceButtonCard 
+                defiatAddress={token}
+                secondAddress={second} 
+              />
             </ChanceStep>
           </Row>
           <ChanceFooter />
