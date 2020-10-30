@@ -85,7 +85,7 @@ export const SecondChance = ({
           <Container>
             <ChanceHeader />
             <Row className="d-flex my-2">
-              <FaucetButton
+              {/* <FaucetButton
                 web3={web3}
                 accounts={accounts}
                 tokenAddress={network.rugged}
@@ -96,7 +96,7 @@ export const SecondChance = ({
                 accounts={accounts}
                 tokenAddress={network.shitcoin}
                 symbol={"SHIIIT"}
-              />
+              /> */}
               
             </Row>
             <Container className="d-overflowH">

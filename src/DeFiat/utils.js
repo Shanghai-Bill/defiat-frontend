@@ -25,6 +25,7 @@ export const get2ndChanceSwapRate = async (secondChanceContract, account, rugged
       .call()
     return new BigNumber(result)
   } catch (e) {
+    console.log(e)
     return new BigNumber(0)
   }
 }

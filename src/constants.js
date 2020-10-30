@@ -8,6 +8,8 @@ export default {
       price: "0x86d1d85bb861e13ecb49a396cce1b936307e0fb7",
       weth: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
       uniFactory: "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+      second: "0x3084807D124442f21F63212577313de6feb44b47",
+      secondLp: "0xdb40c2F4bb5719Fd83160A764a260e88418331ac",
       pools: [
         {
           poolLogo: require("assets/img/defiat-dungeon.png"),
@@ -100,6 +102,33 @@ export default {
             },
           ]
         },
+      ],
+      secondPool: {
+        poolLogo: require("assets/img/sanctuary.png"),
+        poolTitle: "Rug Sanctuary",
+        poolSubtitle: "Stake 2ND-UNI-V2, Earn 2ND",
+        poolAddress: "0x48937F2dd2b0BC8319b996E671978835e0c09685",
+        basePool: "0x3084807D124442f21F63212577313de6feb44b47",
+        stakedAddress: "0xdb40c2F4bb5719Fd83160A764a260e88418331ac",
+        rewardAddress: "0x3084807D124442f21F63212577313de6feb44b47",
+        stakedSymbol: "2ND-UNI-V2",
+        rewardSymbol: "2ND",
+        isLiquidityToken: true
+      },
+      ruggedCoins: [
+        { id: 0, name: 'HOHO', address: '0x660fDbcebC15a97555CC979f0853454AE65B7f93', decimals: '18' },
+        { id: 1, name: 'EMN', address: '0x5ade7aE8660293F2ebfcEfaba91d141d72d221e8', decimals: '18' },
+        { id: 2, name: 'MYX', address: '0x2129fF6000b95A973236020BCd2b2006B0D8E019', decimals: '18' },
+        { id: 3, name: 'HERO', address: '0xb9a1eccd8324d586b2d95b95ac75ea8e6e72154e', decimals: '18' },
+        { id: 4, name: 'NUGS', address: '0x25c5fb03fe893381d87ceda36ebaa57eea4ad74d', decimals: '18' },
+        { id: 5, name: 'NEXE', address: '0xd9F7DEaeB3450cd698FD6d45a7B05A18D84BB1e1', decimals: '18' },
+        { id: 6, name: 'DECORE', address: '0x157d3a0e047400423ae0edf2b4a24447972eabdb', decimals: '18' },
+        { id: 7, name: 'CBDAO', address: '0x4639cd8cd52EC1CF2E496a606ce28D8AfB1C792F', decimals: '18' },
+        { id: 8, name: 'ONLYUP', address: '0x58133836f175a629d6a1e100f3f0d849df9ad412', decimals: '18' },
+        { id: 9, name: 'HATCH', address: '0x6f3009663470475f0749a6b76195375f95495fcb', decimals: '18' },
+        { id: 10, name: 'yCYCL', address: '0x69f08bd1929ef62ecbe947d6bf76a7b7cdba55e8', decimals: '18' },
+        { id: 11, name: 'DEBASE', address: '0xe20303b4f80ef868f653d1fed3f797b5116c3a2e', decimals: '18' },
+        { id: 12, name: 'YBREE', address: '0x11f4c6b3e8f50c50935c7889edc56c96f41b5399', decimals: '18' },
       ]
     },
     4: {
@@ -196,4 +225,33 @@ export default {
       ]
      }
   },
+  5: {
+    name: "goerli",
+    token: "0xFfF47c1877218b40375391B81965474f6E300459",
+    // points: "0x70c7d7856e1558210cfbf27b7f17853655752453",
+    // gov: "0x064fd7d9c228e8a4a2bf247b432a34d6e1cb9442",
+    // price: "0xdbada9b7e7c6334b1a539e8e1a01c4eb3230d095",
+    // weth: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
+    // uniFactory: "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+    second: "0x32d8C1e228b36c87d53b225CaD141f33B6E6E2AC",
+    secondLp: "0x2394184FefCFad8D53062A97C59F63Ba1a684489",
+    shitcoin: "0x4670dC4167f4D80d9597CAecAFED0F529d585589",
+    rugged: "0xe0c7B3Ec3a986Ee518518294DB4193837bF481C2",
+    secondPool: {
+      poolLogo: require("assets/img/sanctuary.png"),
+      poolTitle: "Rug Sanctuary",
+      poolSubtitle: "Stake 2ND-UNI-V2, Earn 2ND",
+      poolAddress: "0xc01DF21d8268eEDB8E72eA6834192480bAB1BD29",
+      basePool: "0x32d8C1e228b36c87d53b225CaD141f33B6E6E2AC",
+      stakedAddress: "0x2394184FefCFad8D53062A97C59F63Ba1a684489",
+      rewardAddress: "0x32d8C1e228b36c87d53b225CaD141f33B6E6E2AC",
+      stakedSymbol: "2ND-UNI-V2",
+      rewardSymbol: "2ND",
+      isLiquidityToken: true
+    },
+    ruggedCoins: [
+      { id: 0, name: 'R_UGGED', address: '0x3Ebbe920B18F5d38bCa5489154388aee2ebE6fF3', decimals: '18' },
+      { id: 1, name: 'SHIIIT', address: '0x4670dC4167f4D80d9597CAecAFED0F529d585589', decimals: '18' },
+    ]
+  }
 };
