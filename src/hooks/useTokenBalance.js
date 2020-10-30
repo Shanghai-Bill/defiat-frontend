@@ -3,6 +3,11 @@ import { useBlock } from './useBlock'
 import { getTokenBalance, getTokenContract } from '../utils/erc20'
 import BigNumber from 'bignumber.js'
 
+BigNumber.config({
+  EXPONENTIAL_AT: 1000,
+  DECIMAL_PLACES: 80,
+})
+
 export const useTokenBalance = (web3, account, tokenAddress) => {
   const block = useBlock(web3)
   const [balance, setBalance] = useState(new BigNumber(0))

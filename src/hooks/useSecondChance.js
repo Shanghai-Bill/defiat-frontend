@@ -7,6 +7,11 @@ import Second_Chance from 'contracts/secondchance/Second_Chance.json'
 import BigNumber from 'bignumber.js'
 import { useTokenBalance } from './useTokenBalance'
 
+BigNumber.config({
+  EXPONENTIAL_AT: 1000,
+  DECIMAL_PLACES: 80,
+})
+
 export const useSecondChance = (web3, account, ruggedAddress, secondAddress) => {
   const [ethFee, setEthFee] = useState(new BigNumber(0))
   const [swapRate, setSwapRate] = useState(new BigNumber(0))
