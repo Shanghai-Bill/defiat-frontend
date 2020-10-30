@@ -208,7 +208,7 @@ export const SecondChance = ({
                     <ChanceValueDisplay
                       id="received"
                       value={getDisplayBalance(swapRate)}
-                      title={"Amount of 2ND TOKENS you will receive"}
+                      title={"Amount of 2ND TOKENS you will receive. May require multiple swaps."}
                       color="info"
                       tooltip={"% of " + selectedToken.name + " you own * 1000 * (Boost/100) = 2ND RECEIVED"}
                     />

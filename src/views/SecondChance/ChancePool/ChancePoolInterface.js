@@ -108,7 +108,7 @@ export const ChancePoolInterface = ({
         <b>Farming Boost: {stakingState.myBoost}%</b>
       </p> */}
       <p className="text-secondary mb-2">
-        Testing 25% Withdrawal Fee<br/>
+        10% Withdrawal Fee<br/>
         <b>Fees are permanately locked in pool to serve as 2ND-UNI-V2 Liquidity</b>
       </p>
       
