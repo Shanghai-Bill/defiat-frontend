@@ -55,3 +55,13 @@ html {
     margin-top: 3px !important;
     margin-bottom: 3px !important;
 }
+
+.d-overflowH
+{
+    overflow: hidden !important;
+}
+
+.d-flex1
+{
+    flex: 1 !important;
+}

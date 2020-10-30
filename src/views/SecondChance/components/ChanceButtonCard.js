@@ -6,7 +6,7 @@ export const ChanceButtonCard = ({
   defiatAddress
 }) => {
   return (
-    <Card>
+    <Card className="d-flex h-100">
       <CardBody>
         <Button
           color="primary"
