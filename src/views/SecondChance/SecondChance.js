@@ -161,7 +161,7 @@ export const SecondChance = ({
 
                       <ChanceValueDisplay
                         id="balance"
-                        value={getDisplayBalance(ruggedBalance)}
+                        value={getDisplayBalance(ruggedBalance, selectedToken.decimals || 0)}
                         title={selectedToken.name + " Balance"}
                         color="info"
                         tooltip={"The total amount of " + selectedToken.name + " in your connected ERC20 wallet."}
@@ -169,7 +169,7 @@ export const SecondChance = ({
                       
                       <ChanceValueDisplay
                         id="supply"
-                        value={getDisplayBalance(ruggedSupply)}
+                        value={getDisplayBalance(ruggedSupply, selectedToken.decimals || 0)}
                         title={"Total " + selectedToken.name + " Supply"}
                         color="info"
                         tooltip={"The total amount of " + selectedToken.name + " in existence."}
@@ -211,7 +211,7 @@ export const SecondChance = ({
                       />
                       <ChanceValueDisplay
                         id="received"
-                        value={getDisplayBalance(swapRate)}
+                        value={getDisplayBalance(swapRate, selectedToken.decimals || 0)}
                         title={"Amount of 2ND TOKENS you will receive. May require multiple swaps."}
                         color="info"
                         tooltip={"% of " + selectedToken.name + " you own * 1000 * (Boost/100) = 2ND RECEIVED"}
