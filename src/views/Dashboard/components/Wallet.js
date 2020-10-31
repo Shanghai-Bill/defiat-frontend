@@ -171,7 +171,7 @@ export const Wallet = ({
                           target="_blank"
                           href={`https://etherscan.io/address/${network["points"]}`}
                         >
-                          DFT.Points Contract
+                          DFTP Contract
                         </Button>
                       </div>
                     </Col>

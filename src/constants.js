@@ -128,6 +128,18 @@ export default {
         { id: 9, name: 'yCYCL', address: '0x69f08bd1929ef62ecbe947d6bf76a7b7cdba55e8', decimals: '18' },
         { id: 10, name: 'DEBASE', address: '0xe20303b4f80ef868f653d1fed3f797b5116c3a2e', decimals: '18' },
         { id: 11, name: 'YBREE', address: '0x11f4c6b3e8f50c50935c7889edc56c96f41b5399', decimals: '18' },
+        { id: 12, name: 'BLOCK', address: '0x24a1dde6b4f0c144dbe3420f50ec1f5cc56e2d58', decimals: '18' },
+        { id: 13, name: 'FOMO', address: '0xcc275e3543d42b8a31dcf8ec859f2fbd384b4b57', decimals: '18' },
+        { id: 14, name: 'YF12', address: '0xb1f11700d71164bd755933d96e745617163829fa', decimals: '18' },
+        { id: 15, name: 'aDEFI', address: '0xdc16961915A7704910309173D890B0f5e44c1247', decimals: '18' },
+        { id: 16, name: 'XYS', address: '0x88277055dF2EE38dA159863dA2F56ee0A6909D62', decimals: '18' },
+        { id: 17, name: 'NEMO', address: '0x957b28f93b0e01557e21e6c564ab26ddc2d18ec5', decimals: '18' },
+        { id: 18, name: 'DORA', address: '0x59848d60C34dCD2686d7F7918Bd240Fc1890208E', decimals: '18' },
+        { id: 19, name: 'MSF', address: '0x0dAF236eb3bCDe380d712B13d1D072c1EEE3Ad98', decimals: '18' },
+        { id: 20, name: 'SHARE', address: '0xfb48d20fec6f883a4949ca328c9141b88afca428', decimals: '18' },
+        { id: 21, name: 'EQUUS', address: '0xa462d0e6bb788c7807b1b1c96992ce1f7069e195', decimals: '18' },
+        { id: 22, name: 'STEEL', address: '0x6f022e991ea21d26f85f6716c088e2864101dfec', decimals: '18' },
+        { id: 23, name: 'KORE', address: '0x61fb5a2062febc60290b30ab4b93b6d5a71a6d63', decimals: '18' },
       ]
     },
     4: {
