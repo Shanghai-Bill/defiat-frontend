@@ -131,7 +131,7 @@ export const SecondChance = ({
                     <CardBody>
                       <img 
                         className="mb-2 img-fluid secondChanceCard" 
-                        src={require('assets/img/recycle-solid-purple.png')}
+                        src={require('assets/img/recycle.png')}
                       />
                       <CardTitle className="text-primary card-title">
                         Recycle Rugged Tokens

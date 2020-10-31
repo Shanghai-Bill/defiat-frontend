@@ -8,7 +8,7 @@ export const ChanceFooter = () => {
         <div className="pl-md-5">
           <img 
             className="mb-2 img-fluid secondChanceCard" 
-            src={require('assets/img/tractor-solid-purple.png')}
+            src={require('assets/img/rug.png')}
           />
         </div>
       </Col>

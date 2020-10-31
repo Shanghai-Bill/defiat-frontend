@@ -29,7 +29,7 @@ export const ChanceHeader = () => {
         <Col className="mt-lg-5" md="5">
           <img
             className="mb-2"
-            src={require('assets/img/recycle-solid-purple.png')}
+            src={require('assets/img/recycle.png')}
             alt="recycle"
             width="auto"
             height="150px"
