@@ -139,6 +139,7 @@ export default {
         { id: 20, name: 'EQUUS', address: '0xa462d0e6bb788c7807b1b1c96992ce1f7069e195', decimals: '18' },
         { id: 21, name: 'STEEL', address: '0x6f022e991ea21d26f85f6716c088e2864101dfec', decimals: '0' },
         { id: 22, name: 'KORE', address: '0x61fb5a2062febc60290b30ab4b93b6d5a71a6d63', decimals: '18' },
+        { id: 22, name: 'HEX2T', address: '0xEd1199093b1aBd07a368Dd1C0Cdc77D8517BA2A0', decimals: '18' },
       ]
     },
     4: {
