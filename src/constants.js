@@ -11,7 +11,7 @@ export default {
       second: "0x3084807D124442f21F63212577313de6feb44b47",
       secondLp: "0xdb40c2F4bb5719Fd83160A764a260e88418331ac",
       pools: [
-        {
+        /*{
           poolLogo: require("assets/img/defiat-dungeon.png"),
           poolTitle: "DeFiat Dungeon",
           poolSubtitle: "Stake DFT, earn DFT",
@@ -46,7 +46,115 @@ export default {
           stakedSymbol: "DFT-UNI-V2",
           rewardSymbol: "DFT",
           isLiquidityToken: true
-        },
+          },*/
+          {
+              poolLogo: require("assets/img/USDC-logo.png"),
+              poolTitle: "USD Coin",
+              poolSubtitle: "USD Coin",
+              poolAddress: "0x7BACeF5001203724B1D8b5480dfb7238fcA1375c",
+              basePool: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+              stakedAddress: "0xe2a1d215d03d7e9fa0ed66355c86678561e4940a",
+              rewardAddress: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+              stakedSymbol: "USDC-UNI-V2",
+              rewardSymbol: "DFT",
+              isLiquidityToken: true
+          },
+          {
+              poolLogo: require("assets/img/USDT-logo.png"),
+              poolTitle: "USDT",
+              poolSubtitle: "Tether USD",
+              poolAddress: "0x7BACeF5001203724B1D8b5480dfb7238fcA1375c",
+              basePool: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+              stakedAddress: "0xe2a1d215d03d7e9fa0ed66355c86678561e4940a",
+              rewardAddress: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+              stakedSymbol: "USDT-UNI-V2",
+              rewardSymbol: "DFT",
+              isLiquidityToken: true
+          },
+          {
+              poolLogo: require("assets/img/WETH-logo.png"),
+              poolTitle: "WETH",
+              poolSubtitle: "Wrapped Ether",
+              poolAddress: "0xB508Dd7EeD4517bc66462cd384c0849d99B160fc",
+              basePool: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+              stakedAddress: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+              rewardAddress: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+              stakedSymbol: "WETH-UNI-V2",
+              rewardSymbol: "DFT",
+              isLiquidityToken: true
+          },
+          {
+              poolLogo: require("assets/img/LINK-logo.png"),
+              poolTitle: "ChainLink",
+              poolSubtitle: "ChainLink",
+              poolAddress: "0x7BACeF5001203724B1D8b5480dfb7238fcA1375c",
+              basePool: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+              stakedAddress: "0xe2a1d215d03d7e9fa0ed66355c86678561e4940a",
+              rewardAddress: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+              stakedSymbol: "LINK-UNI-V2",
+              rewardSymbol: "DFT",
+              isLiquidityToken: true
+          },
+          {
+              poolLogo: require("assets/img/YFI-logo.png"),
+              poolTitle: "yearn.finance",
+              poolSubtitle: "yearn.finance",
+              poolAddress: "0x973a2B39F7D59C0E59097f26C0921b60597aFe57",
+              basePool: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+              stakedAddress: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+              rewardAddress: "0x8c9d8f5CC3427F460e20F63b36992f74AA19e27d",
+              stakedSymbol: "YFI-UNI-V2",
+              rewardSymbol: "DFT",
+              isLiquidityToken: true
+          },
+          {
+              poolLogo: require("assets/img/UNI-logo.png"),
+              poolTitle: "UNI",
+              poolSubtitle: "UNI",
+              poolAddress: "0x7BACeF5001203724B1D8b5480dfb7238fcA1375c",
+              basePool: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+              stakedAddress: "0xe2a1d215d03d7e9fa0ed66355c86678561e4940a",
+              rewardAddress: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+              stakedSymbol: "UNI-UNI-V2",
+              rewardSymbol: "DFT",
+              isLiquidityToken: true
+          },
+          {
+              poolLogo: require("assets/img/aave-logo.png"),
+              poolTitle: "AAVE",
+              poolSubtitle: "AAVE",
+              poolAddress: "0x7BACeF5001203724B1D8b5480dfb7238fcA1375c",
+              basePool: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+              stakedAddress: "0xe2a1d215d03d7e9fa0ed66355c86678561e4940a",
+              rewardAddress: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+              stakedSymbol: "AAVE-UNI-V2",
+              rewardSymbol: "DFT",
+              isLiquidityToken: true
+          },
+          {
+              poolLogo: require("assets/img/syn-logo.png"),
+              poolTitle: "SYN",
+              poolSubtitle: "Synthetix Network Token",
+              poolAddress: "0x7BACeF5001203724B1D8b5480dfb7238fcA1375c",
+              basePool: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+              stakedAddress: "0xe2a1d215d03d7e9fa0ed66355c86678561e4940a",
+              rewardAddress: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+              stakedSymbol: "SYN-UNI-V2",
+              rewardSymbol: "DFT",
+              isLiquidityToken: true
+          },
+          {
+              poolLogo: require("assets/img/marker-logo.png"),
+              poolTitle: "MKR",
+              poolSubtitle: "Maker",
+              poolAddress: "0x7BACeF5001203724B1D8b5480dfb7238fcA1375c",
+              basePool: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+              stakedAddress: "0xe2a1d215d03d7e9fa0ed66355c86678561e4940a",
+              rewardAddress: "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1",
+              stakedSymbol: "MKR-UNI-V2",
+              rewardSymbol: "DFT",
+              isLiquidityToken: true
+          },
       ],
       extendedPools: [
         {

@@ -15635,6 +15635,10 @@ td.rdtYear:hover {
   color: #8355ff !important;
 }
 
+.defiatSelect__option {
+    color: #8355ff !important;
+}
+
 .secondChanceUniButtons {
     width: 100% !important;
 }
@@ -15667,4 +15671,21 @@ td.rdtYear:hover {
 {
     margin-top: 3px !important;
     margin-bottom: 3px !important;
+}
+
+.anyStakeCard
+{
+    background-color: white !important;
+    border-radius: 10% !important;
+}
+
+.anyStakeTextPrimary {
+    color: #8355ff !important;
+}
+
+.anyStakeLogoSmall {
+    height: 1.17em !important;
+    width: 1.17em !important;
+    transform: translateY(-10%) !important;
+    margin-right: 6px !important;
 }

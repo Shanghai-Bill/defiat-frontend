@@ -21,6 +21,7 @@ import { ProposalInterface } from '../Proposals/ProposalInterface'
 import { Operator } from '../Operator'
 import { Partners } from '../Partners'
 import { SecondChance } from '../SecondChance'
+import { AnyStake } from '../AnyStake'
 import { withRouter, useRouteMatch, useHistory, Route, Switch } from 'react-router-dom'
 import { Nav, NavItem, NavLink, Container } from 'reactstrap'
 import { PageWrapper } from 'components/PageWrapper'
@@ -141,15 +142,26 @@ const Dashboard = (props) => {
                     Partners
                   </NavLink>
                 </NavItem>
-                <NavItem>
-                  <NavLink
-                    className={history.location.pathname.includes(path + '/secondchance') ? 'active' : ''}
-                    onClick={() => handleTab(`${path}/secondchance`)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    Second Chance
-                  </NavLink>
-                </NavItem>
+                {network && network.name === 'rinkeby' && (
+                  <NavItem>
+                    <NavLink
+                      className={history.location.pathname.includes(path + '/secondchance') ? 'active' : ''}
+                      onClick={() => handleTab(`${path}/secondchance`)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      Second Chance
+                    </NavLink>
+                  </NavItem>
+                                      )}
+                                          <NavItem>
+                                              <NavLink
+                                                  className={history.location.pathname.includes(path + '/anystake') ? 'active' : ''}
+                                                  onClick={() => handleTab(`${path}/anystake`)}
+                                                  style={{ cursor: "pointer" }}
+                                              >
+                                                  AnyStake
+                    </NavLink>
+                                          </NavItem>
               </Nav>
               
               <Switch>
@@ -189,13 +201,22 @@ const Dashboard = (props) => {
                     network={network} 
                   />
                 </Route>
-                <Route path={`${path}/secondchance`}>
-                  <SecondChance
-                    web3={web3}
-                    accounts={accounts}
-                    network={network}
-                  />
-                </Route>
+                {network && network.name === 'rinkeby' && (
+                  <Route path={`${path}/secondchance`}>
+                    <SecondChance
+                      web3={web3}
+                      accounts={accounts}
+                      network={network}
+                    />
+                  </Route>
+                                      )}
+                                          <Route path={`${path}/anystake`}>
+                                              <AnyStake
+                                                  web3={web3}
+                                                  accounts={accounts}
+                                                  network={network}
+                                              />
+                                          </Route>
               </Switch>
             </Container>
           )}
