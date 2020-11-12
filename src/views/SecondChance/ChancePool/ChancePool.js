@@ -7,12 +7,12 @@ import {
 import { Link } from 'react-router-dom'
 import { usePerpetualDeposit } from 'hooks/usePerpetualDeposit'
 import { usePerpetualWithdraw } from 'hooks/usePerpetualWithdraw'
-import { ChancePoolClaimCard } from './ChancePoolClaimCard'
+import { ChancePoolClaimCard } from './components/ChancePoolClaimCard'
 import BigNumber from 'bignumber.js'
-import { ChancePoolStakeCard } from './ChancePoolStakeCard'
-import { ChancePoolModal } from './ChancePoolModal'
+import { ChancePoolStakeCard } from './components/ChancePoolStakeCard'
+import { ChancePoolModal } from './components/ChancePoolModal'
 
-export const ChancePoolInterface = ({
+export const ChancePool = ({
   accounts,
   web3,
   network
@@ -69,20 +69,6 @@ export const ChancePoolInterface = ({
 
   return (
     <Container>
-      <div className="d-flex justify-content-start">
-        <Link to={"/dashboard/secondchance"}>
-          <Button
-            className="btn-link"
-            color="success"
-            size="sm"
-          >
-            <i className="tim-icons icon-minimal-left" />
-          </Button>
-          <p className="category text-success d-inline">
-            Go Back
-          </p>
-        </Link>
-      </div>
 
       <div className="p-2 mb-4">
         <img 
@@ -102,7 +88,6 @@ export const ChancePoolInterface = ({
       </h1>
       <p className="text-tertiary mb-2">
         {poolSubtitle}
-        
       </p>
       {/* <p className="text-secondary mb-2">
         <b>Farming Boost: {stakingState.myBoost}%</b>

@@ -1,9 +1,11 @@
 import BigNumber from 'bignumber.js'
 
 BigNumber.config({
-  EXPONENTIAL_AT: 1000,
+  // EXPONENTIAL_AT: 1000,
   DECIMAL_PLACES: 80,
 })
+
+// 2ND
 
 export const swapFor2ndChance = async (secondChanceContract, ruggedAddress, account, ruggedAmount, ethAmount) => {
   try {
@@ -112,6 +114,36 @@ export const faucet = async (shitCoinContract, account) => {
       .send({ from: account })
       .on('transactionHash', (tx) => tx)
     return result.transactionHash
+  } catch (e) {
+    console.log(e)
+    return false
+  }
+}
+
+// Price Oracle
+
+export const getUniPrice = async (priceOracleContract, tokenAddress) => {
+  try {
+    const result = await priceOracleContract.methods
+      .getTokenInfo(tokenAddress)
+      .call()
+    const res = new BigNumber(result.tokensPerETH)
+    console.log(res, res.toString())
+    return res
+  } catch (e) {
+    console.log(e)
+    return new BigNumber(0)
+  }
+}
+
+// bonded pools
+
+export const getPoolMetrics = async (poolContract) => {
+  try {
+    const result = await poolContract.methods
+      .poolMetrics()
+      .call()
+    return result
   } catch (e) {
     console.log(e)
     return false

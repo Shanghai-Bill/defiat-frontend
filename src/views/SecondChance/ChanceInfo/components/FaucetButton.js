@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from 'reactstrap'
-import { useFaucet } from '../../../hooks/useFaucet'
+import { useFaucet } from 'hooks/useFaucet'
 
 export const FaucetButton = ({
   web3,

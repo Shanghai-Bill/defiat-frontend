@@ -5,7 +5,7 @@ import { usePerpetualStakedBalance } from 'hooks/usePerpetualStakedBalance'
 import { useTokenBalance } from 'hooks/useTokenBalance'
 import { getDisplayBalance, getFullDisplayBalance } from 'utils/formatBalance'
 import BigNumber from 'bignumber.js'
-import { getInputNumber } from '../../../utils/formatBalance'
+import { getInputNumber } from 'utils/formatBalance'
 
 export const ChancePoolModal = ({
   web3,

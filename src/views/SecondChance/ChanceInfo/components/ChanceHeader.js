@@ -5,14 +5,6 @@ import { FlexCenter } from 'components/FlexCenter'
 export const ChanceHeader = () => {
   return (
     <>
-      <FlexCenter>
-        <img
-          src={require('assets/img/2nd-brand-full.png')}
-          alt="2nd-brand"
-          width="100%"
-          height="auto"
-        />
-      </FlexCenter>
       <Row className="row-grid justify-content-between align-items-center">
         <Col className="mt-lg-5" md="5">
           <div className="pl-md-5">

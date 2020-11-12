@@ -10,9 +10,13 @@ import {
   Container
 } from 'reactstrap'
 import { useHistory } from 'react-router-dom'
-import Uni_Price from 'contracts/Uni_Price.json'
+import Uni_Price from 'contracts/Uni_Price_v2.json'
 import Uni_V2 from 'contracts/IUniswapV2Pair.json'
 import ERC20 from 'contracts/_ERC20.json'
+import { useBondedApr } from '../../hooks/useBondedApr'
+import { useBondedPoolMetrics } from '../../hooks/useBondedPoolMetrics'
+import { PoolCardDisplayRow } from './components/PoolCardDisplayRow'
+import { getDisplayBalance } from '../../utils/formatBalance'
 
 export const PoolCard = ({
   web3,
@@ -48,6 +52,10 @@ export const PoolCard = ({
     }
     getAPR();
   }, [poolMetrics])
+
+
+  // const { isPoolOpen, isPoolClosed, totalStaked, poolFee, poolClose, poolOpen } = useBondedPoolMetrics(web3, poolAddress, isExtendedPool)
+  // const apr = useBondedApr(web3, network["price"], poolAddress, stakedAddress, rewardAddress)
 
   const apr = async () => {
     // use the price oracle to figure out the price of each token in eth
@@ -118,7 +126,6 @@ export const PoolCard = ({
   }
 
   return (
-    <>
       <Card className="shadow">
         <CardBody>
           <img className="mb-2 img-fluid" src={poolLogo} alt="" style={{height: 100, width: "auto"}} />
@@ -126,15 +133,15 @@ export const PoolCard = ({
           <CardSubtitle className="text-tertiary">{poolSubtitle}</CardSubtitle>
           {isPoolClosed && <h3 className="mb-1">Pool is Closed</h3>}
           <div className="mt-2 mb-2">
-            {!isPoolClosed && <DisplayRow title="Total Staked:" value={totalStaked} /> }
+            {!isPoolClosed && <PoolCardDisplayRow title="Total Staked:" value={totalStaked} /> }
             {/* <DisplayRow title="Pool Rewards:" value={totalRewards} /> */}
             
-            <DisplayRow title="Pool Opens:" value={poolOpen} />
-            <DisplayRow title="Pool Closes:" value={poolClose} />
+            <PoolCardDisplayRow title="Pool Opens:" value={poolOpen} />
+            <PoolCardDisplayRow title="Pool Closes:" value={poolClose} />
             
-            <DisplayRow title="Entry Fee:" value={poolFee} />
+            <PoolCardDisplayRow title="Entry Fee:" value={poolFee} />
             
-            {!isPoolClosed && <DisplayRow title="APR:" value={poolApr + "%"} />}
+            {!isPoolClosed && <PoolCardDisplayRow title="APR:" value={poolApr + "%"} />}
           </div>
           <Button 
             className="w-100"
@@ -146,20 +153,6 @@ export const PoolCard = ({
           </Button>
         </CardBody>
       </Card>
-    </>
   )
 }
 
-const DisplayRow = ({
-  title,
-  value
-}) => {
-  return (
-    <Container>
-      <Row>
-        <Col className="text-left">{title}</Col>
-        <Col className="text-right"><b>{value}</b></Col>
-      </Row>
-    </Container>
-  )
-}
