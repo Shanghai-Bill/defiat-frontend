@@ -13,7 +13,8 @@ export const ChanceRuggedCard = ({
   web3,
   account,
   network,
-  ruggedCoin
+  ruggedCoin,
+  shouldFilter
 }) => {
   const { second } = network
   const [waiting, setWaiting] = useState(false)
@@ -23,13 +24,13 @@ export const ChanceRuggedCard = ({
   const { onApprove } = useApprove(web3, account, ruggedCoin.address, second)
   const { onRecycle, swapRate } = useSecondChance(web3, account, ruggedCoin.address, second)
 
-  const shareOfSupply = useMemo(() => {
-    if (ruggedCoin.address !== -1) {
-      return getDisplayBalance(ruggedBalance.times(100).div(ruggedSupply), 0)
-    } else {
-      return getDisplayBalance(new BigNumber(0))
-    }
-  }, [ruggedBalance, ruggedSupply])
+  // const shareOfSupply = useMemo(() => {
+  //   if (ruggedCoin.address !== -1) {
+  //     return getDisplayBalance(ruggedBalance.times(100).div(ruggedSupply), 0)
+  //   } else {
+  //     return getDisplayBalance(new BigNumber(0))
+  //   }
+  // }, [ruggedBalance, ruggedSupply])
 
   const handleApprove = useCallback(async () => {
     setWaiting(true)
@@ -44,62 +45,69 @@ export const ChanceRuggedCard = ({
   }, [onRecycle, setWaiting, ruggedBalance])
 
   return (
-    <Grid item xs={12} sm={6}>
-      <Paper>
-        <Box p={2}>
-        <ChanceCardRow
-          title={"Name:"}
-          value={<b>{ruggedCoin.name}</b>}
-        />
-        <ChanceCardRow
-          title={"Symbol:"}
-          value={ruggedCoin.symbol}
-        />
-        <ChanceCardRow
-          title={"Contract:"}
-          value={
-            <a 
-              href={`https://etherscan.io/token/${ruggedCoin.address}`}
-              target="_blank"
-              rel="noopenner referrer"  
-            >
-              {formatAddress(ruggedCoin.address)}
-            </a>
-          }
-        />
-        <ChanceCardRow
-          title={"Total Supply:"}
-          value={getDisplayBalance(ruggedSupply, ruggedCoin.decimals)}
-        />
-        <ChanceCardRow
-          title={"My Balance:"}
-          value={getDisplayBalance(ruggedBalance, ruggedCoin.decimals)}
-        />
-         {ruggedAllowance.eq(0) ? (
-            <Button
-              variant="contained"
-              color="primary"
-              // className="secondChanceUniButtons"
-              disabled={ruggedBalance.eq(0) || waiting}
-              onClick={handleApprove}
-              fullWidth
-            >
-              Approve Recycle
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              color="primary"
-              // className="secondChanceUniButtons"
-              disabled={ruggedBalance.eq(0) || swapRate.eq(0) || waiting}
-              onClick={handleRecycle}
-              fullWidth
-            >
-              Recycle for {getDisplayBalance(swapRate)} 2ND
-            </Button>
-          )}
-          </Box>
-      </Paper>
-    </Grid>
+    <>
+      {shouldFilter && ruggedBalance.eq(0) && (
+        <div />
+      )}
+      {(!shouldFilter || (shouldFilter && ruggedBalance.gt(0))) && (
+        <Grid item xs={12} sm={6}>
+          <Paper>
+            <Box p={2}>
+            <ChanceCardRow
+              title={"Name:"}
+              value={<b>{ruggedCoin.name}</b>}
+            />
+            <ChanceCardRow
+              title={"Symbol:"}
+              value={ruggedCoin.symbol}
+            />
+            <ChanceCardRow
+              title={"Contract:"}
+              value={
+                <a 
+                  href={`https://etherscan.io/token/${ruggedCoin.address}`}
+                  target="_blank"
+                  rel="noopenner referrer"  
+                >
+                  {formatAddress(ruggedCoin.address)}
+                </a>
+              }
+            />
+            <ChanceCardRow
+              title={"Total Supply:"}
+              value={getDisplayBalance(ruggedSupply, ruggedCoin.decimals)}
+            />
+            <ChanceCardRow
+              title={"My Balance:"}
+              value={getDisplayBalance(ruggedBalance, ruggedCoin.decimals)}
+            />
+            {ruggedAllowance.eq(0) ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  // className="secondChanceUniButtons"
+                  disabled={ruggedBalance.eq(0) || waiting}
+                  onClick={handleApprove}
+                  fullWidth
+                >
+                  Approve Recycle
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  // className="secondChanceUniButtons"
+                  disabled={ruggedBalance.eq(0) || swapRate.eq(0) || waiting}
+                  onClick={handleRecycle}
+                  fullWidth
+                >
+                  Recycle for {getDisplayBalance(swapRate)} 2ND
+                </Button>
+              )}
+              </Box>
+          </Paper>
+        </Grid>
+      )}
+    </>
   )
 }
