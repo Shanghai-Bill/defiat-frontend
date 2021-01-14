@@ -17,7 +17,6 @@ import { NoWallet } from './components/NoWallet'
 import { Wallet } from './components/Wallet'
 import { Staking } from '../Staking'
 import { Proposals } from '../Proposals'
-import { ProposalInterface } from '../Proposals/ProposalInterface'
 import { Operator } from '../Operator'
 import { Partners } from '../Partners'
 import { SecondChance } from '../SecondChance'
@@ -124,7 +123,7 @@ const Dashboard = (props) => {
                     Staking
                   </NavLink>
                 </NavItem>
-                <NavItem>
+                {/* <NavItem>
                   <NavLink
                     className={history.location.pathname.includes(path + '/proposals') ? 'active' : '' }
                     onClick={() => handleTab(`${path}/proposals`)}
@@ -141,27 +140,16 @@ const Dashboard = (props) => {
                   >
                     Partners
                   </NavLink>
+                </NavItem> */}
+                <NavItem>
+                  <NavLink
+                    className={history.location.pathname.includes(path + '/secondchance') ? 'active' : ''}
+                    onClick={() => handleTab(`${path}/secondchance`)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Second Chance
+                  </NavLink>
                 </NavItem>
-                {network && network.name === 'rinkeby' && (
-                  <NavItem>
-                    <NavLink
-                      className={history.location.pathname.includes(path + '/secondchance') ? 'active' : ''}
-                      onClick={() => handleTab(`${path}/secondchance`)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      Second Chance
-                    </NavLink>
-                  </NavItem>
-                                      )}
-                                          <NavItem>
-                                              <NavLink
-                                                  className={history.location.pathname.includes(path + '/anystake') ? 'active' : ''}
-                                                  onClick={() => handleTab(`${path}/anystake`)}
-                                                  style={{ cursor: "pointer" }}
-                                              >
-                                                  AnyStake
-                    </NavLink>
-                                          </NavItem>
               </Nav>
               
               <Switch>
@@ -173,21 +161,26 @@ const Dashboard = (props) => {
                     network={network} 
                   />
                 </Route>
-                <Route path={`${path}/operator`}>
+                {/* <Route path={`${path}/operator`}>
                   <Operator
                     web3={web3}
                     accounts={accounts}
                     network={network} 
                   />
-                </Route>
+                </Route> */}
                 <Route path={`${path}/staking`}>
-                  <Staking
+                  {/* <Staking
                     web3={web3}
                     accounts={accounts}
                     network={network} 
+                  /> */}
+                  <AnyStake
+                    web3={web3}
+                    accounts={accounts}
+                    network={network}
                   />
                 </Route>
-                <Route path={`${path}/proposals`}>
+                {/* <Route path={`${path}/proposals`}>
                   <Proposals
                     web3={web3}
                     accounts={accounts}
@@ -200,23 +193,14 @@ const Dashboard = (props) => {
                     accounts={accounts}
                     network={network} 
                   />
+                </Route> */}
+                <Route path={`${path}/secondchance`}>
+                  <SecondChance
+                    web3={web3}
+                    accounts={accounts}
+                    network={network}
+                  />
                 </Route>
-                {network && network.name === 'rinkeby' && (
-                  <Route path={`${path}/secondchance`}>
-                    <SecondChance
-                      web3={web3}
-                      accounts={accounts}
-                      network={network}
-                    />
-                  </Route>
-                                      )}
-                                          <Route path={`${path}/anystake`}>
-                                              <AnyStake
-                                                  web3={web3}
-                                                  accounts={accounts}
-                                                  network={network}
-                                              />
-                                          </Route>
               </Switch>
             </Container>
           )}
