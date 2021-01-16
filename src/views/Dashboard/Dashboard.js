@@ -123,7 +123,7 @@ const Dashboard = (props) => {
                     Staking
                   </NavLink>
                 </NavItem>
-                <NavItem>
+                {/* <NavItem>
                   <NavLink
                     className={history.location.pathname.includes(path + '/proposals') ? 'active' : '' }
                     onClick={() => handleTab(`${path}/proposals`)}
@@ -140,7 +140,7 @@ const Dashboard = (props) => {
                   >
                     Partners
                   </NavLink>
-                </NavItem>
+                </NavItem> */}
                 <NavItem>
                   <NavLink
                     className={history.location.pathname.includes(path + '/secondchance') ? 'active' : ''}
@@ -175,7 +175,7 @@ const Dashboard = (props) => {
                     network={network} 
                   />
                 </Route>
-                <Route path={`${path}/proposals`}>
+                {/* <Route path={`${path}/proposals`}>
                   <Proposals
                     web3={web3}
                     accounts={accounts}
@@ -188,7 +188,7 @@ const Dashboard = (props) => {
                     accounts={accounts}
                     network={network} 
                   />
-                </Route>
+                </Route> */}
                 <Route path={`${path}/secondchance`}>
                   <SecondChance
                     web3={web3}

@@ -15,7 +15,7 @@ export const SocialButtons = () => {
         <Button
           className="btn-icon btn-simple btn-round btn-neutral d-inline-flex justify-content-center align-items-center"
           color="default"
-          href="https://twitter.com/DeFiatCrypto"
+          href="https://twitter.com/DeFiatOfficial"
           target="_blank"
         >
           <FaTwitter />
@@ -39,7 +39,7 @@ export const SocialButtons = () => {
         <Button
           className="btn-icon btn-simple btn-round btn-neutral d-inline-flex justify-content-center align-items-center"
           color="default"
-          href="https://medium.com/@defiat"
+          href="https://defiat.medium.com/"
           target="_blank"
         >
           <FaMediumM />
@@ -47,7 +47,7 @@ export const SocialButtons = () => {
         <Button
           className="btn-icon btn-simple btn-round btn-neutral d-inline-flex justify-content-center align-items-center"
           color="default"
-          href="https://github.com/defiat-crypto/defiat"
+          href="https://github.com/defiat-crypto"
           target="_blank"
         >
           <FaGithub />
